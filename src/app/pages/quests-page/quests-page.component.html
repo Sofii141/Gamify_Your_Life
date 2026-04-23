@@ -1,0 +1,111 @@
+<div class="quests-page">
+
+  <!-- Header -->
+  <div class="page-header">
+    <div>
+      <h1 class="pixel page-title">⚔️ Quest Board</h1>
+      <p class="page-sub">Complete quests to earn XP and level up!</p>
+    </div>
+    <div class="overall-stats">
+      <div class="progress-ring-wrap">
+        <svg class="ring-svg" viewBox="0 0 36 36">
+          <circle cx="18" cy="18" r="15.9" fill="none" stroke="var(--border)" stroke-width="3"/>
+          <circle cx="18" cy="18" r="15.9" fill="none" stroke="var(--primary)" stroke-width="3"
+                  [attr.stroke-dasharray]="ringDash()"
+                  stroke-dashoffset="25"
+                  stroke-linecap="round"/>
+        </svg>
+        <span class="ring-pct pixel">{{ completionRate() }}%</span>
+      </div>
+      <div class="ring-label">{{ overallCompleted() }}/{{ overallTotal() }} done</div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button *ngFor="let tab of tabInfos()"
+            class="tab-btn"
+            [class.active]="activeTab() === tab.id"
+            (click)="activeTab.set(tab.id)">
+      <span>{{ tab.icon }}</span>
+      <span>{{ tab.label }}</span>
+      <span class="tab-count">{{ tab.done }}/{{ tab.total }}</span>
+    </button>
+  </div>
+
+  <!-- Quest list -->
+  <div class="quests-container">
+
+    <!-- Info bar -->
+    <div class="quest-info-bar">
+      <span class="info-badge">{{ completedCount() }}/{{ visibleQuests().length }} completed</span>
+      <span class="info-xp" *ngIf="totalXpAvailable() > 0">⚡ {{ totalXpAvailable() }} XP available</span>
+      <span class="all-done" *ngIf="completedCount() === visibleQuests().length && visibleQuests().length > 0">🎉 All done!</span>
+    </div>
+
+    <!-- Quest items -->
+    <ul class="quest-list">
+      <li *ngFor="let quest of visibleQuests()"
+          class="quest-row"
+          [class.done]="quest.completed">
+
+        <button class="check-circle" (click)="game.toggleQuest(quest.id)">
+          <span class="check-inner" *ngIf="quest.completed">✓</span>
+        </button>
+
+        <div class="quest-body">
+          <span class="quest-title">{{ quest.title }}</span>
+        </div>
+
+        <div class="quest-tags">
+          <span class="tag xp-tag">+{{ quest.xpReward }} XP</span>
+          <span class="tag coin-tag">🪙 {{ quest.coinReward }}</span>
+        </div>
+
+        <button class="del-btn" (click)="game.deleteQuest(quest.id)" title="Delete">×</button>
+      </li>
+
+      <li *ngIf="visibleQuests().length === 0" class="empty-row">
+        <span>✦ No quests here yet — add one below! ✦</span>
+      </li>
+    </ul>
+
+    <!-- Add quest form -->
+    <div class="add-section">
+      <div *ngIf="!adding()" class="add-trigger" (click)="adding.set(true)">
+        <span>＋ Add a quest</span>
+      </div>
+
+      <div *ngIf="adding()" class="add-form card">
+        <input class="add-input"
+               [ngModel]="newTitle()"
+               (ngModelChange)="newTitle.set($event)"
+               placeholder="Quest name... ✨"
+               (keyup.enter)="addQuest()"
+               (keyup.escape)="cancelAdd()"
+               autofocus maxlength="80"/>
+
+        <div class="cat-picker">
+          <button *ngFor="let tab of tabInfos()"
+                  class="cat-pill"
+                  [class.sel]="newCategory() === tab.id"
+                  (click)="newCategory.set(tab.id)">
+            {{ tab.icon }} {{ tab.label }}
+          </button>
+        </div>
+
+        <div class="form-row">
+          <button class="btn btn-primary" (click)="addQuest()">Add Quest</button>
+          <button class="btn btn-ghost"   (click)="cancelAdd()">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Reset daily button -->
+  <button class="reset-btn btn btn-ghost" (click)="game.resetDailyQuests()">
+    🔄 Reset Daily Quests
+  </button>
+
+</div>

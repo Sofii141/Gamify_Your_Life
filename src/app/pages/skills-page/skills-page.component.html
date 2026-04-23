@@ -1,0 +1,177 @@
+<div class="skills-page">
+
+  <!-- ─── Hero Header ─── -->
+  <div class="skills-hero">
+    <div class="hero-text">
+      <h1 class="pixel hero-title">✨ Skills & Abilities</h1>
+      <p class="hero-sub">Level up your craft, one practice at a time</p>
+    </div>
+
+    <!-- Stats chips -->
+    <div class="stats-chips">
+      <div class="stat-chip chip-blue">
+        <span class="chip-icon">💻</span>
+        <div>
+          <div class="chip-val pixel">{{ programmingSkills().length }}</div>
+          <div class="chip-label">Tech Skills</div>
+        </div>
+      </div>
+      <div class="stat-chip chip-pink">
+        <span class="chip-icon">⭐</span>
+        <div>
+          <div class="chip-val pixel">{{ game.avgSkillLevel() }}</div>
+          <div class="chip-label">Avg Level</div>
+        </div>
+      </div>
+      <div class="stat-chip chip-purple">
+        <span class="chip-icon">⚡</span>
+        <div>
+          <div class="chip-val pixel">{{ totalXpEarned() }}</div>
+          <div class="chip-label">Total XP</div>
+        </div>
+      </div>
+      <div class="stat-chip chip-green">
+        <span class="chip-icon">🏆</span>
+        <div>
+          <div class="chip-val pixel">{{ game.skills().length }}</div>
+          <div class="chip-label">Skills</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── Category Filter ─── -->
+  <div class="cat-filter">
+    <button *ngFor="let cat of categories"
+            class="cat-btn"
+            [class.active]="selectedCategory() === cat.id"
+            [style.--cat-color]="cat.color"
+            (click)="selectedCategory.set(cat.id)">
+      <span class="cat-icon">{{ cat.icon }}</span>
+      <span class="cat-label">{{ cat.label }}</span>
+      <span class="cat-count">{{ categoryCount(cat.id) }}</span>
+    </button>
+  </div>
+
+  <!-- ─── Skills Grid ─── -->
+  <ng-container *ngIf="selectedCategory() === 'All'; else filteredView">
+
+    <!-- Programming section -->
+    <div class="skill-section">
+      <div class="section-tag programming-tag">
+        <span>💻</span> Programming
+      </div>
+      <div class="grid-3">
+        <ng-container *ngFor="let skill of programmingSkills()">
+          <ng-container *ngTemplateOutlet="skillCard; context: { skill: skill }"></ng-container>
+        </ng-container>
+      </div>
+    </div>
+
+    <!-- Creative section -->
+    <div class="skill-section">
+      <div class="section-tag creative-tag">
+        <span>🎨</span> Creative
+      </div>
+      <div class="grid-3">
+        <ng-container *ngFor="let skill of creativeSkills()">
+          <ng-container *ngTemplateOutlet="skillCard; context: { skill: skill }"></ng-container>
+        </ng-container>
+      </div>
+    </div>
+
+    <!-- Life section -->
+    <div class="skill-section">
+      <div class="section-tag life-tag">
+        <span>🌸</span> Life
+      </div>
+      <div class="grid-3">
+        <ng-container *ngFor="let skill of lifeSkills()">
+          <ng-container *ngTemplateOutlet="skillCard; context: { skill: skill }"></ng-container>
+        </ng-container>
+      </div>
+    </div>
+
+  </ng-container>
+
+  <ng-template #filteredView>
+    <div class="skill-section">
+      <div class="grid-3">
+        <ng-container *ngFor="let skill of filteredSkills()">
+          <ng-container *ngTemplateOutlet="skillCard; context: { skill: skill }"></ng-container>
+        </ng-container>
+      </div>
+    </div>
+  </ng-template>
+
+  <!-- ─── Skill Card Template ─── -->
+  <ng-template #skillCard let-skill="skill">
+    <div class="skill-card"
+         [class.practicing]="isPracticing(skill.id)"
+         [class.levelled-up]="isLevelling(skill.id)"
+         [style.--sk-color]="skill.color"
+         [style.--sk-bg]="skill.bgColor"
+         (mouseenter)="hoveredSkill.set(skill.id)"
+         (mouseleave)="hoveredSkill.set(null)">
+
+      <!-- Glow orb -->
+      <div class="card-orb"></div>
+
+      <!-- Top row: icon + level -->
+      <div class="card-top">
+        <div class="icon-wrap">
+          <span class="skill-emoji">{{ skill.icon }}</span>
+        </div>
+        <div class="level-col">
+          <span class="level-badge pixel">Lv.{{ skill.level }}</span>
+          <span class="stars">{{ stars(skill.level) }}</span>
+        </div>
+      </div>
+
+      <!-- Name + category -->
+      <div class="card-mid">
+        <div class="skill-name">{{ skill.name }}</div>
+        <div class="skill-desc">{{ skill.description }}</div>
+      </div>
+
+      <!-- XP bar -->
+      <div class="xp-area">
+        <div class="xp-label">
+          <span>XP</span>
+          <span>{{ skill.xp }}/{{ skill.xpToNext }}</span>
+        </div>
+        <div class="xp-track">
+          <div class="xp-fill"
+               [style.width.%]="xpPercent(skill)"
+               [style.background]="skill.color">
+          </div>
+          <div class="xp-shimmer"></div>
+        </div>
+      </div>
+
+      <!-- Practice button -->
+      <button class="practice-btn" (click)="practice(skill)">
+        <span class="btn-spark">⚡</span>
+        Practice  <span class="btn-reward">+10 XP</span>
+      </button>
+
+      <!-- Floating XP burst -->
+      <div class="xp-burst" *ngIf="xpBurst() === skill.id">
+        +10 XP ✨
+      </div>
+
+      <!-- Level up badge -->
+      <div class="levelup-badge" *ngIf="isLevelling(skill.id)">
+        🎉 LEVEL UP!
+      </div>
+
+    </div>
+  </ng-template>
+
+  <!-- ─── Tip banner ─── -->
+  <div class="tip-banner">
+    <span class="tip-icon">💡</span>
+    <span class="tip-text">Click <strong>Practice</strong> on any skill to earn XP. Complete quests for bigger rewards! Skills level up automatically when XP is full.</span>
+  </div>
+
+</div>

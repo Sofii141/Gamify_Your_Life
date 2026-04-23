@@ -1,0 +1,157 @@
+<div class="character-page">
+
+  <!-- ─── Character card ─── -->
+  <div class="char-card card">
+    <div class="char-left">
+
+      <!-- Pixel art avatar large -->
+      <div class="avatar-large float">
+        <svg class="pixel-art" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="0" width="8" height="1" fill="var(--pixel-hair)"/>
+          <rect x="3" y="1" width="10" height="1" fill="var(--pixel-hair)"/>
+          <rect x="3" y="2" width="10" height="1" fill="var(--pixel-hair)"/>
+          <rect x="3" y="3" width="2" height="1" fill="var(--pixel-hair)"/>
+          <rect x="5" y="3" width="6" height="1" fill="#ffdec9"/>
+          <rect x="11" y="3" width="2" height="1" fill="var(--pixel-hair)"/>
+          <rect x="3" y="4" width="1" height="1" fill="var(--pixel-hair)"/>
+          <rect x="4" y="4" width="8" height="1" fill="#ffdec9"/>
+          <rect x="12" y="4" width="1" height="1" fill="var(--pixel-hair)"/>
+          <rect x="3" y="5" width="1" height="1" fill="var(--pixel-hair)"/>
+          <rect x="4" y="5" width="1" height="1" fill="#ffdec9"/>
+          <rect x="5" y="5" width="2" height="1" fill="#8b5cf6"/>
+          <rect x="7" y="5" width="2" height="1" fill="#ffdec9"/>
+          <rect x="9" y="5" width="2" height="1" fill="#8b5cf6"/>
+          <rect x="11" y="5" width="1" height="1" fill="#ffdec9"/>
+          <rect x="12" y="5" width="1" height="1" fill="var(--pixel-hair)"/>
+          <rect x="3" y="6" width="1" height="1" fill="var(--pixel-hair)"/>
+          <rect x="4" y="6" width="1" height="1" fill="#ffdec9"/>
+          <rect x="5" y="6" width="1" height="1" fill="#8b5cf6"/>
+          <rect x="6" y="6" width="1" height="1" fill="#ffffff"/>
+          <rect x="7" y="6" width="2" height="1" fill="#ffdec9"/>
+          <rect x="9" y="6" width="1" height="1" fill="#8b5cf6"/>
+          <rect x="10" y="6" width="1" height="1" fill="#ffffff"/>
+          <rect x="11" y="6" width="1" height="1" fill="#ffdec9"/>
+          <rect x="12" y="6" width="1" height="1" fill="var(--pixel-hair)"/>
+          <rect x="3" y="7" width="1" height="1" fill="var(--pixel-hair)"/>
+          <rect x="4" y="7" width="8" height="1" fill="#ffdec9"/>
+          <rect x="12" y="7" width="1" height="1" fill="var(--pixel-hair)"/>
+          <rect x="3" y="8" width="1" height="1" fill="var(--pixel-hair)"/>
+          <rect x="4" y="8" width="1" height="1" fill="#ffdec9"/>
+          <rect x="5" y="8" width="1" height="1" fill="#ffa8b8"/>
+          <rect x="6" y="8" width="1" height="1" fill="#ffdec9"/>
+          <rect x="7" y="8" width="2" height="1" fill="#e879a0"/>
+          <rect x="9" y="8" width="1" height="1" fill="#ffdec9"/>
+          <rect x="10" y="8" width="1" height="1" fill="#ffa8b8"/>
+          <rect x="11" y="8" width="1" height="1" fill="#ffdec9"/>
+          <rect x="12" y="8" width="1" height="1" fill="var(--pixel-hair)"/>
+          <rect x="3" y="9" width="2" height="1" fill="var(--pixel-hair)"/>
+          <rect x="5" y="9" width="6" height="1" fill="#ffdec9"/>
+          <rect x="11" y="9" width="2" height="1" fill="var(--pixel-hair)"/>
+          <rect x="2" y="10" width="12" height="1" fill="var(--pixel-dress)"/>
+          <rect x="1" y="11" width="2" height="1" fill="var(--pixel-dress)"/>
+          <rect x="3" y="11" width="1" height="1" fill="#ffdec9"/>
+          <rect x="4" y="11" width="8" height="1" fill="var(--pixel-dress)"/>
+          <rect x="12" y="11" width="1" height="1" fill="#ffdec9"/>
+          <rect x="13" y="11" width="2" height="1" fill="var(--pixel-dress)"/>
+          <rect x="1" y="12" width="1" height="1" fill="var(--pixel-dress)"/>
+          <rect x="2" y="12" width="2" height="1" fill="#ffdec9"/>
+          <rect x="4" y="12" width="8" height="1" fill="var(--pixel-dress)"/>
+          <rect x="12" y="12" width="2" height="1" fill="#ffdec9"/>
+          <rect x="14" y="12" width="1" height="1" fill="var(--pixel-dress)"/>
+          <rect x="2" y="13" width="12" height="1" fill="var(--pixel-dress)"/>
+          <rect x="4" y="14" width="2" height="2" fill="var(--pixel-dress)"/>
+          <rect x="10" y="14" width="2" height="2" fill="var(--pixel-dress)"/>
+        </svg>
+        <div class="avatar-sparkles">
+          <span class="sp sp1">✦</span>
+          <span class="sp sp2">⊹</span>
+          <span class="sp sp3">✧</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="char-right">
+      <!-- Name -->
+      <div class="name-row">
+        <div *ngIf="!editName()" class="char-name pixel" (click)="tempName=game.character().name; editName.set(true)">
+          {{ game.character().name }} <span class="edit-pen">✏️</span>
+        </div>
+        <input *ngIf="editName()" class="edit-input name-in" [(ngModel)]="tempName" (keyup.enter)="saveName()" (blur)="saveName()" autofocus maxlength="20"/>
+      </div>
+
+      <!-- Title -->
+      <div class="title-row">
+        <div *ngIf="!editTitle()" class="char-title" (click)="tempTitle=game.character().title; editTitle.set(true)">
+          ✦ {{ game.character().title }} ✦ <span class="edit-pen">✏️</span>
+        </div>
+        <input *ngIf="editTitle()" class="edit-input title-in" [(ngModel)]="tempTitle" (keyup.enter)="saveTitle()" (blur)="saveTitle()" autofocus maxlength="30"/>
+      </div>
+
+      <!-- Stats grid -->
+      <div class="stats-grid">
+        <div class="stat-box">
+          <div class="sbox-icon">⭐</div>
+          <div class="sbox-val pixel">{{ game.character().level }}</div>
+          <div class="sbox-lbl">Level</div>
+        </div>
+        <div class="stat-box">
+          <div class="sbox-icon">🔥</div>
+          <div class="sbox-val pixel">{{ game.character().streak }}</div>
+          <div class="sbox-lbl">Streak</div>
+        </div>
+        <div class="stat-box">
+          <div class="sbox-icon">🪙</div>
+          <div class="sbox-val pixel">{{ game.character().coins }}</div>
+          <div class="sbox-lbl">Coins</div>
+        </div>
+        <div class="stat-box">
+          <div class="sbox-icon">❤️</div>
+          <div class="sbox-val pixel">{{ game.character().hp }}</div>
+          <div class="sbox-lbl">HP</div>
+        </div>
+      </div>
+
+      <!-- XP bar -->
+      <div class="xp-section">
+        <div class="xp-row">
+          <span class="pixel" style="font-size:.5rem">XP</span>
+          <span style="font-size:.78rem; font-weight:700; color:var(--text-muted)">{{ game.character().xp }} / {{ game.character().xpToNext }}</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" [style.width.%]="xpPercent(game.character().xp, game.character().xpToNext)"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── Top Skills ─── -->
+  <div class="section-card card">
+    <h2 class="section-h pixel">💫 Top Skills</h2>
+    <div class="top-skills-grid">
+      <div *ngFor="let skill of topSkills" class="ts-card" [style.--sk-color]="skill.color" [style.--sk-bg]="skill.bgColor">
+        <div class="ts-icon">{{ skill.icon }}</div>
+        <div class="ts-name">{{ skill.name }}</div>
+        <div class="ts-lvl pixel">Lv.{{ skill.level }}</div>
+        <div class="ts-bar">
+          <div class="ts-fill" [style.width.%]="xpPercent(skill.xp, skill.xpToNext)" [style.background]="skill.color"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── Achievements ─── -->
+  <div class="section-card card">
+    <h2 class="section-h pixel">🏆 Achievements</h2>
+    <div class="achievements-grid">
+      <div *ngFor="let a of achievements" class="achievement" [class.earned]="a.earned" [class.locked]="!a.earned">
+        <span class="ach-icon">{{ a.earned ? a.icon : '🔒' }}</span>
+        <div class="ach-info">
+          <div class="ach-label">{{ a.label }}</div>
+          <div class="ach-desc">{{ a.desc }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
