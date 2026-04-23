@@ -77,6 +77,101 @@
   --star:        #ffe082;
 }
 
+[data-theme="misty"] {
+  --bg:          #f2f5f8;
+  --bg-card:     #ffffff;
+  --bg-sidebar:  #e8edf3;
+  --bg-header:   #d5dde8;
+  --primary:     #5a7c9a;
+  --primary-d:   #3d5a73;
+  --primary-l:   #d5dde8;
+  --secondary:   #8fa8c0;
+  --accent:      #c4a882;
+  --text:        #2d3f4f;
+  --text-muted:  #5a7080;
+  --border:      #c5d2dd;
+  --shadow:      rgba(90,124,154,.15);
+  --pixel-hair:  #b8cad8;
+  --pixel-dress: #5a7c9a;
+  --star:        #c5d2dd;
+}
+
+[data-theme="coral"] {
+  --bg:          #fff8f6;
+  --bg-card:     #ffffff;
+  --bg-sidebar:  #fef0ec;
+  --bg-header:   #fdddd5;
+  --primary:     #d97884;
+  --primary-d:   #b55a66;
+  --primary-l:   #fdddd5;
+  --secondary:   #78a898;
+  --accent:      #f0b898;
+  --text:        #4a2a30;
+  --text-muted:  #8a5058;
+  --border:      #f5c4c0;
+  --shadow:      rgba(217,120,132,.15);
+  --pixel-hair:  #f0c0b0;
+  --pixel-dress: #d97884;
+  --star:        #f5c4c0;
+}
+
+[data-theme="terra"] {
+  --bg:          #fdf1ed;
+  --bg-card:     #ffffff;
+  --bg-sidebar:  #f9e5df;
+  --bg-header:   #f0d0c5;
+  --primary:     #c06860;
+  --primary-d:   #954840;
+  --primary-l:   #f0d0c5;
+  --secondary:   #a8896c;
+  --accent:      #88a89c;
+  --text:        #4a2820;
+  --text-muted:  #805040;
+  --border:      #e8c0b0;
+  --shadow:      rgba(192,104,96,.15);
+  --pixel-hair:  #e8b8a0;
+  --pixel-dress: #c06860;
+  --star:        #e8c0b0;
+}
+
+[data-theme="blush"] {
+  --bg:          #fdf5f5;
+  --bg-card:     #ffffff;
+  --bg-sidebar:  #f9ebeb;
+  --bg-header:   #f0d8d8;
+  --primary:     #c08888;
+  --primary-d:   #985050;
+  --primary-l:   #f0d8d8;
+  --secondary:   #8aa880;
+  --accent:      #c8d4a8;
+  --text:        #3a2828;
+  --text-muted:  #805858;
+  --border:      #e8c8c8;
+  --shadow:      rgba(192,136,136,.15);
+  --pixel-hair:  #e8c0c0;
+  --pixel-dress: #c08888;
+  --star:        #e8c8c8;
+}
+
+[data-theme="midnight"] {
+  --bg:          #f0f2fa;
+  --bg-card:     #ffffff;
+  --bg-sidebar:  #e5e8f5;
+  --bg-header:   #d5d8f0;
+  --primary:     #6878b8;
+  --primary-d:   #485898;
+  --primary-l:   #d5d8f0;
+  --secondary:   #9890c8;
+  --accent:      #c8b8d8;
+  --text:        #28304a;
+  --text-muted:  #586090;
+  --border:      #c8d0e8;
+  --shadow:      rgba(104,120,184,.15);
+  --pixel-hair:  #c0c8e8;
+  --pixel-dress: #6878b8;
+  --star:        #c8d0e8;
+}
+
 /* ── Reset & base ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 

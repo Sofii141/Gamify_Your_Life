@@ -21,6 +21,7 @@ export class SidebarComponent {
     { icon: '⚔️',  label: 'Quests',   route: '/quests'    },
     { icon: '✨',  label: 'Skills',   route: '/skills'    },
     { icon: '👤',  label: 'Character',route: '/character' },
+    { icon: '🗓️',  label: 'Calendar', route: '/calendar'  },
     { icon: '⚙️',  label: 'Settings', route: '/settings'  },
   ];
 

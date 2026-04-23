@@ -11,7 +11,7 @@ export interface Character {
   coins: number;
   streak: number;
   lastCheckIn: string | null;
-  theme: 'coquette' | 'sage' | 'dreamy' | 'sunset';
+  theme: 'coquette' | 'sage' | 'dreamy' | 'sunset' | 'misty' | 'coral' | 'terra' | 'blush' | 'midnight';
   hairColor: string;
   dressColor: string;
   avatarMood: 'happy' | 'neutral' | 'tired';

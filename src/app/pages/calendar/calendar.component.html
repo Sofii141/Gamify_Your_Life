@@ -1,0 +1,99 @@
+<div class="calendar-page">
+
+  <!-- Header -->
+  <div class="page-header">
+    <h1 class="pixel">🗓️ My Cozy Calendar</h1>
+    <p>marca tus días con stickers lindos ✨</p>
+  </div>
+
+  <div class="cal-layout" [class.has-panel]="selectedDay() !== null">
+
+    <!-- Calendar card -->
+    <div class="cal-card card">
+
+      <!-- Month nav -->
+      <div class="month-nav">
+        <button class="nav-btn" (click)="prevMonth()">‹</button>
+        <div class="month-center">
+          <span class="month-label pixel">{{ monthLabel() }}</span>
+          <button class="btn btn-ghost today-btn" (click)="goToToday()">Hoy</button>
+        </div>
+        <button class="nav-btn" (click)="nextMonth()">›</button>
+      </div>
+
+      <!-- Day headers -->
+      <div class="day-headers">
+        <span *ngFor="let h of DAY_HEADERS" class="day-header">{{ h }}</span>
+      </div>
+
+      <!-- Grid -->
+      <div class="cal-grid">
+        <div *ngFor="let day of calendarDays()"
+             class="day-cell"
+             [class.empty]="!day.isCurrentMonth"
+             [class.today]="day.isToday"
+             [class.selected]="day.date === selectedDay()"
+             (click)="selectDay(day.date)">
+
+          <span class="day-num" *ngIf="day.isCurrentMonth">{{ day.date }}</span>
+
+          <!-- Stickers shown on cell (max 3) -->
+          <div class="cell-stickers" *ngIf="day.isCurrentMonth && getDayStickers(day.date).length">
+            <span *ngFor="let s of getDayStickers(day.date).slice(0, 3)" class="cell-sticker">{{ s }}</span>
+            <span class="sticker-more" *ngIf="getDayStickers(day.date).length > 3">
+              +{{ getDayStickers(day.date).length - 3 }}
+            </span>
+          </div>
+
+          <!-- Note dot -->
+          <span class="note-dot" *ngIf="day.isCurrentMonth && hasNote(day.date)"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Side panel -->
+    <div class="sticker-panel card" *ngIf="selectedDay() !== null">
+
+      <div class="panel-header">
+        <span class="panel-title pixel">Día {{ selectedDay() }}</span>
+        <button class="close-btn" (click)="selectedDay.set(null)">✕</button>
+      </div>
+
+      <!-- Current stickers on this day -->
+      <div class="current-stickers" *ngIf="getDayStickers(selectedDay()!).length">
+        <p class="section-label">Stickers del día</p>
+        <div class="sticker-row">
+          <span *ngFor="let s of getDayStickers(selectedDay()!); let i = index"
+                class="placed-sticker"
+                (click)="removeSticker(i)"
+                title="Clic para quitar">{{ s }}</span>
+        </div>
+      </div>
+
+      <!-- Sticker picker -->
+      <div class="picker-section">
+        <p class="section-label">Elige un sticker</p>
+        <div class="picker-grid">
+          <button *ngFor="let s of STICKER_LIST"
+                  class="picker-btn"
+                  (click)="addSticker(s)">{{ s }}</button>
+        </div>
+      </div>
+
+      <!-- Note -->
+      <div class="note-section">
+        <p class="section-label">Nota del día</p>
+        <textarea class="note-input"
+                  [(ngModel)]="noteInputValue"
+                  (blur)="saveNote()"
+                  placeholder="Escribe algo lindo... ✨"
+                  rows="3"></textarea>
+      </div>
+
+      <div class="panel-actions">
+        <button class="btn btn-ghost" (click)="clearDay()">🗑️ Limpiar día</button>
+      </div>
+
+    </div>
+  </div>
+</div>
