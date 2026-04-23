@@ -1,0 +1,55 @@
+<div class="stats-bar">
+
+  <!-- Check in button -->
+  <button class="stat-btn check-in" (click)="checkIn()" [class.done]="!game.canCheckIn()">
+    <span class="btn-icon">{{ game.canCheckIn() ? '📋' : '✅' }}</span>
+    <span class="btn-label">Check in</span>
+    <span class="check-msg" *ngIf="checkInMessage()">{{ checkInMessage() }}</span>
+  </button>
+
+  <!-- Level / XP -->
+  <div class="stat-btn xp-btn">
+    <span class="btn-icon pixel">⭐</span>
+    <div class="stat-detail">
+      <span class="stat-label pixel">Lv.{{ game.character().level }}</span>
+      <div class="mini-bar">
+        <div class="mini-fill xp-fill" [style.width.%]="game.xpPercent()"></div>
+      </div>
+      <span class="stat-val">{{ game.character().xp }}/{{ game.character().xpToNext }} XP</span>
+    </div>
+  </div>
+
+  <!-- HP -->
+  <div class="stat-btn hp-btn">
+    <span class="btn-icon">❤️</span>
+    <div class="stat-detail">
+      <span class="stat-label">Health</span>
+      <div class="mini-bar">
+        <div class="mini-fill hp-fill" [style.width.%]="game.hpPercent()"></div>
+      </div>
+      <span class="stat-val">{{ game.character().hp }}/{{ game.character().maxHp }}</span>
+    </div>
+  </div>
+
+  <!-- Mana -->
+  <div class="stat-btn mana-btn">
+    <span class="btn-icon">🔷</span>
+    <div class="stat-detail">
+      <span class="stat-label">Mana</span>
+      <div class="mini-bar">
+        <div class="mini-fill mana-fill" [style.width.%]="game.manaPercent()"></div>
+      </div>
+      <span class="stat-val">{{ game.character().mana }}/{{ game.character().maxMana }}</span>
+    </div>
+  </div>
+
+  <!-- Coins -->
+  <div class="stat-btn coins-btn">
+    <span class="btn-icon">🪙</span>
+    <div class="stat-detail">
+      <span class="stat-label">Coins</span>
+      <span class="coins-val">{{ game.character().coins }}</span>
+    </div>
+  </div>
+
+</div>

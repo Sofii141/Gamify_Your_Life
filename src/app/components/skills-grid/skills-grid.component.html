@@ -1,0 +1,36 @@
+<div class="skills-section">
+  <div class="section-header">
+    <span class="section-title pixel">✨ Skills</span>
+    <span class="section-sub">Click a skill to practice +10 XP</span>
+  </div>
+
+  <div class="skills-grid">
+    <div *ngFor="let skill of game.skills()"
+         class="skill-card"
+         [class.pulse]="selected()?.id === skill.id"
+         [style.--skill-bg]="skill.bgColor"
+         [style.--skill-color]="skill.color"
+         (click)="practice(skill)">
+
+      <div class="skill-top">
+        <span class="skill-icon">{{ skill.icon }}</span>
+        <span class="skill-badge badge">Lv.{{ skill.level }}</span>
+      </div>
+
+      <div class="skill-name">{{ skill.name }}</div>
+      <div class="skill-desc">{{ skill.description }}</div>
+
+      <div class="skill-xp-bar">
+        <div class="progress-track">
+          <div class="progress-fill skill-progress"
+               [style.width.%]="skillPercent(skill)"
+               [style.background]="skill.color">
+          </div>
+        </div>
+        <span class="xp-text">{{ skill.xp }}/{{ skill.xpToNext }}</span>
+      </div>
+
+      <div class="practice-hint" *ngIf="selected()?.id === skill.id">+10 XP! ✨</div>
+    </div>
+  </div>
+</div>

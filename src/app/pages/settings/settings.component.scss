@@ -1,0 +1,128 @@
+.settings-page {
+  padding: 2rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 720px;
+}
+
+.page-header {
+  h1 { font-size: .72rem; color: var(--primary-d); margin-bottom: .4rem; }
+  p  { font-size: .95rem; font-weight: 600; color: var(--text-muted); }
+}
+
+.settings-section { display: flex; flex-direction: column; gap: 1rem; }
+
+.section-title { font-size: .58rem; color: var(--text); }
+
+/* Theme grid */
+.themes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: .75rem;
+}
+
+.theme-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .5rem;
+  padding: 1rem .75rem;
+  border-radius: 14px;
+  border: 2px solid var(--border);
+  background: var(--bg);
+  cursor: pointer;
+  transition: all .2s;
+  position: relative;
+  font-family: 'Nunito', sans-serif;
+
+  &:hover { transform: translateY(-3px); box-shadow: 0 6px 20px var(--shadow); border-color: var(--primary); }
+
+  &.active {
+    border-color: var(--primary);
+    background: var(--primary-l);
+    box-shadow: 0 4px 16px var(--shadow);
+  }
+}
+
+.theme-icon { font-size: 1.5rem; }
+
+.theme-swatches {
+  display: flex;
+  gap: 4px;
+}
+
+.swatch {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(0,0,0,.08);
+}
+
+.theme-label {
+  font-size: .78rem;
+  font-weight: 700;
+  color: var(--text);
+  text-align: center;
+}
+
+.active-check {
+  position: absolute;
+  top: 8px; right: 10px;
+  font-size: .9rem;
+  font-weight: 900;
+  color: var(--primary-d);
+}
+
+/* Info grid */
+.info-grid {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: .6rem .75rem;
+  border-radius: 10px;
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+}
+
+.info-label {
+  width: 80px;
+  font-size: .8rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.info-val {
+  font-size: .88rem;
+  font-weight: 700;
+  color: var(--text);
+  flex: 1;
+}
+
+.hint {
+  font-size: .7rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* Actions */
+.actions-list { display: flex; flex-direction: column; gap: .5rem; }
+
+.action-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .75rem;
+  border-radius: 10px;
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+}
+
+.action-title { font-weight: 700; font-size: .9rem; color: var(--text); }
+.action-desc  { font-size: .78rem; color: var(--text-muted); margin-top: 2px; }

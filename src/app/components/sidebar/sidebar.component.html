@@ -1,0 +1,27 @@
+<nav class="sidebar" [class.collapsed]="collapsed()">
+  <div class="sidebar-logo" (click)="toggle()">
+    <span class="logo-icon pixel">♠</span>
+    <span class="logo-text" *ngIf="!collapsed()">GameLife</span>
+  </div>
+
+  <div class="streak-badge" *ngIf="!collapsed()">
+    <span>🔥</span>
+    <span>{{ game.character().streak }} day streak</span>
+  </div>
+
+  <ul class="nav-list">
+    <li *ngFor="let item of nav">
+      <a [routerLink]="item.route"
+         routerLinkActive="active"
+         class="nav-item"
+         [title]="item.label">
+        <span class="nav-icon">{{ item.icon }}</span>
+        <span class="nav-label" *ngIf="!collapsed()">{{ item.label }}</span>
+      </a>
+    </li>
+  </ul>
+
+  <div class="sidebar-footer" *ngIf="!collapsed()">
+    <div class="stars-deco"></div>
+  </div>
+</nav>

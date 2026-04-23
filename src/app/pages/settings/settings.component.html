@@ -1,0 +1,72 @@
+<div class="settings-page">
+  <div class="page-header">
+    <h1 class="pixel">⚙️ Settings</h1>
+    <p>Customize your cozy space ✨</p>
+  </div>
+
+  <!-- Theme picker -->
+  <section class="card settings-section">
+    <h2 class="section-title pixel">🎨 Theme</h2>
+    <div class="themes-grid">
+      <button *ngFor="let theme of themes"
+              class="theme-card"
+              [class.active]="character.theme === theme.id"
+              (click)="setTheme(theme.id)">
+        <span class="theme-icon">{{ theme.icon }}</span>
+        <div class="theme-swatches">
+          <span *ngFor="let c of theme.colors" class="swatch" [style.background]="c"></span>
+        </div>
+        <span class="theme-label">{{ theme.label }}</span>
+        <span class="active-check" *ngIf="character.theme === theme.id">✓</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- Character info -->
+  <section class="card settings-section">
+    <h2 class="section-title pixel">👤 Character</h2>
+    <div class="info-grid">
+      <div class="info-row">
+        <span class="info-label">Name</span>
+        <span class="info-val">{{ character.name }}</span>
+        <small class="hint">Click name on dashboard to edit</small>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Title</span>
+        <span class="info-val">{{ character.title }}</span>
+        <small class="hint">Click title on dashboard to edit</small>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Level</span>
+        <span class="info-val pixel">{{ character.level }}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Total XP</span>
+        <span class="info-val">{{ character.xp }} / {{ character.xpToNext }}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Streak</span>
+        <span class="info-val">🔥 {{ character.streak }} days</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Coins</span>
+        <span class="info-val">🪙 {{ character.coins }}</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Actions -->
+  <section class="card settings-section">
+    <h2 class="section-title pixel">🔧 Actions</h2>
+    <div class="actions-list">
+      <div class="action-row">
+        <div>
+          <div class="action-title">Reset Daily Quests</div>
+          <div class="action-desc">Mark all daily quests as incomplete</div>
+        </div>
+        <button class="btn btn-ghost" (click)="resetDaily()">Reset</button>
+      </div>
+    </div>
+  </section>
+
+</div>

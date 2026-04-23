@@ -1,0 +1,126 @@
+.skills-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.section-title { font-size: .6rem; color: var(--primary-d); }
+
+.section-sub {
+  font-size: .78rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: .85rem;
+}
+
+.skill-card {
+  background: var(--skill-bg, var(--primary-l));
+  border: 2px solid color-mix(in srgb, var(--skill-color, var(--primary)) 30%, transparent);
+  border-radius: 16px;
+  padding: 1rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  transition: all .2s;
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--skill-color, var(--primary));
+    opacity: 0;
+    transition: opacity .15s;
+    border-radius: inherit;
+  }
+
+  &:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 8px 24px color-mix(in srgb, var(--skill-color, var(--primary)) 25%, transparent);
+    &::after { opacity: .05; }
+  }
+
+  &:active { transform: scale(.97); }
+
+  &.pulse {
+    animation: pulse-glow .8s ease;
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--skill-color, var(--primary)) 40%, transparent);
+  }
+}
+
+.skill-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.skill-icon { font-size: 1.6rem; }
+
+.skill-badge {
+  font-size: .62rem;
+  background: color-mix(in srgb, var(--skill-color, var(--primary)) 20%, white);
+  color: var(--skill-color, var(--primary-d));
+  border-color: color-mix(in srgb, var(--skill-color, var(--primary)) 30%, transparent);
+}
+
+.skill-name {
+  font-weight: 800;
+  font-size: .95rem;
+  color: var(--text);
+}
+
+.skill-desc {
+  font-size: .75rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.skill-xp-bar {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  margin-top: auto;
+}
+
+.skill-progress { transition: width .6s cubic-bezier(.34,1.56,.64,1); }
+
+.xp-text {
+  font-size: .65rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.practice-hint {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--skill-color, var(--primary));
+  color: #fff;
+  font-weight: 800;
+  font-size: .88rem;
+  padding: .4rem .9rem;
+  border-radius: 10px;
+  pointer-events: none;
+  animation: fadeUpIn .4s ease, fadeOut .4s ease .8s forwards;
+  z-index: 2;
+}
+
+@keyframes fadeOut {
+  to { opacity: 0; }
+}

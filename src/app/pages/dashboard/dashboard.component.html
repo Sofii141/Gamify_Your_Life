@@ -1,0 +1,72 @@
+<div class="dashboard">
+
+  <!-- Stats bar top -->
+  <app-stats-bar></app-stats-bar>
+
+  <!-- Header -->
+  <div class="dash-header">
+    <div class="header-title">
+      <span class="cozy-title pixel">my cozy home</span>
+      <span class="deco">♡°•.☆</span>
+    </div>
+    <div class="header-divider stars-deco"></div>
+  </div>
+
+  <!-- Main content grid -->
+  <div class="dash-content">
+
+    <!-- Left: Character panel -->
+    <aside class="left-col">
+      <app-character-panel></app-character-panel>
+
+      <!-- Home Records card -->
+      <div class="home-records card">
+        <div class="records-title">
+          <span>🏠</span>
+          <span class="pixel" style="font-size:.55rem">Home Records</span>
+        </div>
+        <ul class="records-list">
+          <li class="record-item">
+            <span>🍳</span> Cook
+          </li>
+          <li class="record-item">
+            <span>📖</span> Cookbook
+          </li>
+          <li class="record-item">
+            <span>🌿</span> Pantry
+          </li>
+          <li class="record-item">
+            <span>💆</span> Self-care Kit
+          </li>
+          <li class="record-item">
+            <span>🌸</span> Wellness Hub
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Center + Right -->
+    <div class="main-col">
+
+      <!-- Quests -->
+      <app-quest-list></app-quest-list>
+
+      <!-- Skills -->
+      <div class="card">
+        <app-skills-grid></app-skills-grid>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Level up overlay -->
+  <div class="level-up-overlay" *ngIf="game.levelUpNotification()">
+    <div class="level-up-card level-up-anim">
+      <div class="pixel" style="font-size:.65rem; color:var(--primary-d)">✦ LEVEL UP ✦</div>
+      <div class="level-num pixel">Lv.{{ game.character().level }}</div>
+      <div style="font-size:.9rem; font-weight:700">You levelled up! 🎉</div>
+      <div style="font-size:.78rem; color:var(--text-muted)">+10 HP · +5 Mana · +50 Coins</div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,103 @@
+.stats-bar {
+  display: flex;
+  gap: .6rem;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: .85rem 1.25rem;
+  background: var(--bg-card);
+  border-bottom: 2px solid var(--border);
+  box-shadow: 0 2px 12px var(--shadow);
+}
+
+.stat-btn {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  padding: .55rem 1rem;
+  border-radius: 14px;
+  border: 2px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  transition: all .2s;
+  position: relative;
+
+  &:hover { transform: translateY(-2px); box-shadow: 0 6px 16px var(--shadow); }
+  &:active { transform: scale(.97); }
+}
+
+.check-in {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary-d);
+  font-size: .88rem;
+  &.done { background: var(--bg); color: var(--text-muted); }
+}
+
+.btn-icon { font-size: 1.1rem; flex-shrink: 0; }
+.btn-label { font-size: .88rem; }
+
+.check-msg {
+  position: absolute;
+  top: -30px; left: 50%;
+  transform: translateX(-50%);
+  background: var(--primary-d);
+  color: #fff;
+  font-size: .72rem;
+  font-weight: 700;
+  padding: .25rem .7rem;
+  border-radius: 8px;
+  white-space: nowrap;
+  animation: fadeUpIn .3s ease;
+  pointer-events: none;
+}
+
+@keyframes fadeUpIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(6px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+.stat-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 80px;
+}
+
+.stat-label {
+  font-size: .6rem;
+  color: var(--text-muted);
+  font-weight: 700;
+}
+
+.stat-val {
+  font-size: .72rem;
+  color: var(--text-muted);
+}
+
+.coins-val {
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: #f59e0b;
+}
+
+.mini-bar {
+  width: 80px;
+  height: 7px;
+  background: var(--primary-l);
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.mini-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width .6s cubic-bezier(.34,1.56,.64,1);
+}
+
+.xp-fill   { background: linear-gradient(90deg, #fbbf24, #f59e0b); }
+.hp-fill   { background: linear-gradient(90deg, #f87171, #ef4444); }
+.mana-fill { background: linear-gradient(90deg, #60a5fa, #3b82f6); }

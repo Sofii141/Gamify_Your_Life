@@ -1,0 +1,129 @@
+<div class="character-panel card">
+  <!-- Pixel art character SVG -->
+  <div class="avatar-wrap float">
+    <svg class="pixel-art character-svg" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+      <!-- Hair row 0 -->
+      <rect x="4" y="0" width="8" height="1" fill="var(--pixel-hair)"/>
+      <!-- Hair row 1 -->
+      <rect x="3" y="1" width="10" height="1" fill="var(--pixel-hair)"/>
+      <!-- Hair row 2 -->
+      <rect x="3" y="2" width="10" height="1" fill="var(--pixel-hair)"/>
+      <!-- Head row 3 -->
+      <rect x="3" y="3" width="2" height="1" fill="var(--pixel-hair)"/>
+      <rect x="5" y="3" width="6" height="1" fill="#ffdec9"/>
+      <rect x="11" y="3" width="2" height="1" fill="var(--pixel-hair)"/>
+      <!-- Head row 4 -->
+      <rect x="3" y="4" width="1" height="1" fill="var(--pixel-hair)"/>
+      <rect x="4" y="4" width="8" height="1" fill="#ffdec9"/>
+      <rect x="12" y="4" width="1" height="1" fill="var(--pixel-hair)"/>
+      <!-- Eyes row 5 -->
+      <rect x="3" y="5" width="1" height="1" fill="var(--pixel-hair)"/>
+      <rect x="4" y="5" width="1" height="1" fill="#ffdec9"/>
+      <rect x="5" y="5" width="2" height="1" fill="#8b5cf6"/>
+      <rect x="7" y="5" width="2" height="1" fill="#ffdec9"/>
+      <rect x="9" y="5" width="2" height="1" fill="#8b5cf6"/>
+      <rect x="11" y="5" width="1" height="1" fill="#ffdec9"/>
+      <rect x="12" y="5" width="1" height="1" fill="var(--pixel-hair)"/>
+      <!-- Eye shine row 6 -->
+      <rect x="3" y="6" width="1" height="1" fill="var(--pixel-hair)"/>
+      <rect x="4" y="6" width="1" height="1" fill="#ffdec9"/>
+      <rect x="5" y="6" width="1" height="1" fill="#8b5cf6"/>
+      <rect x="6" y="6" width="1" height="1" fill="#ffffff"/>
+      <rect x="7" y="6" width="2" height="1" fill="#ffdec9"/>
+      <rect x="9" y="6" width="1" height="1" fill="#8b5cf6"/>
+      <rect x="10" y="6" width="1" height="1" fill="#ffffff"/>
+      <rect x="11" y="6" width="1" height="1" fill="#ffdec9"/>
+      <rect x="12" y="6" width="1" height="1" fill="var(--pixel-hair)"/>
+      <!-- Face row 7 -->
+      <rect x="3" y="7" width="1" height="1" fill="var(--pixel-hair)"/>
+      <rect x="4" y="7" width="8" height="1" fill="#ffdec9"/>
+      <rect x="12" y="7" width="1" height="1" fill="var(--pixel-hair)"/>
+      <!-- Blush + mouth row 8 -->
+      <rect x="3" y="8" width="1" height="1" fill="var(--pixel-hair)"/>
+      <rect x="4" y="8" width="1" height="1" fill="#ffdec9"/>
+      <rect x="5" y="8" width="1" height="1" fill="#ffa8b8"/>
+      <rect x="6" y="8" width="1" height="1" fill="#ffdec9"/>
+      <rect x="7" y="8" width="2" height="1" fill="#e879a0"/>
+      <rect x="9" y="8" width="1" height="1" fill="#ffdec9"/>
+      <rect x="10" y="8" width="1" height="1" fill="#ffa8b8"/>
+      <rect x="11" y="8" width="1" height="1" fill="#ffdec9"/>
+      <rect x="12" y="8" width="1" height="1" fill="var(--pixel-hair)"/>
+      <!-- Chin row 9 -->
+      <rect x="3" y="9" width="2" height="1" fill="var(--pixel-hair)"/>
+      <rect x="5" y="9" width="6" height="1" fill="#ffdec9"/>
+      <rect x="11" y="9" width="2" height="1" fill="var(--pixel-hair)"/>
+      <!-- Dress row 10 -->
+      <rect x="2" y="10" width="12" height="1" fill="var(--pixel-dress)"/>
+      <!-- Dress + arms row 11 -->
+      <rect x="1" y="11" width="2" height="1" fill="var(--pixel-dress)"/>
+      <rect x="3" y="11" width="1" height="1" fill="#ffdec9"/>
+      <rect x="4" y="11" width="8" height="1" fill="var(--pixel-dress)"/>
+      <rect x="12" y="11" width="1" height="1" fill="#ffdec9"/>
+      <rect x="13" y="11" width="2" height="1" fill="var(--pixel-dress)"/>
+      <!-- Dress + arms row 12 -->
+      <rect x="1" y="12" width="1" height="1" fill="var(--pixel-dress)"/>
+      <rect x="2" y="12" width="2" height="1" fill="#ffdec9"/>
+      <rect x="4" y="12" width="8" height="1" fill="var(--pixel-dress)"/>
+      <rect x="12" y="12" width="2" height="1" fill="#ffdec9"/>
+      <rect x="14" y="12" width="1" height="1" fill="var(--pixel-dress)"/>
+      <!-- Dress row 13 -->
+      <rect x="2" y="13" width="12" height="1" fill="var(--pixel-dress)"/>
+      <!-- Legs -->
+      <rect x="4" y="14" width="2" height="2" fill="var(--pixel-dress)"/>
+      <rect x="10" y="14" width="2" height="2" fill="var(--pixel-dress)"/>
+    </svg>
+
+    <!-- Sparkle decorations -->
+    <span class="sparkle s1">✦</span>
+    <span class="sparkle s2">✧</span>
+    <span class="sparkle s3">⊹</span>
+  </div>
+
+  <!-- Name -->
+  <div class="char-name-wrap">
+    <div *ngIf="!editingName()" class="char-name" (click)="startEditName()" title="Click to edit">
+      {{ game.character().name }}
+      <span class="edit-hint">✏️</span>
+    </div>
+    <input *ngIf="editingName()"
+           class="name-input"
+           [(ngModel)]="tempName"
+           (keyup.enter)="saveName()"
+           (blur)="saveName()"
+           autofocus
+           maxlength="20"/>
+  </div>
+
+  <!-- Title -->
+  <div class="char-title-wrap">
+    <div *ngIf="!editingTitle()" class="char-title" (click)="startEditTitle()" title="Click to edit">
+      ✦ {{ game.character().title }} ✦
+    </div>
+    <input *ngIf="editingTitle()"
+           class="title-input"
+           [(ngModel)]="tempTitle"
+           (keyup.enter)="saveTitle()"
+           (blur)="saveTitle()"
+           autofocus
+           maxlength="30"/>
+  </div>
+
+  <!-- Level badge -->
+  <div class="level-badge">
+    <span class="pixel">Lv.{{ game.character().level }}</span>
+  </div>
+
+  <!-- Mini skills -->
+  <div class="mini-skills">
+    <div class="mini-skill" *ngFor="let skill of topSkills" (click)="gainSkillXp(skill.id)">
+      <span class="skill-icon">{{ skill.icon }}</span>
+      <div class="skill-info">
+        <span class="skill-name">{{ skill.name }}</span>
+        <div class="progress-track skill-track">
+          <div class="progress-fill" [style.width.%]="(skill.xp / skill.xpToNext) * 100" [style.background]="skill.color"></div>
+        </div>
+      </div>
+      <span class="skill-lvl">{{ skill.level }}</span>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,55 @@
+<div class="quest-panel card">
+
+  <div class="panel-header">
+    <span class="panel-title">♡ Quests ♡</span>
+    <span class="quest-count badge">{{ completedCount }}/{{ visibleQuests.length }}</span>
+  </div>
+
+  <!-- Category tabs -->
+  <div class="tabs">
+    <button class="tab" [class.active]="activeTab()==='daily'"  (click)="activeTab.set('daily')">🌸 Daily</button>
+    <button class="tab" [class.active]="activeTab()==='weekly'" (click)="activeTab.set('weekly')">⭐ Weekly</button>
+    <button class="tab" [class.active]="activeTab()==='custom'" (click)="activeTab.set('custom')">✨ Custom</button>
+  </div>
+
+  <!-- Quest list -->
+  <ul class="quest-list">
+    <li *ngFor="let quest of visibleQuests" class="quest-item" [class.completed]="quest.completed">
+      <button class="check-box" (click)="game.toggleQuest(quest.id)">
+        <span *ngIf="quest.completed" class="check-mark">✓</span>
+      </button>
+      <span class="quest-title">{{ quest.title }}</span>
+      <div class="quest-rewards">
+        <span class="reward xp">+{{ quest.xpReward }}xp</span>
+        <span class="reward coin">🪙{{ quest.coinReward }}</span>
+      </div>
+      <button class="delete-btn" (click)="game.deleteQuest(quest.id)" title="Delete">×</button>
+    </li>
+
+    <li *ngIf="visibleQuests.length === 0" class="empty-state">
+      <span>✦ No quests yet! Add one below ✦</span>
+    </li>
+  </ul>
+
+  <!-- Add quest -->
+  <div class="add-area">
+    <div *ngIf="!adding()" class="add-trigger" (click)="adding.set(true)">
+      <span>＋ Add quest</span>
+    </div>
+    <div *ngIf="adding()" class="add-form">
+      <input class="quest-input"
+             [ngModel]="newQuestTitle()"
+             (ngModelChange)="newQuestTitle.set($event)"
+             placeholder="What's the quest? ✨"
+             (keyup.enter)="addQuest()"
+             (keyup.escape)="cancelAdd()"
+             autofocus
+             maxlength="60"/>
+      <div class="form-actions">
+        <button class="btn btn-primary" (click)="addQuest()">Add</button>
+        <button class="btn btn-ghost" (click)="cancelAdd()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+</div>
