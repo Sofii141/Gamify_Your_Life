@@ -1,66 +1,94 @@
 <div class="character-page">
 
-  <!-- ─── Character card ─── -->
-  <div class="char-card card">
-    <div class="char-left">
+  <!-- ─── Creator layout ─── -->
+  <div class="creator-layout">
 
-      <!-- Pixel art avatar large -->
-      <div class="avatar-large float">
+    <!-- Left: Avatar preview + info -->
+    <div class="avatar-col card">
+
+      <div class="avatar-preview float" [ngStyle]="avatarStyle()">
         <svg class="pixel-art" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
           <rect x="4" y="0" width="8" height="1" fill="var(--pixel-hair)"/>
           <rect x="3" y="1" width="10" height="1" fill="var(--pixel-hair)"/>
           <rect x="3" y="2" width="10" height="1" fill="var(--pixel-hair)"/>
           <rect x="3" y="3" width="2" height="1" fill="var(--pixel-hair)"/>
-          <rect x="5" y="3" width="6" height="1" fill="#ffdec9"/>
+          <rect x="5" y="3" width="6" height="1" fill="var(--pixel-skin)"/>
           <rect x="11" y="3" width="2" height="1" fill="var(--pixel-hair)"/>
           <rect x="3" y="4" width="1" height="1" fill="var(--pixel-hair)"/>
-          <rect x="4" y="4" width="8" height="1" fill="#ffdec9"/>
+          <rect x="4" y="4" width="8" height="1" fill="var(--pixel-skin)"/>
           <rect x="12" y="4" width="1" height="1" fill="var(--pixel-hair)"/>
           <rect x="3" y="5" width="1" height="1" fill="var(--pixel-hair)"/>
-          <rect x="4" y="5" width="1" height="1" fill="#ffdec9"/>
-          <rect x="5" y="5" width="2" height="1" fill="#8b5cf6"/>
-          <rect x="7" y="5" width="2" height="1" fill="#ffdec9"/>
-          <rect x="9" y="5" width="2" height="1" fill="#8b5cf6"/>
-          <rect x="11" y="5" width="1" height="1" fill="#ffdec9"/>
+          <rect x="4" y="5" width="1" height="1" fill="var(--pixel-skin)"/>
+          <rect x="5" y="5" width="2" height="1" fill="var(--pixel-eyes)"/>
+          <rect x="7" y="5" width="2" height="1" fill="var(--pixel-skin)"/>
+          <rect x="9" y="5" width="2" height="1" fill="var(--pixel-eyes)"/>
+          <rect x="11" y="5" width="1" height="1" fill="var(--pixel-skin)"/>
           <rect x="12" y="5" width="1" height="1" fill="var(--pixel-hair)"/>
           <rect x="3" y="6" width="1" height="1" fill="var(--pixel-hair)"/>
-          <rect x="4" y="6" width="1" height="1" fill="#ffdec9"/>
-          <rect x="5" y="6" width="1" height="1" fill="#8b5cf6"/>
+          <rect x="4" y="6" width="1" height="1" fill="var(--pixel-skin)"/>
+          <rect x="5" y="6" width="1" height="1" fill="var(--pixel-eyes)"/>
           <rect x="6" y="6" width="1" height="1" fill="#ffffff"/>
-          <rect x="7" y="6" width="2" height="1" fill="#ffdec9"/>
-          <rect x="9" y="6" width="1" height="1" fill="#8b5cf6"/>
+          <rect x="7" y="6" width="2" height="1" fill="var(--pixel-skin)"/>
+          <rect x="9" y="6" width="1" height="1" fill="var(--pixel-eyes)"/>
           <rect x="10" y="6" width="1" height="1" fill="#ffffff"/>
-          <rect x="11" y="6" width="1" height="1" fill="#ffdec9"/>
+          <rect x="11" y="6" width="1" height="1" fill="var(--pixel-skin)"/>
           <rect x="12" y="6" width="1" height="1" fill="var(--pixel-hair)"/>
           <rect x="3" y="7" width="1" height="1" fill="var(--pixel-hair)"/>
-          <rect x="4" y="7" width="8" height="1" fill="#ffdec9"/>
+          <rect x="4" y="7" width="8" height="1" fill="var(--pixel-skin)"/>
           <rect x="12" y="7" width="1" height="1" fill="var(--pixel-hair)"/>
           <rect x="3" y="8" width="1" height="1" fill="var(--pixel-hair)"/>
-          <rect x="4" y="8" width="1" height="1" fill="#ffdec9"/>
+          <rect x="4" y="8" width="1" height="1" fill="var(--pixel-skin)"/>
           <rect x="5" y="8" width="1" height="1" fill="#ffa8b8"/>
-          <rect x="6" y="8" width="1" height="1" fill="#ffdec9"/>
+          <rect x="6" y="8" width="1" height="1" fill="var(--pixel-skin)"/>
           <rect x="7" y="8" width="2" height="1" fill="#e879a0"/>
-          <rect x="9" y="8" width="1" height="1" fill="#ffdec9"/>
+          <rect x="9" y="8" width="1" height="1" fill="var(--pixel-skin)"/>
           <rect x="10" y="8" width="1" height="1" fill="#ffa8b8"/>
-          <rect x="11" y="8" width="1" height="1" fill="#ffdec9"/>
+          <rect x="11" y="8" width="1" height="1" fill="var(--pixel-skin)"/>
           <rect x="12" y="8" width="1" height="1" fill="var(--pixel-hair)"/>
           <rect x="3" y="9" width="2" height="1" fill="var(--pixel-hair)"/>
-          <rect x="5" y="9" width="6" height="1" fill="#ffdec9"/>
+          <rect x="5" y="9" width="6" height="1" fill="var(--pixel-skin)"/>
           <rect x="11" y="9" width="2" height="1" fill="var(--pixel-hair)"/>
           <rect x="2" y="10" width="12" height="1" fill="var(--pixel-dress)"/>
           <rect x="1" y="11" width="2" height="1" fill="var(--pixel-dress)"/>
-          <rect x="3" y="11" width="1" height="1" fill="#ffdec9"/>
+          <rect x="3" y="11" width="1" height="1" fill="var(--pixel-skin)"/>
           <rect x="4" y="11" width="8" height="1" fill="var(--pixel-dress)"/>
-          <rect x="12" y="11" width="1" height="1" fill="#ffdec9"/>
+          <rect x="12" y="11" width="1" height="1" fill="var(--pixel-skin)"/>
           <rect x="13" y="11" width="2" height="1" fill="var(--pixel-dress)"/>
           <rect x="1" y="12" width="1" height="1" fill="var(--pixel-dress)"/>
-          <rect x="2" y="12" width="2" height="1" fill="#ffdec9"/>
+          <rect x="2" y="12" width="2" height="1" fill="var(--pixel-skin)"/>
           <rect x="4" y="12" width="8" height="1" fill="var(--pixel-dress)"/>
-          <rect x="12" y="12" width="2" height="1" fill="#ffdec9"/>
+          <rect x="12" y="12" width="2" height="1" fill="var(--pixel-skin)"/>
           <rect x="14" y="12" width="1" height="1" fill="var(--pixel-dress)"/>
           <rect x="2" y="13" width="12" height="1" fill="var(--pixel-dress)"/>
           <rect x="4" y="14" width="2" height="2" fill="var(--pixel-dress)"/>
           <rect x="10" y="14" width="2" height="2" fill="var(--pixel-dress)"/>
+          <!-- Headphones -->
+          <g *ngIf="(game.character().accessory ?? 'none') === 'headphones'">
+            <rect x="4" y="0" width="8" height="1" fill="var(--pixel-accessory)"/>
+            <rect x="2" y="2" width="2" height="4" fill="var(--pixel-accessory)"/>
+            <rect x="12" y="2" width="2" height="4" fill="var(--pixel-accessory)"/>
+            <rect x="2" y="2" width="1" height="1" fill="#ffffff" opacity="0.4"/>
+            <rect x="13" y="2" width="1" height="1" fill="#ffffff" opacity="0.4"/>
+          </g>
+          <!-- Bow -->
+          <g *ngIf="(game.character().accessory ?? 'none') === 'bow'">
+            <rect x="4" y="0" width="3" height="1" fill="var(--pixel-accessory)"/>
+            <rect x="9" y="0" width="3" height="1" fill="var(--pixel-accessory)"/>
+            <rect x="4" y="1" width="1" height="1" fill="var(--pixel-accessory)"/>
+            <rect x="11" y="1" width="1" height="1" fill="var(--pixel-accessory)"/>
+            <rect x="7" y="0" width="2" height="2" fill="var(--pixel-accessory)"/>
+            <rect x="4" y="0" width="1" height="1" fill="#ffffff" opacity="0.45"/>
+            <rect x="11" y="0" width="1" height="1" fill="#ffffff" opacity="0.45"/>
+          </g>
+          <!-- Star clips -->
+          <g *ngIf="(game.character().accessory ?? 'none') === 'star-clips'">
+            <rect x="2" y="4" width="1" height="1" fill="var(--pixel-accessory)"/>
+            <rect x="1" y="5" width="3" height="1" fill="var(--pixel-accessory)"/>
+            <rect x="2" y="6" width="1" height="1" fill="var(--pixel-accessory)"/>
+            <rect x="13" y="4" width="1" height="1" fill="var(--pixel-accessory)"/>
+            <rect x="12" y="5" width="3" height="1" fill="var(--pixel-accessory)"/>
+            <rect x="13" y="6" width="1" height="1" fill="var(--pixel-accessory)"/>
+          </g>
         </svg>
         <div class="avatar-sparkles">
           <span class="sp sp1">✦</span>
@@ -69,15 +97,13 @@
         </div>
       </div>
 
-    </div>
-
-    <div class="char-right">
       <!-- Name -->
       <div class="name-row">
         <div *ngIf="!editName()" class="char-name pixel" (click)="tempName=game.character().name; editName.set(true)">
           {{ game.character().name }} <span class="edit-pen">✏️</span>
         </div>
-        <input *ngIf="editName()" class="edit-input name-in" [(ngModel)]="tempName" (keyup.enter)="saveName()" (blur)="saveName()" autofocus maxlength="20"/>
+        <input *ngIf="editName()" class="edit-input name-in" [(ngModel)]="tempName"
+               (keyup.enter)="saveName()" (blur)="saveName()" autofocus maxlength="20"/>
       </div>
 
       <!-- Title -->
@@ -85,10 +111,11 @@
         <div *ngIf="!editTitle()" class="char-title" (click)="tempTitle=game.character().title; editTitle.set(true)">
           ✦ {{ game.character().title }} ✦ <span class="edit-pen">✏️</span>
         </div>
-        <input *ngIf="editTitle()" class="edit-input title-in" [(ngModel)]="tempTitle" (keyup.enter)="saveTitle()" (blur)="saveTitle()" autofocus maxlength="30"/>
+        <input *ngIf="editTitle()" class="edit-input title-in" [(ngModel)]="tempTitle"
+               (keyup.enter)="saveTitle()" (blur)="saveTitle()" autofocus maxlength="30"/>
       </div>
 
-      <!-- Stats grid -->
+      <!-- Stats -->
       <div class="stats-grid">
         <div class="stat-box">
           <div class="sbox-icon">⭐</div>
@@ -112,29 +139,109 @@
         </div>
       </div>
 
-      <!-- XP bar -->
       <div class="xp-section">
         <div class="xp-row">
           <span class="pixel" style="font-size:.5rem">XP</span>
-          <span style="font-size:.78rem; font-weight:700; color:var(--text-muted)">{{ game.character().xp }} / {{ game.character().xpToNext }}</span>
+          <span style="font-size:.78rem; font-weight:700; color:var(--text-muted)">
+            {{ game.character().xp }} / {{ game.character().xpToNext }}
+          </span>
         </div>
         <div class="progress-track">
           <div class="progress-fill" [style.width.%]="xpPercent(game.character().xp, game.character().xpToNext)"></div>
         </div>
       </div>
+
     </div>
+
+    <!-- Right: Customization panels -->
+    <div class="customize-col">
+      <div class="customize-card card">
+        <h2 class="section-h pixel">✨ Personalizar personaje</h2>
+
+        <!-- Hair -->
+        <div class="custom-row">
+          <span class="custom-label">💇 Cabello</span>
+          <div class="swatch-row">
+            <button *ngFor="let h of HAIR_COLORS" class="swatch"
+                    [class.active]="game.character().hairColor === h.value"
+                    [style.background]="h.value"
+                    (click)="setHair(h.value)" [title]="h.label"></button>
+          </div>
+        </div>
+
+        <!-- Eyes -->
+        <div class="custom-row">
+          <span class="custom-label">👁️ Ojos</span>
+          <div class="swatch-row">
+            <button *ngFor="let e of EYE_COLORS" class="swatch"
+                    [class.active]="game.character().eyeColor === e.value"
+                    [style.background]="e.value"
+                    (click)="setEyes(e.value)" [title]="e.label"></button>
+          </div>
+        </div>
+
+        <!-- Skin -->
+        <div class="custom-row">
+          <span class="custom-label">🤎 Tono de piel</span>
+          <div class="swatch-row">
+            <button *ngFor="let s of SKIN_TONES" class="swatch skin-swatch"
+                    [class.active]="game.character().skinTone === s.value"
+                    [style.background]="s.value"
+                    (click)="setSkin(s.value)" [title]="s.label"></button>
+          </div>
+        </div>
+
+        <!-- Outfit -->
+        <div class="custom-row">
+          <span class="custom-label">👗 Atuendo</span>
+          <div class="swatch-row">
+            <button *ngFor="let o of OUTFIT_COLORS" class="swatch"
+                    [class.active]="game.character().dressColor === o.value"
+                    [style.background]="o.value"
+                    (click)="setOutfit(o.value)" [title]="o.label"></button>
+          </div>
+        </div>
+
+        <!-- Accessory -->
+        <div class="custom-row">
+          <span class="custom-label">🎀 Accesorio</span>
+          <div class="acc-row">
+            <button *ngFor="let a of ACCESSORIES" class="acc-btn"
+                    [class.active]="(game.character().accessory ?? 'none') === a.id"
+                    (click)="setAccessory(a.id)">
+              {{ a.icon }} {{ a.label }}
+            </button>
+          </div>
+        </div>
+
+        <!-- Accessory color -->
+        <div class="custom-row" *ngIf="(game.character().accessory ?? 'none') !== 'none'">
+          <span class="custom-label">🎨 Color del accesorio</span>
+          <div class="swatch-row">
+            <button *ngFor="let c of ACC_COLORS" class="swatch"
+                    [class.active]="game.character().accessoryColor === c.value"
+                    [style.background]="c.value"
+                    (click)="setAccColor(c.value)" [title]="c.label"></button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
   </div>
 
   <!-- ─── Top Skills ─── -->
   <div class="section-card card">
     <h2 class="section-h pixel">💫 Top Skills</h2>
     <div class="top-skills-grid">
-      <div *ngFor="let skill of topSkills" class="ts-card" [style.--sk-color]="skill.color" [style.--sk-bg]="skill.bgColor">
+      <div *ngFor="let skill of topSkills" class="ts-card"
+           [style.--sk-color]="skill.color" [style.--sk-bg]="skill.bgColor">
         <div class="ts-icon">{{ skill.icon }}</div>
         <div class="ts-name">{{ skill.name }}</div>
         <div class="ts-lvl pixel">Lv.{{ skill.level }}</div>
         <div class="ts-bar">
-          <div class="ts-fill" [style.width.%]="xpPercent(skill.xp, skill.xpToNext)" [style.background]="skill.color"></div>
+          <div class="ts-fill" [style.width.%]="xpPercent(skill.xp, skill.xpToNext)"
+               [style.background]="skill.color"></div>
         </div>
       </div>
     </div>
@@ -144,7 +251,8 @@
   <div class="section-card card">
     <h2 class="section-h pixel">🏆 Achievements</h2>
     <div class="achievements-grid">
-      <div *ngFor="let a of achievements" class="achievement" [class.earned]="a.earned" [class.locked]="!a.earned">
+      <div *ngFor="let a of achievements" class="achievement"
+           [class.earned]="a.earned" [class.locked]="!a.earned">
         <span class="ach-icon">{{ a.earned ? a.icon : '🔒' }}</span>
         <div class="ach-info">
           <div class="ach-label">{{ a.label }}</div>

@@ -40,4 +40,15 @@ export class CharacterPanelComponent {
   }
 
   get topSkills() { return this.game.skills().slice(0, 4); }
+
+  get avatarStyle() {
+    const c = this.game.character();
+    return {
+      '--pixel-hair':      c.hairColor,
+      '--pixel-dress':     c.dressColor,
+      '--pixel-skin':      c.skinTone      ?? '#ffdec9',
+      '--pixel-eyes':      c.eyeColor      ?? '#8b5cf6',
+      '--pixel-accessory': c.accessoryColor ?? '#f48fb1',
+    };
+  }
 }

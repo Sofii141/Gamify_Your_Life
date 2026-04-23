@@ -15,6 +15,10 @@ export interface Character {
   hairColor: string;
   dressColor: string;
   avatarMood: 'happy' | 'neutral' | 'tired';
+  eyeColor: string;
+  skinTone: string;
+  accessory: 'none' | 'headphones' | 'bow' | 'star-clips';
+  accessoryColor: string;
 }
 
 export interface Quest {
