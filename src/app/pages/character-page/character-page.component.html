@@ -1,238 +1,13 @@
 <div class="character-page">
 
-  <!-- ─── Creator layout ─── -->
-  <div class="creator-layout">
+  <!-- ==================== STUDIO LAYOUT (3 COLUMNS) ==================== -->
+  <div class="studio-layout">
 
-    <!-- Left: Avatar preview + info -->
-    <div class="avatar-col card">
-
-      <!-- Avatar — click to cycle mood -->
-      <div class="avatar-preview float" [ngStyle]="avatarStyle()" (click)="cycleMood()"
-           [class.mood-excited]="game.character().avatarMood === 'excited'"
-           [class.mood-tired]="game.character().avatarMood === 'tired'"
-           title="Clic para cambiar estado de ánimo">
-        <svg #avatarSvg class="pixel-art" viewBox="0 0 24 40" xmlns="http://www.w3.org/2000/svg">
-
-          <!-- ═══ TWINTAILS (back layer) ═══ -->
-          <rect x="0"  y="7"  width="4" height="25" fill="var(--pixel-hair)"/>
-          <rect x="0"  y="32" width="3" height="4"  fill="var(--pixel-hair)"/>
-          <rect x="1"  y="36" width="2" height="2"  fill="var(--pixel-hair)"/>
-          <rect x="20" y="7"  width="4" height="25" fill="var(--pixel-hair)"/>
-          <rect x="21" y="32" width="3" height="4"  fill="var(--pixel-hair)"/>
-          <rect x="21" y="36" width="2" height="2"  fill="var(--pixel-hair)"/>
-
-          <!-- ═══ COAT — poofy silhouette ═══ -->
-          <!-- Collar -->
-          <rect x="9"  y="17" width="6"  height="1" fill="var(--pixel-dress)"/>
-          <rect x="8"  y="18" width="8"  height="1" fill="var(--pixel-dress)"/>
-          <!-- Body -->
-          <rect x="6"  y="19" width="12" height="7" fill="var(--pixel-dress)"/>
-          <rect x="7"  y="26" width="10" height="1" fill="var(--pixel-dress)"/>
-          <rect x="8"  y="27" width="8"  height="1" fill="var(--pixel-dress)"/>
-          <!-- Left arm -->
-          <rect x="3"  y="19" width="4"  height="7" fill="var(--pixel-dress)"/>
-          <rect x="3"  y="26" width="3"  height="1" fill="var(--pixel-skin)"/>
-          <!-- Right arm -->
-          <rect x="17" y="19" width="4"  height="7" fill="var(--pixel-dress)"/>
-          <rect x="18" y="26" width="3"  height="1" fill="var(--pixel-skin)"/>
-          <!-- Cross ✚ detail 1 -->
-          <rect x="8"  y="21" width="3"  height="1" fill="#ffffff"/>
-          <rect x="9"  y="20" width="1"  height="3" fill="#ffffff"/>
-          <!-- Cross ✚ detail 2 -->
-          <rect x="13" y="21" width="3"  height="1" fill="#ffffff"/>
-          <rect x="14" y="20" width="1"  height="3" fill="#ffffff"/>
-
-          <!-- ═══ SKIRT ═══ -->
-          <rect x="7"  y="28" width="10" height="1" fill="#1e1520"/>
-          <rect x="5"  y="29" width="14" height="4" fill="#1e1520"/>
-          <rect x="6"  y="33" width="12" height="1" fill="#1e1520"/>
-
-          <!-- ═══ LEG WARMERS ═══ -->
-          <rect x="7"  y="34" width="4"  height="4" fill="#e0d4c4"/>
-          <rect x="13" y="34" width="4"  height="4" fill="#e0d4c4"/>
-
-          <!-- ═══ SHOES ═══ -->
-          <rect x="6"  y="38" width="5"  height="2" fill="#1e1520"/>
-          <rect x="6"  y="38" width="2"  height="2" fill="#cc2222"/>
-          <rect x="13" y="38" width="5"  height="2" fill="#1e1520"/>
-          <rect x="16" y="38" width="2"  height="2" fill="#cc2222"/>
-
-          <!-- ═══ HEAD HAIR ═══ -->
-          <!-- Ornament/clip -->
-          <rect x="11" y="0"  width="2"  height="1" fill="var(--pixel-hair)"/>
-          <rect x="10" y="1"  width="4"  height="1" fill="var(--pixel-hair)"/>
-          <rect x="11" y="1"  width="1"  height="1" fill="#ffffff" opacity="0.5"/>
-          <!-- Hair top -->
-          <rect x="7"  y="2"  width="10" height="1" fill="var(--pixel-hair)"/>
-          <rect x="5"  y="3"  width="14" height="1" fill="var(--pixel-hair)"/>
-          <!-- Hair sides (frame the face) -->
-          <rect x="4"  y="4"  width="4"  height="11" fill="var(--pixel-hair)"/>
-          <rect x="16" y="4"  width="4"  height="11" fill="var(--pixel-hair)"/>
-          <!-- Chin-level framing -->
-          <rect x="5"  y="14" width="3"  height="2"  fill="var(--pixel-hair)"/>
-          <rect x="16" y="14" width="3"  height="2"  fill="var(--pixel-hair)"/>
-
-          <!-- ═══ FACE SKIN ═══ -->
-          <rect x="8"  y="3"  width="8"  height="1"  fill="var(--pixel-skin)"/>
-          <rect x="7"  y="4"  width="10" height="10" fill="var(--pixel-skin)"/>
-          <rect x="8"  y="14" width="8"  height="1"  fill="var(--pixel-skin)"/>
-          <rect x="9"  y="15" width="6"  height="1"  fill="var(--pixel-skin)"/>
-          <!-- Neck -->
-          <rect x="10" y="15" width="4"  height="3"  fill="var(--pixel-skin)"/>
-
-          <!-- ═══ EYES — HAPPY / EXCITED ═══ -->
-          <g *ngIf="(game.character().avatarMood ?? 'happy') !== 'tired'">
-            <!-- Left eye: top bar + lower with highlight -->
-            <rect x="8"  y="6" width="3" height="1" fill="var(--pixel-eyes)"/>
-            <rect x="8"  y="7" width="2" height="1" fill="var(--pixel-eyes)"/>
-            <rect x="10" y="7" width="1" height="1" fill="#ffffff"/>
-            <!-- Right eye -->
-            <rect x="13" y="6" width="3" height="1" fill="var(--pixel-eyes)"/>
-            <rect x="14" y="7" width="2" height="1" fill="var(--pixel-eyes)"/>
-            <rect x="13" y="7" width="1" height="1" fill="#ffffff"/>
-          </g>
-          <!-- ═══ EYES — TIRED (half-closed) ═══ -->
-          <g *ngIf="(game.character().avatarMood ?? 'happy') === 'tired'">
-            <rect x="8"  y="7" width="3" height="1" fill="var(--pixel-eyes)"/>
-            <rect x="13" y="7" width="3" height="1" fill="var(--pixel-eyes)"/>
-          </g>
-          <!-- Excited sparkles -->
-          <g *ngIf="(game.character().avatarMood ?? 'happy') === 'excited'">
-            <rect x="7"  y="5" width="1" height="1" fill="#ffd700"/>
-            <rect x="16" y="5" width="1" height="1" fill="#ffd700"/>
-          </g>
-
-          <!-- Blush -->
-          <rect x="7"  y="9" width="2" height="1" fill="#ffa8c0"/>
-          <rect x="15" y="9" width="2" height="1" fill="#ffa8c0"/>
-
-          <!-- Mouth — by mood -->
-          <rect *ngIf="(game.character().avatarMood ?? 'happy') === 'happy'"  x="10" y="11" width="4" height="1" fill="#e879a0"/>
-          <rect *ngIf="(game.character().avatarMood ?? 'happy') === 'excited'" x="9"  y="11" width="6" height="1" fill="#e879a0"/>
-          <rect *ngIf="(game.character().avatarMood ?? 'happy') === 'tired'"   x="10" y="11" width="4" height="1" fill="#b0a0b0"/>
-
-          <!-- ═══ ACCESSORIES ═══ -->
-          <g *ngIf="(game.character().accessory ?? 'none') === 'headphones'">
-            <rect x="5"  y="3" width="14" height="1" fill="var(--pixel-accessory)"/>
-            <rect x="3"  y="4" width="3"  height="5" fill="var(--pixel-accessory)"/>
-            <rect x="18" y="4" width="3"  height="5" fill="var(--pixel-accessory)"/>
-            <rect x="3"  y="4" width="1"  height="1" fill="#ffffff" opacity="0.4"/>
-            <rect x="20" y="4" width="1"  height="1" fill="#ffffff" opacity="0.4"/>
-          </g>
-          <g *ngIf="(game.character().accessory ?? 'none') === 'bow'">
-            <rect x="6"  y="2" width="4" height="2" fill="var(--pixel-accessory)"/>
-            <rect x="14" y="2" width="4" height="2" fill="var(--pixel-accessory)"/>
-            <rect x="10" y="2" width="4" height="2" fill="var(--pixel-accessory)"/>
-            <rect x="6"  y="2" width="1" height="1" fill="#ffffff" opacity="0.5"/>
-            <rect x="17" y="2" width="1" height="1" fill="#ffffff" opacity="0.5"/>
-          </g>
-          <g *ngIf="(game.character().accessory ?? 'none') === 'star-clips'">
-            <rect x="4"  y="6" width="1" height="1" fill="var(--pixel-accessory)"/>
-            <rect x="3"  y="7" width="3" height="1" fill="var(--pixel-accessory)"/>
-            <rect x="4"  y="8" width="1" height="1" fill="var(--pixel-accessory)"/>
-            <rect x="19" y="6" width="1" height="1" fill="var(--pixel-accessory)"/>
-            <rect x="18" y="7" width="3" height="1" fill="var(--pixel-accessory)"/>
-            <rect x="19" y="8" width="1" height="1" fill="var(--pixel-accessory)"/>
-          </g>
-
-        </svg>
-        <div class="avatar-sparkles">
-          <span class="sp sp1">✦</span>
-          <span class="sp sp2">⊹</span>
-          <span class="sp sp3">✧</span>
-        </div>
-      </div>
-
-      <!-- Mood button -->
-      <button class="mood-btn" (click)="cycleMood()">{{ moodLabel }}</button>
-
-      <!-- Export button -->
-      <button class="export-btn" (click)="downloadCharacter()" [disabled]="exporting()" title="Descargar personaje como PNG">
-        <span *ngIf="!exporting()">📥 Descargar PNG</span>
-        <span *ngIf="exporting()">⏳ Exportando…</span>
-      </button>
-
-      <!-- Name -->
-      <div class="name-row">
-        <div *ngIf="!editName()" class="char-name pixel" (click)="tempName=game.character().name; editName.set(true)">
-          {{ game.character().name }} <span class="edit-pen">✏️</span>
-        </div>
-        <input *ngIf="editName()" class="edit-input name-in" [(ngModel)]="tempName"
-               (keyup.enter)="saveName()" (blur)="saveName()" autofocus maxlength="20"/>
-      </div>
-
-      <!-- Title -->
-      <div class="title-row">
-        <div *ngIf="!editTitle()" class="char-title" (click)="tempTitle=game.character().title; editTitle.set(true)">
-          ✦ {{ game.character().title }} ✦ <span class="edit-pen">✏️</span>
-        </div>
-        <input *ngIf="editTitle()" class="edit-input title-in" [(ngModel)]="tempTitle"
-               (keyup.enter)="saveTitle()" (blur)="saveTitle()" autofocus maxlength="30"/>
-      </div>
-
-      <!-- Stats -->
-      <div class="stats-grid">
-        <div class="stat-box">
-          <div class="sbox-icon">⭐</div>
-          <div class="sbox-val pixel">{{ game.character().level }}</div>
-          <div class="sbox-lbl">Level</div>
-        </div>
-        <div class="stat-box">
-          <div class="sbox-icon">🔥</div>
-          <div class="sbox-val pixel">{{ game.character().streak }}</div>
-          <div class="sbox-lbl">Streak</div>
-        </div>
-        <div class="stat-box">
-          <div class="sbox-icon">🪙</div>
-          <div class="sbox-val pixel">{{ game.character().coins }}</div>
-          <div class="sbox-lbl">Coins</div>
-        </div>
-        <div class="stat-box">
-          <div class="sbox-icon">❤️</div>
-          <div class="sbox-val pixel">{{ game.character().hp }}</div>
-          <div class="sbox-lbl">HP</div>
-        </div>
-      </div>
-
-      <div class="xp-section">
-        <div class="xp-row">
-          <span class="pixel" style="font-size:.5rem">XP</span>
-          <span style="font-size:.78rem; font-weight:700; color:var(--text-muted)">
-            {{ game.character().xp }} / {{ game.character().xpToNext }}
-          </span>
-        </div>
-        <div class="progress-track">
-          <div class="progress-fill" [style.width.%]="xpPercent(game.character().xp, game.character().xpToNext)"></div>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Right: Customization panels -->
-    <div class="customize-col">
-      <div class="customize-card card">
-        <h2 class="section-h pixel">✨ Personalizar personaje</h2>
-
-        <div class="custom-row">
-          <span class="custom-label">💇 Cabello</span>
-          <div class="swatch-row">
-            <button *ngFor="let h of HAIR_COLORS" class="swatch"
-                    [class.active]="game.character().hairColor === h.value"
-                    [style.background]="h.value"
-                    (click)="setHair(h.value)" [title]="h.label"></button>
-          </div>
-        </div>
-
-        <div class="custom-row">
-          <span class="custom-label">👁️ Ojos</span>
-          <div class="swatch-row">
-            <button *ngFor="let e of EYE_COLORS" class="swatch"
-                    [class.active]="game.character().eyeColor === e.value"
-                    [style.background]="e.value"
-                    (click)="setEyes(e.value)" [title]="e.label"></button>
-          </div>
-        </div>
-
+    <!-- ─── LEFT COLUMN: APARIENCIA (Body) ─── -->
+    <div class="side-panel card">
+      <h2 class="panel-h pixel">🧬 Apariencia</h2>
+      <div class="panel-content">
+        
         <div class="custom-row">
           <span class="custom-label">🤎 Tono de piel</span>
           <div class="swatch-row">
@@ -244,27 +19,189 @@
         </div>
 
         <div class="custom-row">
-          <span class="custom-label">👗 Atuendo</span>
+          <span class="custom-label">💇 Cabello</span>
           <div class="swatch-row">
-            <button *ngFor="let o of OUTFIT_COLORS" class="swatch"
-                    [class.active]="game.character().dressColor === o.value"
+            <button *ngFor="let h of HAIR_COLORS" class="swatch"
+                    [class.active]="game.character().hairColor === h.value"[style.background]="h.value"
+                    (click)="setHair(h.value)" [title]="h.label"></button>
+          </div>
+        </div>
+
+        <div class="custom-row">
+          <span class="custom-label">👁️ Ojos</span>
+          <div class="swatch-row">
+            <button *ngFor="let e of EYE_COLORS" class="swatch"
+                    [class.active]="game.character().eyeColor === e.value"
+                    [style.background]="e.value"
+                    (click)="setEyes(e.value)"[title]="e.label"></button>
+          </div>
+        </div>
+
+        <div class="custom-row">
+          <span class="custom-label">😊 Expresión</span>
+          <div class="mood-row">
+            <button class="acc-btn"[class.active]="mood === 'happy'" (click)="game.updateCharacter({avatarMood:'happy'})">😊 Feliz</button>
+            <button class="acc-btn" [class.active]="mood === 'excited'" (click)="game.updateCharacter({avatarMood:'excited'})">⭐ Wow</button>
+            <button class="acc-btn" [class.active]="mood === 'tired'" (click)="game.updateCharacter({avatarMood:'tired'})">😴 Zzz</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ─── CENTER COLUMN: AVATAR STUDIO ─── -->
+    <div class="center-panel">
+      
+      <!-- Stage / Pedestal -->
+      <div class="avatar-stage">
+        <div class="stage-glow"></div>
+
+        <div class="avatar-preview float" [ngStyle]="avatarStyle()" (click)="cycleMood()"
+             [class.mood-excited]="mood === 'excited'"[class.mood-tired]="mood === 'tired'"
+             title="Clic para cambiar expresión">
+          
+          <svg #avatarSvg class="pixel-art" viewBox="0 0 32 40" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="16" cy="39" rx="8" ry="1.5" fill="#000000" opacity="0.2"/>
+            
+            <g class="sprite-body">
+              <rect x="6" y="8" width="20" height="2" fill="var(--pixel-hair)"/><rect x="4" y="10" width="24" height="23" fill="var(--pixel-hair)"/><rect x="4" y="27" width="24" height="6" fill="#000000" opacity="0.2"/><rect x="5" y="33" width="22" height="2" fill="#000000" opacity="0.3"/><rect x="4" y="20" width="24" height="15" fill="#000000" opacity="0.1"/>
+              <rect x="12" y="31" width="2" height="3" fill="var(--pixel-skin)"/><rect x="18" y="31" width="2" height="3" fill="var(--pixel-skin)"/><rect x="12" y="31" width="2" height="1" fill="#000000" opacity="0.3"/><rect x="18" y="31" width="2" height="1" fill="#000000" opacity="0.3"/>
+              <rect x="12" y="34" width="2" height="3" fill="#2a2a35"/><rect x="18" y="34" width="2" height="3" fill="#2a2a35"/>
+              <rect x="11" y="37" width="3" height="2" fill="#111111"/><rect x="18" y="37" width="3" height="2" fill="#111111"/><rect x="11" y="37" width="1" height="1" fill="#ffffff" opacity="0.4"/><rect x="18" y="37" width="1" height="1" fill="#ffffff" opacity="0.4"/>
+              <rect x="8" y="24" width="3" height="6" fill="var(--pixel-dress)"/><rect x="21" y="24" width="3" height="6" fill="var(--pixel-dress)"/><rect x="8" y="28" width="3" height="2" fill="#000000" opacity="0.2"/><rect x="21" y="28" width="3" height="2" fill="#000000" opacity="0.2"/>
+              <rect x="8" y="30" width="2" height="2" fill="var(--pixel-skin)"/><rect x="22" y="30" width="2" height="2" fill="var(--pixel-skin)"/>
+              <rect x="11" y="23" width="10" height="6" fill="var(--pixel-dress)"/><rect x="10" y="29" width="12" height="3" fill="var(--pixel-dress)"/><rect x="9" y="31" width="14" height="1" fill="var(--pixel-dress)"/>
+              <rect x="11" y="23" width="1" height="6" fill="#000000" opacity="0.2"/><rect x="20" y="23" width="1" height="6" fill="#000000" opacity="0.2"/><rect x="10" y="31" width="12" height="1" fill="#000000" opacity="0.25"/><rect x="11" y="26" width="10" height="1" fill="#000000" opacity="0.15"/>
+              <rect x="13" y="23" width="6" height="2" fill="#ffffff"/><rect x="14" y="25" width="4" height="1" fill="#dddddd"/><rect x="15" y="24" width="2" height="3" fill="#222222"/>
+            </g>
+
+            <g class="sprite-head">
+              <rect x="14" y="21" width="4" height="3" fill="var(--pixel-skin)"/><rect x="14" y="21" width="4" height="2" fill="#000000" opacity="0.25"/>
+              <rect x="8" y="10" width="16" height="12" fill="var(--pixel-skin)"/><rect x="7" y="11" width="18" height="10" fill="var(--pixel-skin)"/><rect x="7" y="11" width="18" height="3" fill="#000000" opacity="0.1"/>
+              
+              <g *ngIf="mood !== 'tired'">
+                <rect x="9" y="14" width="4" height="4" fill="#1a1a24"/><rect x="19" y="14" width="4" height="4" fill="#1a1a24"/><rect x="8" y="14" width="1" height="1" fill="#1a1a24"/><rect x="23" y="14" width="1" height="1" fill="#1a1a24"/>
+                <rect x="10" y="15" width="2" height="3" fill="var(--pixel-eyes)"/><rect x="20" y="15" width="2" height="3" fill="var(--pixel-eyes)"/><rect x="10" y="15" width="2" height="1" fill="#000000" opacity="0.6"/><rect x="20" y="15" width="2" height="1" fill="#000000" opacity="0.6"/>
+                <rect x="11" y="15" width="1" height="2" fill="#ffffff"/><rect x="21" y="15" width="1" height="2" fill="#ffffff"/><rect x="10" y="17" width="2" height="1" fill="#ffffff" opacity="0.3"/><rect x="20" y="17" width="2" height="1" fill="#ffffff" opacity="0.3"/>
+              </g>
+              <g *ngIf="mood === 'tired'">
+                <rect x="9" y="16" width="4" height="2" fill="#1a1a24"/><rect x="19" y="16" width="4" height="2" fill="#1a1a24"/><rect x="8" y="16" width="1" height="1" fill="#1a1a24"/><rect x="23" y="16" width="1" height="1" fill="#1a1a24"/>
+                <rect x="10" y="17" width="2" height="1" fill="var(--pixel-eyes)"/><rect x="20" y="17" width="2" height="1" fill="var(--pixel-eyes)"/>
+              </g>
+              <g *ngIf="mood === 'excited'">
+                <rect x="7" y="13" width="1" height="1" fill="#ffd700"/><rect x="24" y="13" width="1" height="1" fill="#ffd700"/><rect x="10" y="12" width="1" height="1" fill="#ffd700"/><rect x="21" y="12" width="1" height="1" fill="#ffd700"/>
+              </g>
+              
+              <rect x="7" y="17" width="2" height="1" fill="#ff7790" opacity="0.5"/><rect x="23" y="17" width="2" height="1" fill="#ff7790" opacity="0.5"/>
+              <rect *ngIf="mood === 'happy'" x="15" y="18" width="2" height="1" fill="#d97382"/>
+              <rect *ngIf="mood === 'excited'" x="14" y="18" width="4" height="2" fill="#d97382"/>
+              <rect *ngIf="mood === 'tired'" x="15" y="18" width="2" height="1" fill="#9a8c98"/>
+              
+              <rect x="8" y="5" width="16" height="5" fill="var(--pixel-hair)"/><rect x="9" y="4" width="14" height="1" fill="var(--pixel-hair)"/><rect x="6" y="7" width="20" height="5" fill="var(--pixel-hair)"/>
+              <rect x="6" y="12" width="4" height="2" fill="var(--pixel-hair)"/><rect x="12" y="12" width="8" height="1" fill="var(--pixel-hair)"/><rect x="22" y="12" width="4" height="2" fill="var(--pixel-hair)"/><rect x="14" y="13" width="3" height="1" fill="var(--pixel-hair)"/>
+              <rect x="5" y="11" width="3" height="11" fill="var(--pixel-hair)"/><rect x="24" y="11" width="3" height="11" fill="var(--pixel-hair)"/>
+              <rect x="9" y="7" width="14" height="1" fill="#ffffff" opacity="0.25"/><rect x="8" y="8" width="1" height="1" fill="#ffffff" opacity="0.25"/><rect x="23" y="8" width="1" height="1" fill="#ffffff" opacity="0.25"/><rect x="5" y="19" width="3" height="3" fill="#000000" opacity="0.3"/><rect x="24" y="19" width="3" height="3" fill="#000000" opacity="0.3"/>
+              
+              <!-- ================= 9 ACCESORIOS ================= -->
+              <g *ngIf="acc === 'headphones'">
+                <rect x="6" y="4" width="20" height="2" fill="var(--pixel-accessory)"/><rect x="3" y="11" width="3" height="7" fill="var(--pixel-accessory)"/><rect x="26" y="11" width="3" height="7" fill="var(--pixel-accessory)"/><rect x="4" y="12" width="1" height="5" fill="#ffffff" opacity="0.4"/><rect x="27" y="12" width="1" height="5" fill="#ffffff" opacity="0.4"/>
+              </g>
+              <g *ngIf="acc === 'bow'">
+                <rect x="13" y="4" width="6" height="4" fill="var(--pixel-accessory)"/><rect x="12" y="5" width="8" height="2" fill="var(--pixel-accessory)"/><rect x="15" y="5" width="2" height="2" fill="#000000" opacity="0.2"/><rect x="14" y="4" width="1" height="1" fill="#ffffff" opacity="0.4"/><rect x="17" y="4" width="1" height="1" fill="#ffffff" opacity="0.4"/>
+              </g>
+              <g *ngIf="acc === 'star-clips'">
+                <rect x="23" y="12" width="1" height="4" fill="var(--pixel-accessory)"/><rect x="22" y="13" width="3" height="2" fill="var(--pixel-accessory)"/><rect x="23" y="13" width="1" height="1" fill="#ffffff" opacity="0.5"/>
+              </g>
+              <g *ngIf="acc === 'glasses'">
+                <rect x="7" y="13" width="7" height="6" fill="#ffffff" opacity="0.15"/><rect x="18" y="13" width="7" height="6" fill="#ffffff" opacity="0.15"/>
+                <rect x="7" y="13" width="7" height="1" fill="var(--pixel-accessory)"/><rect x="7" y="18" width="7" height="1" fill="var(--pixel-accessory)"/><rect x="7" y="14" width="1" height="4" fill="var(--pixel-accessory)"/><rect x="13" y="14" width="1" height="4" fill="var(--pixel-accessory)"/>
+                <rect x="18" y="13" width="7" height="1" fill="var(--pixel-accessory)"/><rect x="18" y="18" width="7" height="1" fill="var(--pixel-accessory)"/><rect x="18" y="14" width="1" height="4" fill="var(--pixel-accessory)"/><rect x="24" y="14" width="1" height="4" fill="var(--pixel-accessory)"/>
+                <rect x="14" y="14" width="4" height="1" fill="var(--pixel-accessory)"/>
+                <rect x="8" y="14" width="2" height="1" fill="#ffffff" opacity="0.5"/><rect x="19" y="14" width="2" height="1" fill="#ffffff" opacity="0.5"/>
+              </g>
+              <g *ngIf="acc === 'cat-ears'">
+                <rect x="6" y="2" width="4" height="4" fill="var(--pixel-accessory)"/><rect x="7" y="0" width="2" height="2" fill="var(--pixel-accessory)"/><rect x="7" y="2" width="2" height="2" fill="#ffb6c1" opacity="0.8"/>
+                <rect x="22" y="2" width="4" height="4" fill="var(--pixel-accessory)"/><rect x="23" y="0" width="2" height="2" fill="var(--pixel-accessory)"/><rect x="23" y="2" width="2" height="2" fill="#ffb6c1" opacity="0.8"/>
+              </g>
+              <g *ngIf="acc === 'flower'">
+                <rect x="22" y="7" width="5" height="5" fill="var(--pixel-accessory)"/><rect x="23" y="6" width="3" height="1" fill="var(--pixel-accessory)"/><rect x="23" y="12" width="3" height="1" fill="var(--pixel-accessory)"/><rect x="21" y="8" width="1" height="3" fill="var(--pixel-accessory)"/><rect x="27" y="8" width="1" height="3" fill="var(--pixel-accessory)"/>
+                <rect x="22" y="7" width="3" height="1" fill="#ffffff" opacity="0.4"/><rect x="22" y="11" width="5" height="1" fill="#000000" opacity="0.2"/>
+                <rect x="23" y="8" width="3" height="3" fill="#ffffff"/><rect x="24" y="9" width="1" height="1" fill="#ffd700"/>
+              </g>
+              <g *ngIf="acc === 'crown'">
+                <rect x="11" y="3" width="10" height="3" fill="var(--pixel-accessory)"/><rect x="11" y="1" width="2" height="2" fill="var(--pixel-accessory)"/><rect x="15" y="1" width="2" height="2" fill="var(--pixel-accessory)"/><rect x="19" y="1" width="2" height="2" fill="var(--pixel-accessory)"/>
+                <rect x="11" y="5" width="10" height="1" fill="#000000" opacity="0.2"/>
+                <rect x="15" y="3" width="2" height="1" fill="#ffffff"/><rect x="11" y="3" width="1" height="1" fill="#ffffff" opacity="0.5"/><rect x="20" y="3" width="1" height="1" fill="#ffffff" opacity="0.5"/>
+              </g>
+              <g *ngIf="acc === 'halo'">
+                <rect x="10" y="0" width="12" height="1" fill="var(--pixel-accessory)"/><rect x="8" y="1" width="2" height="2" fill="var(--pixel-accessory)"/><rect x="22" y="1" width="2" height="2" fill="var(--pixel-accessory)"/><rect x="10" y="3" width="12" height="1" fill="var(--pixel-accessory)"/>
+                <rect x="10" y="0" width="12" height="1" fill="#ffffff" opacity="0.6"/>
+              </g>
+
+            </g>
+          </svg>
+
+          <div class="avatar-sparkles">
+            <span class="sp sp1">✦</span>
+            <span class="sp sp2">⊹</span>
+            <span class="sp sp3">✧</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Identity & Core Actions -->
+      <div class="identity-card card">
+        <div class="lvl-badge pixel">Lv.{{ game.character().level }}</div>
+        
+        <div class="name-row">
+          <div *ngIf="!editName()" class="char-name pixel" (click)="tempName=game.character().name; editName.set(true)">
+            {{ game.character().name }} <span class="edit-pen">✏️</span>
+          </div>
+          <input *ngIf="editName()" class="edit-input name-in" [(ngModel)]="tempName" (keyup.enter)="saveName()" (blur)="saveName()" autofocus maxlength="20"/>
+        </div>
+
+        <div class="title-row">
+          <div *ngIf="!editTitle()" class="char-title" (click)="tempTitle=game.character().title; editTitle.set(true)">
+            ✦ {{ game.character().title }} ✦ <span class="edit-pen">✏️</span>
+          </div>
+          <input *ngIf="editTitle()" class="edit-input title-in" [(ngModel)]="tempTitle" (keyup.enter)="saveTitle()" (blur)="saveTitle()" autofocus maxlength="30"/>
+        </div>
+
+        <button class="export-btn" (click)="downloadCharacter()" [disabled]="exporting()" title="Descargar PNG transparente HD">
+          <span *ngIf="!exporting()">📸 Exportar Avatar</span>
+          <span *ngIf="exporting()">⏳ Procesando...</span>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- ─── RIGHT COLUMN: ESTILO Y TEMAS ─── -->
+    <div class="side-panel card">
+      <h2 class="panel-h pixel">👗 Estilo</h2>
+      <div class="panel-content">
+        
+        <div class="custom-row">
+          <span class="custom-label">👕 Atuendo</span>
+          <div class="swatch-row">
+            <button *ngFor="let o of OUTFIT_COLORS" class="swatch"[class.active]="game.character().dressColor === o.value"
                     [style.background]="o.value"
                     (click)="setOutfit(o.value)" [title]="o.label"></button>
           </div>
         </div>
 
+        <!-- Botones de Accesorios (Grilla) -->
         <div class="custom-row">
-          <span class="custom-label">🎀 Accesorio</span>
+          <span class="custom-label">🎀 Accesorios</span>
           <div class="acc-row">
-            <button *ngFor="let a of ACCESSORIES" class="acc-btn"
-                    [class.active]="(game.character().accessory ?? 'none') === a.id"
+            <button *ngFor="let a of ACCESSORIES" class="acc-btn"[class.active]="acc === a.id"
                     (click)="setAccessory(a.id)">
-              {{ a.icon }} {{ a.label }}
+              <span class="acc-icon">{{ a.icon }}</span>
+              <span class="acc-label">{{ a.label }}</span>
             </button>
           </div>
         </div>
 
-        <div class="custom-row" *ngIf="(game.character().accessory ?? 'none') !== 'none'">
+        <div class="custom-row" *ngIf="acc !== 'none'">
           <span class="custom-label">🎨 Color del accesorio</span>
           <div class="swatch-row">
             <button *ngFor="let c of ACC_COLORS" class="swatch"
@@ -274,53 +211,64 @@
           </div>
         </div>
 
+        <hr class="divider">
+
         <div class="custom-row">
-          <span class="custom-label">😊 Estado de ánimo</span>
-          <div class="acc-row">
-            <button class="acc-btn" [class.active]="(game.character().avatarMood ?? 'happy') === 'happy'"
-                    (click)="game.updateCharacter({avatarMood:'happy'})">😊 Feliz</button>
-            <button class="acc-btn" [class.active]="(game.character().avatarMood ?? 'happy') === 'excited'"
-                    (click)="game.updateCharacter({avatarMood:'excited'})">⭐ Emocionada</button>
-            <button class="acc-btn" [class.active]="(game.character().avatarMood ?? 'happy') === 'tired'"
-                    (click)="game.updateCharacter({avatarMood:'tired'})">😴 Cansada</button>
+          <span class="custom-label">✨ Temas rápidos</span>
+          <div class="preset-grid">
+            <button *ngFor="let p of PRESETS" class="preset-btn" (click)="applyPreset(p)">
+              <span class="preset-icon">{{p.icon}}</span>
+              <div class="preset-info">
+                <span class="preset-name">{{p.name}}</span>
+                <div class="preset-dots">
+                  <span class="p-dot"[style.background]="p.colors.hair"></span>
+                  <span class="p-dot" [style.background]="p.colors.dress"></span>
+                  <span class="p-dot" [style.background]="p.colors.eyes"></span>
+                </div>
+              </div>
+            </button>
           </div>
         </div>
 
       </div>
     </div>
 
-  </div>
+  </div> <!-- End Studio Layout -->
 
-  <!-- ─── Top Skills ─── -->
-  <div class="section-card card">
-    <h2 class="section-h pixel">💫 Top Skills</h2>
-    <div class="top-skills-grid">
-      <div *ngFor="let skill of topSkills" class="ts-card"
-           [style.--sk-color]="skill.color" [style.--sk-bg]="skill.bgColor">
-        <div class="ts-icon">{{ skill.icon }}</div>
-        <div class="ts-name">{{ skill.name }}</div>
-        <div class="ts-lvl pixel">Lv.{{ skill.level }}</div>
-        <div class="ts-bar">
-          <div class="ts-fill" [style.width.%]="xpPercent(skill.xp, skill.xpToNext)"
-               [style.background]="skill.color"></div>
+  <!-- ==================== BOTTOM: STATS & SKILLS ==================== -->
+  <div class="bottom-layout">
+    
+    <div class="stats-bar card">
+      <div class="stat-box"><div class="sbox-icon">🔥</div><div class="sbox-val pixel">{{ game.character().streak }}</div><div class="sbox-lbl">Racha</div></div>
+      <div class="stat-box"><div class="sbox-icon">🪙</div><div class="sbox-val pixel">{{ game.character().coins }}</div><div class="sbox-lbl">Monedas</div></div>
+      <div class="stat-box"><div class="sbox-icon">❤️</div><div class="sbox-val pixel">{{ game.character().hp }}</div><div class="sbox-lbl">Salud</div></div>
+      <div class="xp-section-wide">
+        <div class="xp-row"><span class="pixel" style="font-size:.6rem">Progreso Nivel</span><span class="xp-numbers">{{ game.character().xp }} / {{ game.character().xpToNext }} XP</span></div>
+        <div class="progress-track"><div class="progress-fill" [style.width.%]="xpPercent(game.character().xp, game.character().xpToNext)"></div></div>
+      </div>
+    </div>
+
+    <div class="bottom-grids">
+      <div class="section-card card">
+        <h2 class="section-h pixel">💫 Top Habilidades</h2>
+        <div class="top-skills-grid">
+          <div *ngFor="let skill of topSkills" class="ts-card"[style.--sk-color]="skill.color"[style.--sk-bg]="skill.bgColor">
+            <div class="ts-icon">{{ skill.icon }}</div><div class="ts-name">{{ skill.name }}</div><div class="ts-lvl pixel">Lv.{{ skill.level }}</div>
+            <div class="ts-bar"><div class="ts-fill"[style.width.%]="xpPercent(skill.xp, skill.xpToNext)" [style.background]="skill.color"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-card card">
+        <h2 class="section-h pixel">🏆 Logros</h2>
+        <div class="achievements-grid">
+          <div *ngFor="let a of achievements" class="achievement"[class.earned]="a.earned"[class.locked]="!a.earned">
+            <span class="ach-icon">{{ a.earned ? a.icon : '🔒' }}</span>
+            <div class="ach-info"><div class="ach-label">{{ a.label }}</div><div class="ach-desc">{{ a.desc }}</div></div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- ─── Achievements ─── -->
-  <div class="section-card card">
-    <h2 class="section-h pixel">🏆 Achievements</h2>
-    <div class="achievements-grid">
-      <div *ngFor="let a of achievements" class="achievement"
-           [class.earned]="a.earned" [class.locked]="!a.earned">
-        <span class="ach-icon">{{ a.earned ? a.icon : '🔒' }}</span>
-        <div class="ach-info">
-          <div class="ach-label">{{ a.label }}</div>
-          <div class="ach-desc">{{ a.desc }}</div>
-        </div>
-      </div>
-    </div>
   </div>
-
 </div>

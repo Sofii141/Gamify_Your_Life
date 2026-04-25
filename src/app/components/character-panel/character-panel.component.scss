@@ -20,29 +20,63 @@
 
 .avatar-wrap {
   position: relative;
-  width: 96px;
+  width: 128px;
   height: 160px;
 }
 
-/* 24×40 viewBox — sidebar: 96×160 (scale ×4) */
 .character-svg {
-  width: 96px;
+  width: 128px;
   height: 160px;
+  /* Rendering exacto para evitar borrosidad y preservar el Pixel Art */
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-crisp-edges;
   image-rendering: pixelated;
-  filter: drop-shadow(0 6px 12px var(--shadow));
+  image-rendering: crisp-edges;
+  
+  /* Sombra exterior más suave y premium para el modelo */
+  filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.35));
 }
+
+/* ========================================================= 
+   ANIMACIÓN "IDLE" TIPO VIDEOJUEGO (Respiración Spine 2D)
+========================================================= */
+.sprite-body {
+  animation: idle-breathe-body 2.5s ease-in-out infinite;
+}
+
+.sprite-head {
+  /* La cabeza tiene un pequeño retraso y mayor recorrido para simular un cuello vivo */
+  animation: idle-breathe-head 2.5s ease-in-out infinite;
+}
+
+@keyframes idle-breathe-body {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(0.5px); } 
+}
+
+@keyframes idle-breathe-head {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(1px); } 
+}
+/* ========================================================= */
 
 .sparkle {
   position: absolute;
-  color: var(--star);
+  color: var(--star, #ffe600);
   font-size: .9rem;
   pointer-events: none;
   animation: sparkle 2s ease-in-out infinite;
-  &.s1 { top: 4px; right: 8px; animation-delay: 0s; }
-  &.s2 { bottom: 10px; left: 4px; animation-delay: .7s; font-size: .65rem; }
-  &.s3 { top: 30px; left: 2px; animation-delay: 1.4s; font-size: .75rem; }
+  &.s1 { top: 4px; right: 12px; animation-delay: 0s; }
+  &.s2 { bottom: 10px; left: 6px; animation-delay: .7s; font-size: .65rem; }
+  &.s3 { top: 30px; left: 4px; animation-delay: 1.4s; font-size: .75rem; }
 }
 
+@keyframes sparkle {
+  0%, 100% { opacity: 0.3; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.1); }
+}
+
+/* UI Restante igual */
 .char-name-wrap, .char-title-wrap { width: 100%; text-align: center; }
 
 .char-name {

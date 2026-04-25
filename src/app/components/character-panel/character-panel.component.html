@@ -1,92 +1,152 @@
 <div class="character-panel card">
   <!-- Pixel art character SVG -->
   <div class="avatar-wrap float" [ngStyle]="avatarStyle">
-    <svg class="pixel-art character-svg" viewBox="0 0 24 40" xmlns="http://www.w3.org/2000/svg">
-      <!-- Twintails -->
-      <rect x="0"  y="7"  width="4" height="25" fill="var(--pixel-hair)"/>
-      <rect x="0"  y="32" width="3" height="4"  fill="var(--pixel-hair)"/>
-      <rect x="1"  y="36" width="2" height="2"  fill="var(--pixel-hair)"/>
-      <rect x="20" y="7"  width="4" height="25" fill="var(--pixel-hair)"/>
-      <rect x="21" y="32" width="3" height="4"  fill="var(--pixel-hair)"/>
-      <rect x="21" y="36" width="2" height="2"  fill="var(--pixel-hair)"/>
-      <!-- Coat -->
-      <rect x="9"  y="17" width="6"  height="1" fill="var(--pixel-dress)"/>
-      <rect x="8"  y="18" width="8"  height="1" fill="var(--pixel-dress)"/>
-      <rect x="6"  y="19" width="12" height="7" fill="var(--pixel-dress)"/>
-      <rect x="7"  y="26" width="10" height="1" fill="var(--pixel-dress)"/>
-      <rect x="8"  y="27" width="8"  height="1" fill="var(--pixel-dress)"/>
-      <rect x="3"  y="19" width="4"  height="7" fill="var(--pixel-dress)"/>
-      <rect x="3"  y="26" width="3"  height="1" fill="var(--pixel-skin)"/>
-      <rect x="17" y="19" width="4"  height="7" fill="var(--pixel-dress)"/>
-      <rect x="18" y="26" width="3"  height="1" fill="var(--pixel-skin)"/>
-      <rect x="8"  y="21" width="3"  height="1" fill="#ffffff"/>
-      <rect x="9"  y="20" width="1"  height="3" fill="#ffffff"/>
-      <rect x="13" y="21" width="3"  height="1" fill="#ffffff"/>
-      <rect x="14" y="20" width="1"  height="3" fill="#ffffff"/>
-      <!-- Skirt -->
-      <rect x="7"  y="28" width="10" height="1" fill="#1e1520"/>
-      <rect x="5"  y="29" width="14" height="4" fill="#1e1520"/>
-      <rect x="6"  y="33" width="12" height="1" fill="#1e1520"/>
-      <!-- Leg warmers -->
-      <rect x="7"  y="34" width="4"  height="4" fill="#e0d4c4"/>
-      <rect x="13" y="34" width="4"  height="4" fill="#e0d4c4"/>
-      <!-- Shoes -->
-      <rect x="6"  y="38" width="5"  height="2" fill="#1e1520"/>
-      <rect x="6"  y="38" width="2"  height="2" fill="#cc2222"/>
-      <rect x="13" y="38" width="5"  height="2" fill="#1e1520"/>
-      <rect x="16" y="38" width="2"  height="2" fill="#cc2222"/>
-      <!-- Head hair -->
-      <rect x="11" y="0"  width="2"  height="1" fill="var(--pixel-hair)"/>
-      <rect x="10" y="1"  width="4"  height="1" fill="var(--pixel-hair)"/>
-      <rect x="11" y="1"  width="1"  height="1" fill="#ffffff" opacity="0.5"/>
-      <rect x="7"  y="2"  width="10" height="1" fill="var(--pixel-hair)"/>
-      <rect x="5"  y="3"  width="14" height="1" fill="var(--pixel-hair)"/>
-      <rect x="4"  y="4"  width="4"  height="11" fill="var(--pixel-hair)"/>
-      <rect x="16" y="4"  width="4"  height="11" fill="var(--pixel-hair)"/>
-      <rect x="5"  y="14" width="3"  height="2"  fill="var(--pixel-hair)"/>
-      <rect x="16" y="14" width="3"  height="2"  fill="var(--pixel-hair)"/>
-      <!-- Face -->
-      <rect x="8"  y="3"  width="8"  height="1"  fill="var(--pixel-skin)"/>
-      <rect x="7"  y="4"  width="10" height="10" fill="var(--pixel-skin)"/>
-      <rect x="8"  y="14" width="8"  height="1"  fill="var(--pixel-skin)"/>
-      <rect x="9"  y="15" width="6"  height="1"  fill="var(--pixel-skin)"/>
-      <rect x="10" y="15" width="4"  height="3"  fill="var(--pixel-skin)"/>
-      <!-- Eyes -->
-      <rect x="8"  y="6" width="3" height="1" fill="var(--pixel-eyes)"/>
-      <rect x="8"  y="7" width="2" height="1" fill="var(--pixel-eyes)"/>
-      <rect x="10" y="7" width="1" height="1" fill="#ffffff"/>
-      <rect x="13" y="6" width="3" height="1" fill="var(--pixel-eyes)"/>
-      <rect x="14" y="7" width="2" height="1" fill="var(--pixel-eyes)"/>
-      <rect x="13" y="7" width="1" height="1" fill="#ffffff"/>
-      <!-- Blush + mouth -->
-      <rect x="7"  y="9" width="2" height="1" fill="#ffa8c0"/>
-      <rect x="15" y="9" width="2" height="1" fill="#ffa8c0"/>
-      <rect x="10" y="11" width="4" height="1" fill="#e879a0"/>
-      <!-- Accessories -->
-      <g *ngIf="(game.character().accessory ?? 'none') === 'headphones'">
-        <rect x="5"  y="3" width="14" height="1" fill="var(--pixel-accessory)"/>
-        <rect x="3"  y="4" width="3"  height="5" fill="var(--pixel-accessory)"/>
-        <rect x="18" y="4" width="3"  height="5" fill="var(--pixel-accessory)"/>
-        <rect x="3"  y="4" width="1"  height="1" fill="#ffffff" opacity="0.4"/>
-        <rect x="20" y="4" width="1"  height="1" fill="#ffffff" opacity="0.4"/>
+    <svg class="pixel-art character-svg" viewBox="0 0 32 40" xmlns="http://www.w3.org/2000/svg">
+      
+      <!-- GROUND SHADOW (Static) -->
+      <ellipse cx="16" cy="39" rx="8" ry="1.5" fill="#000000" opacity="0.2"/>
+
+      <!-- ================= BODY GROUP (Animates slowly) ================= -->
+      <g class="sprite-body">
+        
+        <!-- Back Hair -->
+        <rect x="6" y="8" width="20" height="2" fill="var(--pixel-hair)"/>
+        <rect x="4" y="10" width="24" height="23" fill="var(--pixel-hair)"/>
+        <!-- Back Hair Shadows (Depth & Gradient) -->
+        <rect x="4" y="27" width="24" height="6" fill="#000000" opacity="0.2"/>
+        <rect x="5" y="33" width="22" height="2" fill="#000000" opacity="0.3"/>
+        <rect x="4" y="20" width="24" height="15" fill="#000000" opacity="0.1"/>
+
+        <!-- Legs -->
+        <rect x="12" y="31" width="2" height="3" fill="var(--pixel-skin)"/>
+        <rect x="18" y="31" width="2" height="3" fill="var(--pixel-skin)"/>
+        <!-- Cast shadow from skirt -->
+        <rect x="12" y="31" width="2" height="1" fill="#000000" opacity="0.3"/>
+        <rect x="18" y="31" width="2" height="1" fill="#000000" opacity="0.3"/>
+        
+        <!-- Socks -->
+        <rect x="12" y="34" width="2" height="3" fill="#2a2a35"/>
+        <rect x="18" y="34" width="2" height="3" fill="#2a2a35"/>
+        
+        <!-- Shoes & Shine -->
+        <rect x="11" y="37" width="3" height="2" fill="#111111"/>
+        <rect x="18" y="37" width="3" height="2" fill="#111111"/>
+        <rect x="11" y="37" width="1" height="1" fill="#ffffff" opacity="0.4"/>
+        <rect x="18" y="37" width="1" height="1" fill="#ffffff" opacity="0.4"/>
+
+        <!-- Arms Behind -->
+        <rect x="8" y="24" width="3" height="6" fill="var(--pixel-dress)"/>
+        <rect x="21" y="24" width="3" height="6" fill="var(--pixel-dress)"/>
+        <rect x="8" y="28" width="3" height="2" fill="#000000" opacity="0.2"/>
+        <rect x="21" y="28" width="3" height="2" fill="#000000" opacity="0.2"/>
+        
+        <!-- Hands -->
+        <rect x="8" y="30" width="2" height="2" fill="var(--pixel-skin)"/>
+        <rect x="22" y="30" width="2" height="2" fill="var(--pixel-skin)"/>
+
+        <!-- Dress / Torso Base -->
+        <rect x="11" y="23" width="10" height="6" fill="var(--pixel-dress)"/>
+        <rect x="10" y="29" width="12" height="3" fill="var(--pixel-dress)"/>
+        <rect x="9" y="31" width="14" height="1" fill="var(--pixel-dress)"/>
+        
+        <!-- Dress Dynamic Shading (Folds & Edges) -->
+        <rect x="11" y="23" width="1" height="6" fill="#000000" opacity="0.2"/>
+        <rect x="20" y="23" width="1" height="6" fill="#000000" opacity="0.2"/>
+        <rect x="10" y="31" width="12" height="1" fill="#000000" opacity="0.25"/>
+        <rect x="11" y="26" width="10" height="1" fill="#000000" opacity="0.15"/>
+        
+        <!-- Collar & Tie -->
+        <rect x="13" y="23" width="6" height="2" fill="#ffffff"/>
+        <rect x="14" y="25" width="4" height="1" fill="#dddddd"/>
+        <rect x="15" y="24" width="2" height="3" fill="#222222"/>
       </g>
-      <g *ngIf="(game.character().accessory ?? 'none') === 'bow'">
-        <rect x="6"  y="2" width="4" height="2" fill="var(--pixel-accessory)"/>
-        <rect x="14" y="2" width="4" height="2" fill="var(--pixel-accessory)"/>
-        <rect x="10" y="2" width="4" height="2" fill="var(--pixel-accessory)"/>
-        <rect x="6"  y="2" width="1" height="1" fill="#ffffff" opacity="0.5"/>
-        <rect x="17" y="2" width="1" height="1" fill="#ffffff" opacity="0.5"/>
-      </g>
-      <g *ngIf="(game.character().accessory ?? 'none') === 'star-clips'">
-        <rect x="4"  y="6" width="1" height="1" fill="var(--pixel-accessory)"/>
-        <rect x="3"  y="7" width="3" height="1" fill="var(--pixel-accessory)"/>
-        <rect x="4"  y="8" width="1" height="1" fill="var(--pixel-accessory)"/>
-        <rect x="19" y="6" width="1" height="1" fill="var(--pixel-accessory)"/>
-        <rect x="18" y="7" width="3" height="1" fill="var(--pixel-accessory)"/>
-        <rect x="19" y="8" width="1" height="1" fill="var(--pixel-accessory)"/>
+
+      <!-- ================= HEAD GROUP (Animates slightly more) ================= -->
+      <g class="sprite-head">
+        
+        <!-- Neck -->
+        <rect x="14" y="21" width="4" height="3" fill="var(--pixel-skin)"/>
+        <rect x="14" y="21" width="4" height="2" fill="#000000" opacity="0.25"/>
+
+        <!-- Face Base (Rounded) -->
+        <rect x="8" y="10" width="16" height="12" fill="var(--pixel-skin)"/>
+        <rect x="7" y="11" width="18" height="10" fill="var(--pixel-skin)"/>
+        <rect x="7" y="11" width="18" height="3" fill="#000000" opacity="0.1"/>
+
+        <!-- Detailed Anime Eyes -->
+        <rect x="9" y="14" width="4" height="4" fill="#1a1a24"/>
+        <rect x="19" y="14" width="4" height="4" fill="#1a1a24"/>
+        <rect x="8" y="14" width="1" height="1" fill="#1a1a24"/>
+        <rect x="23" y="14" width="1" height="1" fill="#1a1a24"/>
+        
+        <!-- Iris & Pupil -->
+        <rect x="10" y="15" width="2" height="3" fill="var(--pixel-eyes)"/>
+        <rect x="20" y="15" width="2" height="3" fill="var(--pixel-eyes)"/>
+        <rect x="10" y="15" width="2" height="1" fill="#000000" opacity="0.6"/>
+        <rect x="20" y="15" width="2" height="1" fill="#000000" opacity="0.6"/>
+        
+        <!-- Eye Highlights (Sparkle + Ambient Reflection) -->
+        <rect x="11" y="15" width="1" height="2" fill="#ffffff"/>
+        <rect x="21" y="15" width="1" height="2" fill="#ffffff"/>
+        <rect x="10" y="17" width="2" height="1" fill="#ffffff" opacity="0.3"/>
+        <rect x="20" y="17" width="2" height="1" fill="#ffffff" opacity="0.3"/>
+
+        <!-- Blush & Mouth -->
+        <rect x="7" y="17" width="2" height="1" fill="#ff7790" opacity="0.5"/>
+        <rect x="23" y="17" width="2" height="1" fill="#ff7790" opacity="0.5"/>
+        <rect x="15" y="18" width="2" height="1" fill="#d97382"/>
+
+        <!-- Front Hair / Bangs Base -->
+        <rect x="8" y="5" width="16" height="5" fill="var(--pixel-hair)"/>
+        <rect x="9" y="4" width="14" height="1" fill="var(--pixel-hair)"/>
+        <rect x="6" y="7" width="20" height="5" fill="var(--pixel-hair)"/>
+        
+        <!-- Bangs Over Forehead -->
+        <rect x="6" y="12" width="4" height="2" fill="var(--pixel-hair)"/>
+        <rect x="12" y="12" width="8" height="1" fill="var(--pixel-hair)"/>
+        <rect x="22" y="12" width="4" height="2" fill="var(--pixel-hair)"/>
+        <rect x="14" y="13" width="3" height="1" fill="var(--pixel-hair)"/>
+        
+        <!-- Side Strands -->
+        <rect x="5" y="11" width="3" height="11" fill="var(--pixel-hair)"/>
+        <rect x="24" y="11" width="3" height="11" fill="var(--pixel-hair)"/>
+        
+        <!-- Hair Crown Highlight (Halo Effect) -->
+        <rect x="9" y="7" width="14" height="1" fill="#ffffff" opacity="0.25"/>
+        <rect x="8" y="8" width="1" height="1" fill="#ffffff" opacity="0.25"/>
+        <rect x="23" y="8" width="1" height="1" fill="#ffffff" opacity="0.25"/>
+        
+        <!-- Hair Inner Shadow Framing the Face -->
+        <rect x="5" y="19" width="3" height="3" fill="#000000" opacity="0.3"/>
+        <rect x="24" y="19" width="3" height="3" fill="#000000" opacity="0.3"/>
+
+        <!-- ================= ACCESSORIES ================= -->
+        <g *ngIf="(game.character().accessory ?? 'none') === 'headphones'">
+          <rect x="6" y="4" width="20" height="2" fill="var(--pixel-accessory)"/>
+          <rect x="3" y="11" width="3" height="7" fill="var(--pixel-accessory)"/>
+          <rect x="26" y="11" width="3" height="7" fill="var(--pixel-accessory)"/>
+          <rect x="4" y="12" width="1" height="5" fill="#ffffff" opacity="0.4"/>
+          <rect x="27" y="12" width="1" height="5" fill="#ffffff" opacity="0.4"/>
+        </g>
+
+        <g *ngIf="(game.character().accessory ?? 'none') === 'bow'">
+          <rect x="13" y="4" width="6" height="4" fill="var(--pixel-accessory)"/>
+          <rect x="12" y="5" width="8" height="2" fill="var(--pixel-accessory)"/>
+          <rect x="15" y="5" width="2" height="2" fill="#000000" opacity="0.2"/>
+          <rect x="14" y="4" width="1" height="1" fill="#ffffff" opacity="0.4"/>
+          <rect x="17" y="4" width="1" height="1" fill="#ffffff" opacity="0.4"/>
+        </g>
+
+        <g *ngIf="(game.character().accessory ?? 'none') === 'star-clips'">
+          <rect x="23" y="12" width="1" height="4" fill="var(--pixel-accessory)"/>
+          <rect x="22" y="13" width="3" height="2" fill="var(--pixel-accessory)"/>
+          <rect x="23" y="13" width="1" height="1" fill="#ffffff" opacity="0.5"/>
+        </g>
+
       </g>
     </svg>
 
+    <!-- Partículas ambientales -->
     <span class="sparkle s1">✦</span>
     <span class="sparkle s2">✧</span>
     <span class="sparkle s3">⊹</span>
@@ -99,8 +159,7 @@
       <span class="edit-hint">✏️</span>
     </div>
     <input *ngIf="editingName()"
-           class="name-input"
-           [(ngModel)]="tempName"
+           class="name-input"[(ngModel)]="tempName"
            (keyup.enter)="saveName()"
            (blur)="saveName()"
            autofocus
