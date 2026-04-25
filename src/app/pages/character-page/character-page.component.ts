@@ -1,7 +1,8 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { GameService } from '../../services/game.service';
+import { AvatarExportService } from '../../services/avatar-export.service';
 
 @Component({
   selector: 'app-character-page',
@@ -11,7 +12,13 @@ import { GameService } from '../../services/game.service';
   styleUrls: ['./character-page.component.scss']
 })
 export class CharacterPageComponent {
-  game = inject(GameService);
+  game   = inject(GameService);
+  exporter = inject(AvatarExportService);
+
+  /** Reference to the live <svg> element for PNG export */
+  @ViewChild('avatarSvg') avatarSvgRef!: ElementRef<SVGElement>;
+
+  exporting = signal(false);
   editName  = signal(false);
   editTitle = signal(false);
   tempName  = '';
@@ -108,6 +115,22 @@ export class CharacterPageComponent {
   setAccessory(acc: 'none' | 'headphones' | 'bow' | 'star-clips') { this.game.updateCharacter({ accessory: acc }); }
   setAccColor(color: string) { this.game.updateCharacter({ accessoryColor: color }); }
 
+  cycleMood() {
+    const m = this.game.character().avatarMood ?? 'happy';
+    const next: Record<string, 'happy'|'excited'|'tired'|'neutral'> = {
+      happy: 'excited', excited: 'tired', tired: 'happy', neutral: 'excited'
+    };
+    this.game.updateCharacter({ avatarMood: next[m] ?? 'happy' });
+  }
+
+  get moodLabel(): string {
+    const m = this.game.character().avatarMood ?? 'happy';
+    const labels: Record<string, string> = {
+      happy: '😊 Feliz', excited: '⭐ Emocionada', tired: '😴 Cansada', neutral: '😐 Normal'
+    };
+    return labels[m] ?? '😊 Feliz';
+  }
+
   get topSkills() { return [...this.game.skills()].sort((a, b) => b.level - a.level || b.xp - a.xp).slice(0, 6); }
 
   get achievements() {
@@ -126,4 +149,19 @@ export class CharacterPageComponent {
   }
 
   xpPercent(xp: number, max: number) { return Math.min(100, (xp / max) * 100); }
+
+  async downloadCharacter(): Promise<void> {
+    if (this.exporting()) return;
+    this.exporting.set(true);
+    try {
+      await this.exporter.downloadPng(
+        this.avatarSvgRef.nativeElement,
+        this.game.character(),
+        8,  // 8× the native 24×40 SVG = 192×320 px PNG
+        `${this.game.character().name}-pixel.png`
+      );
+    } finally {
+      this.exporting.set(false);
+    }
+  }
 }

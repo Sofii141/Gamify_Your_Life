@@ -35,7 +35,7 @@ export class GameService {
       xp: 0, xpToNext: 100,
       hp: 100, maxHp: 100, mana: 50, maxMana: 50,
       coins: 50, streak: 0, lastCheckIn: null,
-      theme: 'coquette', hairColor: '#fdb4d0', dressColor: '#f48fb1',
+      theme: 'coquette', hairColor: '#1a1520', dressColor: '#c08040',
       avatarMood: 'happy',
       eyeColor: '#8b5cf6', skinTone: '#ffdec9',
       accessory: 'none', accessoryColor: '#f48fb1'

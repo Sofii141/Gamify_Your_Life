@@ -14,7 +14,7 @@ export interface Character {
   theme: 'coquette' | 'sage' | 'dreamy' | 'sunset' | 'misty' | 'coral' | 'terra' | 'blush' | 'midnight';
   hairColor: string;
   dressColor: string;
-  avatarMood: 'happy' | 'neutral' | 'tired';
+  avatarMood: 'happy' | 'neutral' | 'tired' | 'excited';
   eyeColor: string;
   skinTone: string;
   accessory: 'none' | 'headphones' | 'bow' | 'star-clips';

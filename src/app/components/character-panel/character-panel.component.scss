@@ -20,13 +20,15 @@
 
 .avatar-wrap {
   position: relative;
-  width: 128px;
-  height: 128px;
+  width: 96px;
+  height: 160px;
 }
 
+/* 24×40 viewBox — sidebar: 96×160 (scale ×4) */
 .character-svg {
-  width: 128px;
-  height: 128px;
+  width: 96px;
+  height: 160px;
+  image-rendering: pixelated;
   filter: drop-shadow(0 6px 12px var(--shadow));
 }
 
