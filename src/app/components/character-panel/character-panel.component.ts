@@ -18,15 +18,16 @@ export class CharacterPanelComponent {
   tempName = '';
   tempTitle = '';
 
+  // Getters limpios para el HTML (igual que en el vestidor)
+  get acc(): string { return (this.game.character() as any).accessory ?? 'none'; }
+  get mood(): string { return (this.game.character() as any).avatarMood ?? 'happy'; }
+
   startEditName() {
     this.tempName = this.game.character().name;
     this.editingName.set(true);
   }
-  
   saveName() {
-    if (this.tempName.trim()) {
-      this.game.updateCharacter({ name: this.tempName.trim() });
-    }
+    if (this.tempName.trim()) this.game.updateCharacter({ name: this.tempName.trim() });
     this.editingName.set(false);
   }
 
@@ -34,16 +35,19 @@ export class CharacterPanelComponent {
     this.tempTitle = this.game.character().title;
     this.editingTitle.set(true);
   }
-  
   saveTitle() {
-    if (this.tempTitle.trim()) {
-      this.game.updateCharacter({ title: this.tempTitle.trim() });
-    }
+    if (this.tempTitle.trim()) this.game.updateCharacter({ title: this.tempTitle.trim() });
     this.editingTitle.set(false);
   }
 
   gainSkillXp(skillId: string) {
     this.game.gainSkillXp(skillId, 5);
+  }
+
+  // Permite interactuar con el avatar desde el panel principal
+  cycleMood() {
+    const next: Record<string, string> = { happy: 'excited', excited: 'tired', tired: 'happy', neutral: 'excited' };
+    this.game.updateCharacter({ avatarMood: next[this.mood] as any ?? 'happy' });
   }
 
   get topSkills() { 

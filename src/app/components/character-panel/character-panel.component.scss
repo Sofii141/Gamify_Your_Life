@@ -22,6 +22,22 @@
   position: relative;
   width: 128px;
   height: 160px;
+  
+  /* Agregamos el comportamiento interactivo */
+  cursor: pointer;
+  transition: transform .2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  
+  &:hover { transform: translateY(-4px) scale(1.02); }
+  &:active { transform: scale(.98); }
+  
+  /* Estados de animo reflejados en el panel */
+  &.mood-excited { animation: bounce-char-panel .45s ease infinite alternate; }
+  &.mood-tired   { filter: saturate(.75); }
+}
+
+@keyframes bounce-char-panel {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-6px); }
 }
 
 .character-svg {
