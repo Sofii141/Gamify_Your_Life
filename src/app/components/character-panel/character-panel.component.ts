@@ -18,7 +18,8 @@ export class CharacterPanelComponent {
   tempName = '';
   tempTitle = '';
 
-  // Getters limpios para el HTML (igual que en el vestidor)
+  // ================= GETTERS LIMPIOS PARA EL HTML =================
+  get hair(): string { return (this.game.character() as any).hairStyle ?? 'long'; }
   get acc(): string { return (this.game.character() as any).accessory ?? 'none'; }
   get mood(): string { return (this.game.character() as any).avatarMood ?? 'happy'; }
 

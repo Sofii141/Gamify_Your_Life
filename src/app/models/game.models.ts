@@ -12,12 +12,13 @@ export interface Character {
   streak: number;
   lastCheckIn: string | null;
   theme: 'coquette' | 'sage' | 'dreamy' | 'sunset' | 'misty' | 'coral' | 'terra' | 'blush' | 'midnight';
+  hairStyle: 'long' | 'short' | 'twintails' | 'ponytail' | 'spiky';
   hairColor: string;
   dressColor: string;
   avatarMood: 'happy' | 'neutral' | 'tired' | 'excited';
   eyeColor: string;
   skinTone: string;
-  accessory: 'none' | 'headphones' | 'bow' | 'star-clips';
+  accessory: 'none' | 'headphones' | 'bow' | 'star-clips' | 'glasses' | 'cat-ears' | 'flower' | 'crown' | 'halo';
   accessoryColor: string;
 }
 

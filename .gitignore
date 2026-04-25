@@ -37,6 +37,24 @@ yarn-error.log
 testem.log
 /typings
 
-# System files
+# Claude Code
+.claude/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Editor swap files
+*.swp
+*.swo
+*~
+
+# OS cache
+.cache/
 .DS_Store
 Thumbs.db
+
+# Logs
+*.log
+logs/
