@@ -1,7 +1,20 @@
-<nav class="sidebar" [class.collapsed]="collapsed()">
-  <div class="sidebar-logo" (click)="toggle()">
-    <span class="logo-icon pixel">♠</span>
-    <span class="logo-text" *ngIf="!collapsed()">GameLife</span>
+<!-- Mobile hamburger button -->
+<button class="hamburger-btn" (click)="openMobile()" aria-label="Open menu">
+  <span>☰</span>
+</button>
+
+<!-- Mobile backdrop -->
+<div class="mobile-backdrop" [class.visible]="mobileOpen()" (click)="closeMobile()"></div>
+
+<!-- Sidebar -->
+<nav class="sidebar" [class.collapsed]="collapsed()" [class.mobile-open]="mobileOpen()">
+
+  <div class="sidebar-top">
+    <div class="sidebar-logo" (click)="toggle()">
+      <span class="logo-icon pixel">♠</span>
+      <span class="logo-text" *ngIf="!collapsed()">GameLife</span>
+    </div>
+    <button class="mobile-close-btn" (click)="closeMobile()" aria-label="Close menu">✕</button>
   </div>
 
   <div class="streak-badge" *ngIf="!collapsed()">
@@ -14,7 +27,8 @@
       <a [routerLink]="item.route"
          routerLinkActive="active"
          class="nav-item"
-         [title]="item.label">
+         [title]="item.label"
+         (click)="closeMobile()">
         <span class="nav-icon">{{ item.icon }}</span>
         <span class="nav-label" *ngIf="!collapsed()">{{ item.label }}</span>
       </a>
@@ -22,6 +36,7 @@
   </ul>
 
   <div class="sidebar-footer" *ngIf="!collapsed()">
+    <p class="footer-quote">✦ level up every day ✦</p>
     <div class="stars-deco"></div>
   </div>
 </nav>

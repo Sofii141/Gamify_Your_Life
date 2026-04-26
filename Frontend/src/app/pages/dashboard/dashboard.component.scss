@@ -136,11 +136,27 @@
   color: var(--primary);
 }
 
-/* Responsive */
+/* ── Responsive ── */
 @media (max-width: 768px) {
+  .dash-header {
+    padding: 1rem 1rem .5rem 1rem;
+  }
+
   .dash-content {
     grid-template-columns: 1fr;
-    padding: 1rem;
+    padding: .75rem 1rem 2rem;
+    gap: 1rem;
   }
+
   .left-col { position: static; }
+
+  .level-up-card {
+    padding: 1.5rem 2rem;
+    margin: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .cozy-title { font-size: .6rem; }
+  .deco { font-size: .9rem; }
 }

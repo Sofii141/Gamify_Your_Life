@@ -1,3 +1,68 @@
+/* ── Mobile hamburger ── */
+.hamburger-btn {
+  display: none;
+  position: fixed;
+  top: .85rem;
+  left: .85rem;
+  z-index: 300;
+  background: var(--bg-card);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  width: 42px;
+  height: 42px;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  cursor: pointer;
+  box-shadow: 0 4px 14px var(--shadow);
+  color: var(--primary);
+  transition: all .2s;
+
+  &:hover { transform: scale(1.07); background: var(--primary-l); }
+}
+
+/* ── Mobile backdrop ── */
+.mobile-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.28);
+  z-index: 150;
+  backdrop-filter: blur(3px);
+  animation: fadeIn .2s ease;
+
+  &.visible { display: block; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Close button (mobile only) ── */
+.mobile-close-btn {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  color: var(--text-muted);
+  padding: .3rem .45rem;
+  border-radius: 8px;
+  transition: all .15s;
+  line-height: 1;
+
+  &:hover { background: var(--border); color: var(--text); }
+}
+
+/* ── Sidebar top row ── */
+.sidebar-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ── Sidebar ── */
 .sidebar {
   width: 200px;
   min-height: 100vh;
@@ -9,6 +74,17 @@
   gap: 1rem;
   transition: width .3s cubic-bezier(.34,1.56,.64,1);
   flex-shrink: 0;
+  position: relative;
+
+  /* Cute gradient top stripe */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+    border-radius: 0 0 3px 3px;
+  }
 
   &.collapsed {
     width: 64px;
@@ -16,6 +92,7 @@
   }
 }
 
+/* ── Logo ── */
 .sidebar-logo {
   display: flex;
   align-items: center;
@@ -38,6 +115,7 @@
   white-space: nowrap;
 }
 
+/* ── Streak badge ── */
 .streak-badge {
   display: flex;
   align-items: center;
@@ -52,6 +130,7 @@
   white-space: nowrap;
 }
 
+/* ── Nav list ── */
 .nav-list {
   list-style: none;
   display: flex;
@@ -77,7 +156,7 @@
   &:hover {
     background: var(--primary-l);
     color: var(--text);
-    transform: translateX(2px);
+    transform: translateX(3px);
   }
 
   &.active {
@@ -100,8 +179,51 @@
   text-overflow: ellipsis;
 }
 
+/* ── Footer ── */
 .sidebar-footer {
   text-align: center;
   padding: .5rem 0;
-  opacity: .5;
+  opacity: .55;
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+}
+
+.footer-quote {
+  font-size: .55rem;
+  color: var(--text-muted);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  letter-spacing: .04em;
+}
+
+/* ── Mobile breakpoint ── */
+@media (max-width: 768px) {
+  .hamburger-btn  { display: flex; }
+  .mobile-close-btn { display: flex; }
+
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    z-index: 200;
+    width: 240px !important;
+    transform: translateX(-100%);
+    transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+    box-shadow: none;
+
+    &.collapsed {
+      width: 240px !important;
+      padding: 1.25rem .75rem;
+    }
+
+    &.mobile-open {
+      transform: translateX(0);
+      box-shadow: 8px 0 40px rgba(0,0,0,.15);
+    }
+
+    .nav-label { display: block !important; }
+    .streak-badge { display: flex !important; }
+    .sidebar-footer { display: flex !important; }
+    .logo-text { display: block !important; }
+  }
 }

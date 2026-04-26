@@ -11,3 +11,10 @@
   overflow-x: hidden;
   min-width: 0;
 }
+
+@media (max-width: 768px) {
+  .main-area {
+    width: 100%;
+    padding-top: 0;
+  }
+}

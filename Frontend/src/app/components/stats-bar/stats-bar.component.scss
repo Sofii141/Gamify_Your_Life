@@ -36,7 +36,7 @@
   &.done { background: var(--bg); color: var(--text-muted); }
 }
 
-.btn-icon { font-size: 1.1rem; flex-shrink: 0; }
+.btn-icon  { font-size: 1.1rem; flex-shrink: 0; }
 .btn-label { font-size: .88rem; }
 
 .check-msg {
@@ -101,3 +101,28 @@
 .xp-fill   { background: linear-gradient(90deg, #fbbf24, #f59e0b); }
 .hp-fill   { background: linear-gradient(90deg, #f87171, #ef4444); }
 .mana-fill { background: linear-gradient(90deg, #60a5fa, #3b82f6); }
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+  .stats-bar {
+    padding: .7rem 1rem .7rem 3.8rem;
+    gap: .4rem;
+  }
+
+  .stat-btn {
+    padding: .45rem .7rem;
+    border-radius: 12px;
+  }
+
+  .stat-detail { min-width: 60px; }
+  .mini-bar    { width: 60px; }
+  .btn-label   { font-size: .8rem; }
+}
+
+@media (max-width: 480px) {
+  .hp-btn, .mana-btn { display: none; }
+
+  .stats-bar { gap: .35rem; }
+
+  .stat-btn { padding: .4rem .6rem; }
+}

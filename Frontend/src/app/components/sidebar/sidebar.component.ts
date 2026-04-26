@@ -15,6 +15,7 @@ interface NavItem { icon: string; label: string; route: string; }
 export class SidebarComponent {
   game = inject(GameService);
   collapsed = signal(false);
+  mobileOpen = signal(false);
 
   nav: NavItem[] = [
     { icon: '🏠', label: 'Home',      route: '/dashboard' },
@@ -26,4 +27,6 @@ export class SidebarComponent {
   ];
 
   toggle() { this.collapsed.update(v => !v); }
+  openMobile() { this.mobileOpen.set(true); }
+  closeMobile() { this.mobileOpen.set(false); }
 }
