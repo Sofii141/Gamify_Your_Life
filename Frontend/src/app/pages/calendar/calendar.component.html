@@ -11,7 +11,7 @@
       <button class="nav-btn" (click)="nextMonth()">›</button>
     </div>
     <div class="topbar-right">
-      <button class="btn btn-ghost" (click)="goToToday()">✦ Hoy</button>
+      <button class="btn btn-ghost" (click)="goToToday()">✦ Today</button>
       <span class="deco-emojis">🌸 ✨ 🌙</span>
     </div>
   </div>
@@ -79,10 +79,10 @@
         <div class="notes-section">
 
           <div class="notes-header-row">
-            <span class="section-label">✏️ Notas del día</span>
+            <span class="section-label">✏️ Day Notes</span>
             <button class="add-note-btn"
                     *ngIf="!editingNote()"
-                    (click)="startAddNote()">＋ Agregar</button>
+                    (click)="startAddNote()">＋ Add</button>
           </div>
 
           <!-- Notes list -->
@@ -96,21 +96,21 @@
                   <span *ngFor="let s of (note.stickers ?? [])" class="note-card-sticker">{{ s }}</span>
                 </div>
                 <p class="note-card-text">{{ note.text }}</p>
-                <span class="note-edit-hint">✏️ editar</span>
+                <span class="note-edit-hint">✏️ edit</span>
               </div>
-              <button class="note-delete-btn" (click)="deleteNote(note.id)" title="Eliminar">✕</button>
+              <button class="note-delete-btn" (click)="deleteNote(note.id)" title="Delete">✕</button>
             </div>
           </div>
 
           <!-- Empty hint -->
           <p class="notes-empty" *ngIf="!getDayNotes(selectedDay()!).length && !editingNote()">
-            Sin notas aún ✨
+            No notes yet ✨
           </p>
 
           <!-- Add / Edit form -->
           <div class="note-form" *ngIf="editingNote()">
             <div class="note-form-header">
-              <span class="note-form-title">{{ editingNote()!.id ? 'Editar nota' : 'Nueva nota' }}</span>
+              <span class="note-form-title">{{ editingNote()!.id ? 'Edit note' : 'New note' }}</span>
               <div class="note-form-colors">
                 <button *ngFor="let c of NOTE_COLORS"
                         class="color-dot"
@@ -136,19 +136,19 @@
               <div class="note-selected-stickers" *ngIf="editingNoteStickers.length">
                 <span *ngFor="let s of editingNoteStickers; let i = index"
                       class="note-sel-sticker" (click)="removeStickerFromNote(i)"
-                      title="Toca para quitar">{{ s }}</span>
+                      title="Click to remove">{{ s }}</span>
               </div>
             </div>
 
             <div class="note-paper" [ngClass]="'note-color-' + editingNote()!.color">
               <textarea class="note-textarea"
                         [(ngModel)]="editingNoteText"
-                        placeholder="Escribe algo lindo aquí... ✨"
+                        placeholder="Write something nice here... ✨"
                         rows="3"></textarea>
             </div>
             <div class="note-form-btns">
-              <button class="btn btn-primary" (click)="saveEditingNote()">Guardar ✓</button>
-              <button class="btn btn-ghost" (click)="cancelEdit()">Cancelar</button>
+              <button class="btn btn-primary" (click)="saveEditingNote()">Save ✓</button>
+              <button class="btn btn-ghost" (click)="cancelEdit()">Cancel</button>
             </div>
           </div>
 
@@ -172,7 +172,7 @@
 
         <!-- Placed stickers -->
         <div class="placed-section" *ngIf="getDayStickers(selectedDay()!).length">
-          <span class="section-label">Mis stickers <small>(toca para quitar)</small></span>
+          <span class="section-label">My stickers <small>(click to remove)</small></span>
           <div class="placed-row">
             <span *ngFor="let s of getDayStickers(selectedDay()!); let i = index"
                   class="placed-sticker" (click)="removeSticker(i)">{{ s }}</span>
@@ -180,7 +180,7 @@
         </div>
 
         <div class="panel-footer">
-          <button class="btn btn-ghost" (click)="clearDay()">🗑️ Limpiar todo</button>
+          <button class="btn btn-ghost" (click)="clearDay()">🗑️ Clear all</button>
         </div>
 
       </div>
@@ -189,21 +189,21 @@
       <div class="empty-panel card" *ngIf="selectedDay() === null">
         <div class="empty-content">
           <div class="empty-deco sparkle">✨ 🌸 ✨</div>
-          <p class="empty-title pixel">Mi diario</p>
-          <p class="empty-desc">Toca un día para decorarlo<br>con stickers y notas</p>
+          <p class="empty-title pixel">My Diary</p>
+          <p class="empty-desc">Click a day to decorate it<br>with stickers and notes</p>
           <div class="month-stats">
             <div class="stat-item">
               <span class="stat-num pixel">{{ getDaysWithStickersCount() }}</span>
-              <span class="stat-label">días decorados</span>
+              <span class="stat-label">decorated days</span>
             </div>
             <div class="stat-item">
               <span class="stat-num pixel">{{ getDaysWithNotesCount() }}</span>
-              <span class="stat-label">notas escritas</span>
+              <span class="stat-label">notes written</span>
             </div>
           </div>
           <div class="hint-row">
-            <span>🌸 clic → sticker</span>
-            <span>✏️ escribe → nota</span>
+            <span>🌸 click → sticker</span>
+            <span>✏️ write → note</span>
           </div>
         </div>
       </div>
