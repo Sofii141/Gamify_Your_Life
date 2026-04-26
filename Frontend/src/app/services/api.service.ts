@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Character, Quest, Skill, GameData } from '../models/game.models';
+import { environment } from '../../environments/environment';
 
 export interface GameDataResponse {
   character: Character;
@@ -12,7 +13,7 @@ export interface GameDataResponse {
 @Injectable({ providedIn: 'root' })
 export class ApiService {
   private http = inject(HttpClient);
-  private base = 'http://localhost:8000/api';
+  private base = environment.apiUrl;
 
   getGame(): Observable<GameDataResponse> {
     return this.http.get<GameDataResponse>(`${this.base}/game`);
