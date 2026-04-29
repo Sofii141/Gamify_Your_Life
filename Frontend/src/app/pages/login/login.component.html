@@ -1,69 +1,239 @@
-<div class="login-container">
+<div class="login-page">
 
-  <div class="login-box">
-    <div class="login-header">
-      <h1 class="pixel">✨ Gamify Your Life</h1>
-      <p class="subtitle">{{ isLogin() ? 'Welcome back!' : 'Join the adventure!' }}</p>
-    </div>
-
-    <form (ngSubmit)="submit()" class="login-form">
-
-      <div *ngIf="!isLogin()" class="form-group">
-        <label>Username</label>
-        <input
-          type="text"
-          [(ngModel)]="username"
-          name="username"
-          placeholder="Choose your name"
-          required
-          [disabled]="loading()">
-      </div>
-
-      <div class="form-group">
-        <label>Email</label>
-        <input
-          type="email"
-          [(ngModel)]="email"
-          name="email"
-          placeholder="your@email.com"
-          required
-          [disabled]="loading()">
-      </div>
-
-      <div class="form-group">
-        <label>Password</label>
-        <input
-          type="password"
-          [(ngModel)]="password"
-          name="password"
-          placeholder="••••••••"
-          required
-          [disabled]="loading()">
-      </div>
-
-      <div *ngIf="error()" class="error-msg">
-        🚫 {{ error() }}
-      </div>
-
-      <button type="submit" class="login-btn" [disabled]="loading()">
-        {{ loading() ? '⏳ Loading...' : (isLogin() ? '✨ Login' : '🎮 Create Account') }}
-      </button>
-
-    </form>
-
-    <div class="login-toggle">
-      <span>{{ isLogin() ? "Don't have an account?" : 'Already have an account?' }}</span>
-      <button type="button" class="toggle-link" (click)="toggleMode()" [disabled]="loading()">
-        {{ isLogin() ? 'Sign up' : 'Login' }}
-      </button>
-    </div>
-
-    <div class="demo-creds" *ngIf="isLogin()">
-      <p class="pixel demo-title">🎯 Demo Credentials</p>
-      <code>{{ '📧 sofii@gamify.dev' }}</code>
-      <code>{{ '🔑 demo123456' }}</code>
-    </div>
-
+  <!-- ── Floating pixel stars (bg decoration) ── -->
+  <div class="stars" aria-hidden="true">
+    <span class="star s1">★</span>
+    <span class="star s2">✦</span>
+    <span class="star s3">✸</span>
+    <span class="star s4">★</span>
+    <span class="star s5">✦</span>
+    <span class="star s6">✸</span>
+    <span class="star s7">★</span>
+    <span class="star s8">✦</span>
   </div>
+
+  <!-- ── Left decorative panel ── -->
+  <aside class="deco-panel" aria-hidden="true">
+
+    <p class="deco-title pixel">Gamify<br>Your Life</p>
+
+    <!-- Cute frog character SVG -->
+    <div class="char-wrap">
+      <svg class="char-svg" viewBox="0 0 120 130" xmlns="http://www.w3.org/2000/svg">
+        <!-- Ear left -->
+        <circle cx="28" cy="28" r="16" fill="#7ac233"/>
+        <circle cx="28" cy="28" r="9"  fill="#a6df5a"/>
+        <!-- Ear right -->
+        <circle cx="92" cy="28" r="16" fill="#7ac233"/>
+        <circle cx="92" cy="28" r="9"  fill="#a6df5a"/>
+        <!-- Head -->
+        <circle cx="60" cy="58" r="44" fill="#7ac233"/>
+        <!-- Head highlight -->
+        <ellipse cx="44" cy="40" rx="14" ry="9" fill="#a6df5a" opacity=".5"/>
+        <!-- Eye left white -->
+        <circle cx="42" cy="55" r="12" fill="white"/>
+        <!-- Eye left pupil -->
+        <circle cx="44" cy="57" r="6.5" fill="#1c2e10"/>
+        <!-- Eye left shine -->
+        <circle cx="41" cy="53" r="2.5" fill="white"/>
+        <!-- Eye right white -->
+        <circle cx="78" cy="55" r="12" fill="white"/>
+        <!-- Eye right pupil -->
+        <circle cx="80" cy="57" r="6.5" fill="#1c2e10"/>
+        <!-- Eye right shine -->
+        <circle cx="77" cy="53" r="2.5" fill="white"/>
+        <!-- Blush left -->
+        <ellipse cx="30" cy="68" rx="9"  ry="5.5" fill="#ffb3d0" opacity=".75"/>
+        <!-- Blush right -->
+        <ellipse cx="90" cy="68" rx="9"  ry="5.5" fill="#ffb3d0" opacity=".75"/>
+        <!-- Nose -->
+        <ellipse cx="60" cy="68" rx="4.5" ry="3" fill="#5a9e22"/>
+        <!-- Smile -->
+        <path d="M 44 77 Q 60 92 76 77" stroke="#3d7a16" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+        <!-- Body -->
+        <ellipse cx="60" cy="112" rx="30" ry="20" fill="#7ac233"/>
+        <!-- Belly -->
+        <ellipse cx="60" cy="112" rx="18" ry="13" fill="#c5f07c" opacity=".6"/>
+        <!-- Arms -->
+        <ellipse cx="24" cy="106" rx="10" ry="7" fill="#7ac233" transform="rotate(-20 24 106)"/>
+        <ellipse cx="96" cy="106" rx="10" ry="7" fill="#7ac233" transform="rotate(20 96 106)"/>
+        <!-- Decorative sparkles -->
+        <text x="2"  y="20"  font-size="13" fill="#f7e237">★</text>
+        <text x="100" y="18" font-size="10" fill="#f7e237">✦</text>
+        <text x="105" y="50" font-size="8"  fill="#f7e237">✸</text>
+        <text x="4"  y="88"  font-size="9"  fill="#f7e237">✦</text>
+      </svg>
+    </div>
+
+    <!-- Mini stat cards -->
+    <div class="deco-stats">
+      <div class="dstat">
+        <span class="dstat-icon">⚔️</span>
+        <div class="dstat-bar">
+          <div class="dstat-fill" style="width:72%"></div>
+        </div>
+        <span class="dstat-val">Lv 7</span>
+      </div>
+      <div class="dstat">
+        <span class="dstat-icon">🌿</span>
+        <div class="dstat-bar green">
+          <div class="dstat-fill" style="width:55%"></div>
+        </div>
+        <span class="dstat-val">HP</span>
+      </div>
+      <div class="dstat">
+        <span class="dstat-icon">✨</span>
+        <div class="dstat-bar purple">
+          <div class="dstat-fill" style="width:40%"></div>
+        </div>
+        <span class="dstat-val">MP</span>
+      </div>
+    </div>
+
+    <p class="deco-tagline">Turn your daily habits<br>into epic quests 🗡️</p>
+
+  </aside>
+
+  <!-- ── Login / Register card ── -->
+  <main class="form-panel">
+    <div class="form-card">
+
+      <!-- Mobile logo -->
+      <div class="mobile-logo">
+        <span class="pixel mobile-title">✨ Gamify Your Life</span>
+      </div>
+
+      <!-- Mode tabs -->
+      <div class="mode-tabs" role="tablist">
+        <button
+          role="tab"
+          [class.active]="isLogin()"
+          (click)="isLogin() || toggleMode()"
+          [disabled]="loading()">
+          🗝️ Login
+        </button>
+        <button
+          role="tab"
+          [class.active]="!isLogin()"
+          (click)="!isLogin() || toggleMode()"
+          [disabled]="loading()">
+          ⚔️ Sign Up
+        </button>
+      </div>
+
+      <!-- Welcome text -->
+      <div class="welcome">
+        <h2>{{ isLogin() ? 'Welcome back, hero! 👾' : 'Start your quest! 🌟' }}</h2>
+        <p>{{ isLogin() ? 'Your adventure awaits.' : 'Create your character and begin.' }}</p>
+      </div>
+
+      <!-- Google button -->
+      <div *ngIf="googleEnabled" class="google-wrap">
+        <div #googleBtnContainer class="google-btn-container"></div>
+      </div>
+
+      <!-- Divider -->
+      <div class="divider">
+        <span>{{ googleEnabled ? '— or continue with email —' : '— enter your credentials —' }}</span>
+      </div>
+
+      <!-- Form -->
+      <form (ngSubmit)="submit()" class="form" autocomplete="on">
+
+        <!-- Username (register only) -->
+        <div class="field" *ngIf="!isLogin()" [@slideIn]>
+          <label for="username">
+            <span class="field-icon">🧙</span> Username
+          </label>
+          <input
+            id="username"
+            type="text"
+            [ngModel]="username()"
+            (ngModelChange)="username.set($event)"
+            name="username"
+            placeholder="Choose your hero name"
+            autocomplete="username"
+            required
+            [disabled]="loading()">
+        </div>
+
+        <!-- Email -->
+        <div class="field">
+          <label for="email">
+            <span class="field-icon">📧</span> Email
+          </label>
+          <input
+            id="email"
+            type="email"
+            [ngModel]="email()"
+            (ngModelChange)="email.set($event)"
+            name="email"
+            placeholder="your@email.com"
+            autocomplete="email"
+            required
+            [disabled]="loading()">
+        </div>
+
+        <!-- Password -->
+        <div class="field">
+          <label for="password">
+            <span class="field-icon">🔑</span> Password
+          </label>
+          <div class="pass-wrap">
+            <input
+              id="password"
+              [type]="showPass() ? 'text' : 'password'"
+              [ngModel]="password()"
+              (ngModelChange)="password.set($event)"
+              name="password"
+              placeholder="••••••••"
+              autocomplete="current-password"
+              required
+              [disabled]="loading()">
+            <button type="button" class="eye-btn" (click)="togglePass()" tabindex="-1">
+              {{ showPass() ? '🙈' : '👁️' }}
+            </button>
+          </div>
+        </div>
+
+        <!-- Error -->
+        <div class="error-msg" *ngIf="error()" role="alert">
+          ⚠️ {{ error() }}
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="submit-btn" [disabled]="loading()">
+          <span *ngIf="!loading()">
+            {{ isLogin() ? '⚔️ Enter the dungeon' : '🌟 Create my character' }}
+          </span>
+          <span *ngIf="loading()" class="loading-dots">
+            <span></span><span></span><span></span>
+          </span>
+        </button>
+
+      </form>
+
+      <!-- Toggle mode -->
+      <p class="toggle-hint">
+        {{ isLogin() ? "Don't have an account?" : 'Already have an account?' }}
+        <button type="button" class="link-btn" (click)="toggleMode()" [disabled]="loading()">
+          {{ isLogin() ? 'Sign up free →' : '← Back to login' }}
+        </button>
+      </p>
+
+      <!-- Demo credentials -->
+      <div class="demo-box" *ngIf="isLogin()">
+        <span class="pixel demo-label">🎯 Demo</span>
+        <div class="demo-row">
+          <code>sofii&#64;gamify.dev</code>
+          <code>demo123456</code>
+          <button type="button" class="demo-fill-btn" (click)="fillDemo()" [disabled]="loading()">
+            Fill ✨
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </main>
 
 </div>

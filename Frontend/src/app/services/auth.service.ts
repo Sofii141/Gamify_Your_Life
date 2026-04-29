@@ -43,6 +43,14 @@ export class AuthService {
     this.setUser({ id: res.user_id, username: res.username });
   }
 
+  async googleLogin(idToken: string): Promise<void> {
+    const res = await firstValueFrom(
+      this.http.post<AuthResponse>(`${this.apiUrl}/auth/google`, { id_token: idToken })
+    );
+    this.setToken(res.access_token);
+    this.setUser({ id: res.user_id, username: res.username });
+  }
+
   logout(): void {
     localStorage.removeItem(this.tokenKey);
     localStorage.removeItem(this.userKey);

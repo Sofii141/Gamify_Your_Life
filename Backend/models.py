@@ -10,7 +10,9 @@ class User(Base):
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String, unique=True, index=True)
     email = Column(String, unique=True, index=True)
-    password_hash = Column(String)
+    password_hash = Column(String, nullable=True)   # nullable for Google-only users
+    google_id = Column(String, nullable=True, unique=True, index=True)
+    avatar_url = Column(String, nullable=True)
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
 
     character = relationship("Character", back_populates="user", uselist=False, cascade="all, delete-orphan")

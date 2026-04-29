@@ -1,186 +1,516 @@
-.login-container {
-  width: 100%;
+// ─── Palette ───────────────────────────────────────────────────────────────
+$lime:       #c5f135;
+$lime-mid:   #a8d62e;
+$lime-dark:  #7ac233;
+$lime-pale:  #eafbb8;
+$lime-bg:    #d8f76a;
+$white:      #ffffff;
+$dark:       #1e2d0f;
+$card-bg:    #f9ffed;
+$border:     #b8e04a;
+$muted:      #6b8c3a;
+$error-bg:   #fff0f0;
+$error-col:  #c0392b;
+$purple:     #9b59b6;
+$blue:       #3498db;
+
+// ─── Pixel font shorthand ──────────────────────────────────────────────────
+.pixel { font-family: 'Press Start 2P', monospace; }
+
+// ─── Page shell ───────────────────────────────────────────────────────────
+.login-page {
+  position: relative;
   min-height: 100vh;
+  display: flex;
+  background: linear-gradient(135deg, $lime 0%, $lime-bg 40%, #b4f0a0 100%);
+  overflow: hidden;
+}
+
+// ─── Floating stars background ────────────────────────────────────────────
+.stars {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.star {
+  position: absolute;
+  font-size: 1.1rem;
+  color: $lime-dark;
+  opacity: .45;
+  animation: floatStar var(--dur, 6s) ease-in-out infinite var(--delay, 0s);
+
+  &.s1 { top: 8%;  left: 5%;   --dur: 7s;  --delay: 0s;    font-size: .9rem; }
+  &.s2 { top: 15%; left: 18%;  --dur: 5s;  --delay: 1.2s;  font-size: 1.3rem; }
+  &.s3 { top: 30%; left: 3%;   --dur: 8s;  --delay: 0.5s;  font-size: .7rem; }
+  &.s4 { top: 60%; left: 8%;   --dur: 6s;  --delay: 2s;    font-size: 1rem; }
+  &.s5 { top: 75%; left: 20%;  --dur: 9s;  --delay: 0.8s;  font-size: .8rem; }
+  &.s6 { top: 10%; right: 8%;  --dur: 6s;  --delay: 3s;    font-size: 1.2rem; }
+  &.s7 { top: 50%; right: 5%;  --dur: 7s;  --delay: 1s;    font-size: .9rem; }
+  &.s8 { top: 85%; right: 12%; --dur: 5.5s;--delay: 1.5s;  font-size: 1rem; }
+}
+
+@keyframes floatStar {
+  0%, 100% { transform: translateY(0)    rotate(0deg);   opacity: .45; }
+  50%       { transform: translateY(-18px) rotate(180deg); opacity: .9; }
+}
+
+// ─── Left decorative panel ────────────────────────────────────────────────
+.deco-panel {
+  position: relative;
+  z-index: 1;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.6rem;
+  width: 400px;
+  flex-shrink: 0;
+  padding: 3rem 2rem;
+
+  @media (min-width: 900px) { display: flex; }
+}
+
+.deco-title {
+  font-size: .72rem;
+  color: $dark;
+  text-align: center;
+  line-height: 1.8;
+  text-shadow: 2px 2px 0 rgba(255,255,255,.6);
+}
+
+.char-wrap {
+  position: relative;
+  filter: drop-shadow(0 8px 24px rgba(0,0,0,.15));
+  animation: charBob 3.5s ease-in-out infinite;
+}
+
+.char-svg {
+  width: 180px;
+  height: 195px;
+}
+
+@keyframes charBob {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-10px); }
+}
+
+.deco-stats {
+  display: flex;
+  flex-direction: column;
+  gap: .6rem;
+  width: 100%;
+  max-width: 240px;
+  background: rgba(255,255,255,.45);
+  border: 2px solid rgba(255,255,255,.7);
+  border-radius: 16px;
+  padding: 1rem 1.2rem;
+  backdrop-filter: blur(6px);
+}
+
+.dstat {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+
+  .dstat-icon { font-size: 1rem; flex-shrink: 0; }
+
+  .dstat-bar {
+    flex: 1;
+    height: 8px;
+    background: rgba(0,0,0,.12);
+    border-radius: 99px;
+    overflow: hidden;
+
+    &.green  .dstat-fill { background: #27ae60; }
+    &.purple .dstat-fill { background: $purple; }
+
+    .dstat-fill {
+      height: 100%;
+      background: $lime-dark;
+      border-radius: 99px;
+      transition: width .6s ease;
+    }
+  }
+
+  .dstat-val {
+    font-family: 'Press Start 2P', monospace;
+    font-size: .44rem;
+    color: $dark;
+    min-width: 24px;
+  }
+}
+
+.deco-tagline {
+  font-size: .78rem;
+  font-weight: 700;
+  color: $dark;
+  text-align: center;
+  line-height: 1.6;
+  opacity: .8;
+}
+
+// ─── Right form panel ─────────────────────────────────────────────────────
+.form-panel {
+  position: relative;
+  z-index: 1;
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, var(--primary-l) 0%, var(--secondary-l) 100%);
-  padding: 1rem;
+  padding: 2rem 1rem;
 }
 
-.login-box {
-  background: var(--bg-card);
-  border: 2px solid var(--border);
-  border-radius: 24px;
-  padding: 2.5rem 2rem;
+.form-card {
   width: 100%;
-  max-width: 380px;
-  box-shadow: 0 20px 60px rgba(0,0,0,.12);
+  max-width: 420px;
+  background: $card-bg;
+  border: 2.5px solid $border;
+  border-radius: 28px;
+  padding: 2.4rem 2rem;
+  box-shadow:
+    0 4px 0 $lime-dark,
+    0 24px 60px rgba(0,0,0,.12);
 }
 
-.login-header {
+// ─── Mobile logo ──────────────────────────────────────────────────────────
+.mobile-logo {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1.6rem;
+  @media (min-width: 900px) { display: none; }
 }
 
-.login-header h1 {
-  font-size: .68rem;
-  color: var(--primary-d);
-  margin-bottom: .5rem;
+.mobile-title {
+  font-size: .58rem;
+  color: $lime-dark;
+  letter-spacing: .03em;
 }
 
-.subtitle {
-  font-size: .9rem;
-  font-weight: 600;
-  color: var(--text-muted);
+// ─── Mode tabs ────────────────────────────────────────────────────────────
+.mode-tabs {
+  display: flex;
+  background: $lime-pale;
+  border: 2px solid $border;
+  border-radius: 99px;
+  padding: 4px;
+  margin-bottom: 1.6rem;
+
+  button {
+    flex: 1;
+    padding: .55rem .5rem;
+    border: none;
+    border-radius: 99px;
+    background: transparent;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: .82rem;
+    color: $muted;
+    cursor: pointer;
+    transition: all .25s cubic-bezier(.34,1.56,.64,1);
+
+    &.active {
+      background: $lime-dark;
+      color: $white;
+      box-shadow: 0 2px 8px rgba(122,194,51,.4);
+    }
+
+    &:disabled { opacity: .6; cursor: not-allowed; }
+  }
 }
 
-.login-form {
+// ─── Welcome text ─────────────────────────────────────────────────────────
+.welcome {
+  text-align: center;
+  margin-bottom: 1.4rem;
+
+  h2 {
+    font-size: 1.15rem;
+    font-weight: 900;
+    color: $dark;
+    margin-bottom: .3rem;
+  }
+
+  p {
+    font-size: .82rem;
+    color: $muted;
+    font-weight: 600;
+  }
+}
+
+// ─── Google button ────────────────────────────────────────────────────────
+.google-wrap {
+  margin-bottom: .6rem;
+}
+
+.google-btn-container {
+  width: 100%;
+  min-height: 44px;
+  display: flex;
+  justify-content: center;
+
+  // Google renders an iframe inside; make it fill the container
+  :host ::ng-deep iframe {
+    width: 100% !important;
+  }
+}
+
+// ─── Divider ──────────────────────────────────────────────────────────────
+.divider {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  margin: 1rem 0;
+
+  &::before, &::after {
+    content: '';
+    flex: 1;
+    height: 1.5px;
+    background: $border;
+    border-radius: 99px;
+  }
+
+  span {
+    font-size: .72rem;
+    font-weight: 700;
+    color: $muted;
+    white-space: nowrap;
+  }
+}
+
+// ─── Form fields ──────────────────────────────────────────────────────────
+.form {
   display: flex;
   flex-direction: column;
-  gap: 1.2rem;
+  gap: 1rem;
 }
 
-.form-group {
+.field {
   display: flex;
   flex-direction: column;
-  gap: .4rem;
-}
+  gap: .35rem;
 
-.form-group label {
-  font-weight: 700;
-  font-size: .82rem;
-  color: var(--text);
-  text-transform: uppercase;
-  letter-spacing: .05em;
-}
-
-.form-group input {
-  padding: .75rem 1rem;
-  border: 2px solid var(--border);
-  border-radius: 12px;
-  background: var(--bg-card);
-  font-family: 'Nunito', sans-serif;
-  font-size: .9rem;
-  color: var(--text);
-  transition: all .2s;
-
-  &:focus {
-    outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px var(--primary-l);
+  label {
+    font-weight: 800;
+    font-size: .78rem;
+    color: $dark;
+    display: flex;
+    align-items: center;
+    gap: .4rem;
   }
 
-  &::placeholder {
-    color: var(--text-muted);
-  }
+  .field-icon { font-size: .9rem; }
 
-  &:disabled {
-    opacity: .6;
-    cursor: not-allowed;
+  input {
+    width: 100%;
+    padding: .75rem 1rem;
+    border: 2px solid $border;
+    border-radius: 12px;
+    background: $white;
+    font-family: 'Nunito', sans-serif;
+    font-size: .9rem;
+    color: $dark;
+    transition: border-color .2s, box-shadow .2s;
+    box-sizing: border-box;
+
+    &:focus {
+      outline: none;
+      border-color: $lime-dark;
+      box-shadow: 0 0 0 3px rgba(122,194,51,.25);
+    }
+
+    &::placeholder { color: #b5c98a; }
+    &:disabled { opacity: .6; cursor: not-allowed; }
   }
 }
 
+// Password with eye toggle
+.pass-wrap {
+  position: relative;
+
+  input { padding-right: 2.8rem; }
+
+  .eye-btn {
+    position: absolute;
+    right: .7rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: .2rem;
+    line-height: 1;
+
+    &:hover { transform: translateY(-50%) scale(1.15); }
+  }
+}
+
+// ─── Error ────────────────────────────────────────────────────────────────
 .error-msg {
-  padding: .75rem 1rem;
-  background: #fee;
-  border: 2px solid #fcc;
+  padding: .7rem 1rem;
+  background: $error-bg;
+  border: 2px solid #fac8c8;
   border-radius: 12px;
-  font-size: .82rem;
-  font-weight: 600;
-  color: #c33;
+  font-size: .8rem;
+  font-weight: 700;
+  color: $error-col;
   text-align: center;
+  animation: shake .35s ease;
 }
 
-.login-btn {
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-5px); }
+  40%, 80% { transform: translateX(5px); }
+}
+
+// ─── Submit button ────────────────────────────────────────────────────────
+.submit-btn {
+  width: 100%;
   padding: .9rem 1.5rem;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  color: #fff;
+  background: linear-gradient(135deg, $lime-dark 0%, $lime-mid 100%);
+  color: $white;
   border: none;
-  border-radius: 12px;
+  border-radius: 14px;
   font-family: 'Nunito', sans-serif;
-  font-weight: 800;
+  font-weight: 900;
   font-size: .95rem;
   cursor: pointer;
-  transition: all .25s cubic-bezier(.34,1.56,.64,1);
-  margin-top: .5rem;
+  letter-spacing: .02em;
+  box-shadow: 0 4px 0 #5a9e22, 0 8px 20px rgba(122,194,51,.35);
+  transition: all .2s cubic-bezier(.34,1.56,.64,1);
+  margin-top: .4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
 
   &:hover:not(:disabled) {
     transform: translateY(-2px);
-    box-shadow: 0 12px 30px rgba(0,0,0,.15);
+    box-shadow: 0 6px 0 #5a9e22, 0 14px 30px rgba(122,194,51,.4);
   }
 
   &:active:not(:disabled) {
-    transform: translateY(0);
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #5a9e22;
   }
 
-  &:disabled {
-    opacity: .6;
-    cursor: not-allowed;
+  &:disabled { opacity: .65; cursor: not-allowed; transform: none; }
+}
+
+// Loading dots animation
+.loading-dots {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: $white;
+    animation: dotBounce .8s ease-in-out infinite;
+
+    &:nth-child(2) { animation-delay: .15s; }
+    &:nth-child(3) { animation-delay: .3s; }
   }
 }
 
-.login-toggle {
+@keyframes dotBounce {
+  0%, 80%, 100% { transform: scale(.7); opacity: .5; }
+  40%           { transform: scale(1.1); opacity: 1; }
+}
+
+// ─── Toggle mode hint ─────────────────────────────────────────────────────
+.toggle-hint {
   text-align: center;
-  margin-top: 1.5rem;
-  font-size: .82rem;
-  color: var(--text-muted);
+  margin-top: 1.2rem;
+  font-size: .8rem;
+  color: $muted;
+  font-weight: 600;
 }
 
-.toggle-link {
+.link-btn {
   background: none;
   border: none;
-  color: var(--primary);
-  font-weight: 700;
+  color: $lime-dark;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: .8rem;
   cursor: pointer;
-  text-decoration: underline;
   margin-left: .3rem;
+  text-decoration: underline;
+  text-underline-offset: 2px;
   transition: color .2s;
 
-  &:hover:not(:disabled) {
-    color: var(--primary-d);
-  }
-
-  &:disabled {
-    opacity: .6;
-    cursor: not-allowed;
-  }
+  &:hover:not(:disabled) { color: darken($lime-dark, 15%); }
+  &:disabled { opacity: .6; cursor: not-allowed; }
 }
 
-.demo-creds {
-  margin-top: 1.5rem;
-  padding: 1rem;
-  background: var(--primary-l);
-  border: 1.5px solid var(--border);
-  border-radius: 12px;
+// ─── Demo credentials ─────────────────────────────────────────────────────
+.demo-box {
+  margin-top: 1.2rem;
+  padding: .9rem 1rem;
+  background: $lime-pale;
+  border: 2px dashed $lime-dark;
+  border-radius: 14px;
   text-align: center;
 }
 
-.demo-title {
-  font-size: .52rem;
-  color: var(--primary-d);
-  margin-bottom: .5rem;
-}
-
-.demo-creds code {
+.demo-label {
+  font-size: .44rem;
+  color: $lime-dark;
   display: block;
-  font-size: .75rem;
-  font-family: 'Courier New', monospace;
-  color: var(--text);
-  padding: .3rem 0;
-  word-break: break-all;
+  margin-bottom: .6rem;
 }
 
+.demo-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: .5rem;
+
+  code {
+    font-size: .75rem;
+    font-family: 'Courier New', monospace;
+    color: $dark;
+    background: $white;
+    padding: .25rem .55rem;
+    border-radius: 8px;
+    border: 1.5px solid $border;
+  }
+}
+
+.demo-fill-btn {
+  padding: .3rem .8rem;
+  background: $lime-dark;
+  color: $white;
+  border: none;
+  border-radius: 99px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: .78rem;
+  cursor: pointer;
+  transition: all .2s;
+
+  &:hover:not(:disabled) {
+    background: darken($lime-dark, 8%);
+    transform: scale(1.05);
+  }
+
+  &:disabled { opacity: .6; cursor: not-allowed; }
+}
+
+// ─── Mobile tweaks ────────────────────────────────────────────────────────
 @media (max-width: 480px) {
-  .login-box {
-    padding: 1.75rem 1.25rem;
+  .form-card {
+    padding: 1.8rem 1.2rem;
+    border-radius: 22px;
   }
 
-  .login-header h1 {
-    font-size: .56rem;
-  }
+  .submit-btn { font-size: .85rem; }
 
-  .login-form {
-    gap: 1rem;
-  }
+  .welcome h2 { font-size: 1rem; }
 }
