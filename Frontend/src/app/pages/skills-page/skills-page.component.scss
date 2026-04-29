@@ -567,17 +567,209 @@
 
 /* ── Responsive ── */
 @media (max-width: 768px) {
-  .skills-page { padding: 1rem; gap: 1.25rem; }
-  .skills-hero { flex-direction: column; }
-  .controls-row { flex-direction: column; align-items: flex-start; }
-  .grid-3 { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: .75rem; }
-  .stat-chip { min-width: 75px; padding: .55rem .75rem; }
-  .tip-tiers { gap: .3rem; }
-  .tier-arrow { display: none; }
+  .skills-page     { padding: 1rem; gap: 1.25rem; }
+  .skills-hero     { flex-direction: column; }
+  .controls-row    { flex-direction: column; align-items: flex-start; }
+  .grid-3          { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: .75rem; }
+  .stat-chip       { min-width: 75px; padding: .55rem .75rem; }
+  .tip-tiers       { gap: .3rem; }
+  .tier-arrow      { display: none; }
+  .svg-tree-panel  { padding: 1rem .75rem; gap: 1rem; }
+  .tree-legend     { gap: .75rem; }
 }
 
 @media (max-width: 480px) {
-  .grid-3 { grid-template-columns: 1fr 1fr; }
-  .view-label { display: none; }
-  .hero-title { font-size: .6rem; }
+  .grid-3        { grid-template-columns: 1fr 1fr; }
+  .view-label    { display: none; }
+  .hero-title    { font-size: .6rem; }
+  .tree-cat-btn  { font-size: .78rem; padding: .4rem .8rem; }
+}
+
+/* ══════════════════════════════════════════
+   TREE VIEW  –  hint bar
+══════════════════════════════════════════ */
+.tree-hint {
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  padding: .4rem .75rem;
+  background: var(--primary-l);
+  border: 1.5px solid var(--border);
+  border-radius: 999px;
+}
+
+/* ══════════════════════════════════════════
+   SVG SKILL TREE PANEL
+══════════════════════════════════════════ */
+.svg-tree-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  background: var(--bg-card);
+  border: 2px solid var(--border);
+  border-radius: 24px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 24px rgba(0,0,0,.06);
+}
+
+/* ── Category tabs ── */
+.tree-cat-tabs {
+  display: flex;
+  gap: .5rem;
+  flex-wrap: wrap;
+}
+
+.tree-cat-btn {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  padding: .5rem 1.1rem;
+  border-radius: 999px;
+  border: 2px solid var(--border);
+  background: var(--bg-card);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: .88rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all .2s cubic-bezier(.34,1.56,.64,1);
+
+  &:hover {
+    border-color: var(--primary);
+    color: var(--text);
+    transform: translateY(-2px);
+  }
+  &.active {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: #fff;
+    box-shadow: 0 4px 14px var(--shadow);
+    transform: translateY(-2px);
+  }
+}
+
+/* ── SVG scroll wrapper ── */
+.svg-scroll-wrap {
+  overflow-x: auto;
+  overflow-y: hidden;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #fafbff 0%, #f8f9fc 100%);
+  border: 1.5px solid var(--border);
+  padding: 1rem .5rem;
+
+  /* subtle dot-grid background */
+  background-image:
+    radial-gradient(circle, #d1d5db 1px, transparent 1px);
+  background-size: 28px 28px;
+  background-color: #f9fafb;
+}
+
+.skill-tree-svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* ── SVG nodes ── */
+.skill-node-group {
+  cursor: pointer;
+  transition: opacity .2s;
+
+  .node-body,
+  .node-halo,
+  .level-badge-g {
+    transition: transform .22s cubic-bezier(.34,1.56,.64,1);
+    transform-origin: center;
+    transform-box: fill-box;
+  }
+
+  &:hover:not(.node-locked) {
+    .node-body      { transform: scale(1.08); }
+    .node-halo      { transform: scale(1.15); opacity: .14 !important; }
+    .level-badge-g  { transform: scale(1.1); }
+  }
+
+  &.node-locked {
+    cursor: not-allowed;
+    opacity: .7;
+  }
+}
+
+/* Mastered node pulse */
+.node-mastered .mastered-ring {
+  animation: masteredPulse 2.4s ease-in-out infinite;
+}
+
+/* Progress arc draw-in */
+.progress-arc {
+  transition: stroke-dashoffset .8s cubic-bezier(.34,1.56,.64,1);
+}
+
+/* Floating +XP burst in SVG */
+.svg-xp-burst {
+  animation: svgBurstFloat .9s ease forwards;
+  pointer-events: none;
+}
+
+/* Connection lines */
+.conn-line {
+  transition: opacity .2s, stroke-width .2s;
+}
+.conn-active:hover { opacity: .9 !important; }
+
+.conn-badge {
+  transition: transform .2s;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* ── Legend row ── */
+.tree-legend {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  padding: .65rem 1rem;
+  background: var(--primary-l);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  font-size: .78rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.legend-swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 2px solid;
+}
+
+.swatch-unlocked {
+  background: color-mix(in srgb, var(--primary) 15%, white);
+  border-color: var(--primary);
+}
+
+.swatch-locked {
+  background: #F1F5F9;
+  border-color: #CBD5E1;
+}
+
+/* ── SVG animations ── */
+@keyframes masteredPulse {
+  0%, 100% { opacity: .55; stroke-width: 3; }
+  50%       { opacity: .9;  stroke-width: 4; }
+}
+
+@keyframes svgBurstFloat {
+  0%   { opacity: 1; transform: translateY(0);    }
+  80%  { opacity: 1; transform: translateY(-12px); }
+  100% { opacity: 0; transform: translateY(-22px); }
 }

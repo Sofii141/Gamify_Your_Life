@@ -6,7 +6,6 @@
       <h1 class="pixel hero-title">✨ Skills & Abilities</h1>
       <p class="hero-sub">Level up your craft, one practice at a time</p>
     </div>
-
     <div class="stats-chips">
       <div class="stat-chip chip-blue">
         <span class="chip-icon">💻</span>
@@ -41,9 +40,7 @@
 
   <!-- ─── Controls row ─── -->
   <div class="controls-row">
-
-    <!-- Category Filter -->
-    <div class="cat-filter">
+    <div class="cat-filter" *ngIf="viewMode() === 'grid'">
       <button *ngFor="let cat of categories"
               class="cat-btn"
               [class.active]="selectedCategory() === cat.id"
@@ -54,8 +51,10 @@
         <span class="cat-count">{{ categoryCount(cat.id) }}</span>
       </button>
     </div>
+    <div class="cat-filter" *ngIf="viewMode() === 'tree'">
+      <span class="tree-hint">🌳 Skills connected by dependencies — unlock by leveling up prerequisites</span>
+    </div>
 
-    <!-- View Mode Selector -->
     <div class="view-modes">
       <button *ngFor="let vm of viewModes"
               class="view-btn"
@@ -68,70 +67,270 @@
         <span class="soon-badge" *ngIf="!vm.available">Soon</span>
       </button>
     </div>
-
   </div>
 
-  <!-- ─── Skills Grid ─── -->
-  <ng-container *ngIf="selectedCategory() === 'All'; else filteredView">
+  <!-- ══════════════════════════════════════
+       GRID VIEW
+  ══════════════════════════════════════ -->
+  <ng-container *ngIf="viewMode() === 'grid'">
 
-    <div class="skill-section" *ngIf="programmingSkills().length">
-      <div class="section-tag programming-tag">
-        <span>💻</span>
-        <span>Programming</span>
-        <span class="section-progress">
-          {{ masteredInCategory(programmingSkills()) }}/{{ programmingSkills().length }} mastered
-        </span>
+    <ng-container *ngIf="selectedCategory() === 'All'; else filteredView">
+      <div class="skill-section" *ngIf="programmingSkills().length">
+        <div class="section-tag programming-tag">
+          <span>💻</span><span>Programming</span>
+          <span class="section-progress">{{ masteredInCategory(programmingSkills()) }}/{{ programmingSkills().length }} mastered</span>
+        </div>
+        <div class="grid-3">
+          <ng-container *ngFor="let skill of programmingSkills()">
+            <ng-container *ngTemplateOutlet="skillCard; context: { skill: skill }"></ng-container>
+          </ng-container>
+        </div>
       </div>
-      <div class="grid-3">
-        <ng-container *ngFor="let skill of programmingSkills()">
-          <ng-container *ngTemplateOutlet="skillCard; context: { skill: skill }"></ng-container>
-        </ng-container>
-      </div>
-    </div>
 
-    <div class="skill-section" *ngIf="creativeSkills().length">
-      <div class="section-tag creative-tag">
-        <span>🎨</span>
-        <span>Creative</span>
-        <span class="section-progress">
-          {{ masteredInCategory(creativeSkills()) }}/{{ creativeSkills().length }} mastered
-        </span>
+      <div class="skill-section" *ngIf="creativeSkills().length">
+        <div class="section-tag creative-tag">
+          <span>🎨</span><span>Creative</span>
+          <span class="section-progress">{{ masteredInCategory(creativeSkills()) }}/{{ creativeSkills().length }} mastered</span>
+        </div>
+        <div class="grid-3">
+          <ng-container *ngFor="let skill of creativeSkills()">
+            <ng-container *ngTemplateOutlet="skillCard; context: { skill: skill }"></ng-container>
+          </ng-container>
+        </div>
       </div>
-      <div class="grid-3">
-        <ng-container *ngFor="let skill of creativeSkills()">
-          <ng-container *ngTemplateOutlet="skillCard; context: { skill: skill }"></ng-container>
-        </ng-container>
-      </div>
-    </div>
 
-    <div class="skill-section" *ngIf="lifeSkills().length">
-      <div class="section-tag life-tag">
-        <span>🌸</span>
-        <span>Life</span>
-        <span class="section-progress">
-          {{ masteredInCategory(lifeSkills()) }}/{{ lifeSkills().length }} mastered
-        </span>
+      <div class="skill-section" *ngIf="lifeSkills().length">
+        <div class="section-tag life-tag">
+          <span>🌸</span><span>Life</span>
+          <span class="section-progress">{{ masteredInCategory(lifeSkills()) }}/{{ lifeSkills().length }} mastered</span>
+        </div>
+        <div class="grid-3">
+          <ng-container *ngFor="let skill of lifeSkills()">
+            <ng-container *ngTemplateOutlet="skillCard; context: { skill: skill }"></ng-container>
+          </ng-container>
+        </div>
       </div>
-      <div class="grid-3">
-        <ng-container *ngFor="let skill of lifeSkills()">
-          <ng-container *ngTemplateOutlet="skillCard; context: { skill: skill }"></ng-container>
-        </ng-container>
+    </ng-container>
+
+    <ng-template #filteredView>
+      <div class="skill-section">
+        <div class="grid-3">
+          <ng-container *ngFor="let skill of filteredSkills()">
+            <ng-container *ngTemplateOutlet="skillCard; context: { skill: skill }"></ng-container>
+          </ng-container>
+        </div>
       </div>
-    </div>
+    </ng-template>
 
   </ng-container>
 
-  <ng-template #filteredView>
-    <div class="skill-section">
-      <div class="grid-3">
-        <ng-container *ngFor="let skill of filteredSkills()">
-          <ng-container *ngTemplateOutlet="skillCard; context: { skill: skill }"></ng-container>
-        </ng-container>
-      </div>
-    </div>
-  </ng-template>
+  <!-- ══════════════════════════════════════
+       TREE VIEW  –  SVG Skill Graph
+  ══════════════════════════════════════ -->
+  <ng-container *ngIf="viewMode() === 'tree'">
+    <div class="svg-tree-panel">
 
-  <!-- ─── Skill Card Template ─── -->
+      <!-- ── Category tabs ── -->
+      <div class="tree-cat-tabs">
+        <button *ngFor="let tc of treeCats"
+                class="tree-cat-btn"
+                [class.active]="svgCategory() === tc.id"
+                (click)="svgCategory.set(tc.id)">
+          <span>{{ tc.icon }}</span>
+          <span>{{ tc.label }}</span>
+        </button>
+      </div>
+
+      <!-- ── SVG canvas ── -->
+      <div class="svg-scroll-wrap">
+        <svg class="skill-tree-svg"
+             [attr.viewBox]="'0 0 ' + getSvgConfig().width + ' ' + getSvgConfig().height"
+             [attr.width]="getSvgConfig().width"
+             [attr.height]="getSvgConfig().height"
+             xmlns="http://www.w3.org/2000/svg">
+
+          <defs>
+            <!-- Glow for mastered progress arc -->
+            <filter id="glow-f" x="-40%" y="-40%" width="180%" height="180%">
+              <feGaussianBlur stdDeviation="4" result="b"/>
+              <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <!-- Soft drop shadow for nodes -->
+            <filter id="shadow-f" x="-25%" y="-25%" width="150%" height="150%">
+              <feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="#00000018"/>
+            </filter>
+            <!-- Grey-out for locked nodes -->
+            <filter id="grey-f" x="-5%" y="-5%" width="110%" height="110%">
+              <feColorMatrix type="saturate" values="0.1"/>
+            </filter>
+          </defs>
+
+          <!-- ══ Connections layer ══ -->
+          <g class="connections-layer">
+            <ng-container *ngFor="let conn of svgConnections()">
+
+              <!-- Bezier path -->
+              <path [attr.d]="conn.path"
+                    fill="none"
+                    [attr.stroke]="conn.isLocked ? '#CBD5E1' : conn.color"
+                    [attr.stroke-width]="conn.isLocked ? '2' : '3.5'"
+                    [attr.stroke-dasharray]="conn.isLocked ? '7 5' : null"
+                    [attr.opacity]="conn.isLocked ? '0.4' : '0.6'"
+                    stroke-linecap="round"
+                    class="conn-line"
+                    [class.conn-active]="!conn.isLocked"/>
+
+              <!-- Midpoint badge -->
+              <g [attr.transform]="'translate(' + conn.midX + ',' + conn.midY + ')'">
+                <circle r="13"
+                        [attr.fill]="conn.isLocked ? 'white' : conn.color"
+                        [attr.stroke]="conn.isLocked ? '#CBD5E1' : 'white'"
+                        stroke-width="2"
+                        class="conn-badge"/>
+                <text *ngIf="conn.isLocked"  text-anchor="middle" dominant-baseline="central" font-size="12">🔒</text>
+                <text *ngIf="!conn.isLocked" text-anchor="middle" dominant-baseline="central"
+                      fill="white" font-size="9" font-weight="bold">✓</text>
+              </g>
+
+            </ng-container>
+          </g>
+
+          <!-- ══ Nodes layer ══ -->
+          <g class="nodes-layer">
+            <g *ngFor="let node of svgNodes()"
+               class="skill-node-group"
+               [class.node-locked]="node.isLocked"
+               [class.node-mastered]="!node.isLocked && node.skill.level >= 10"
+               [attr.transform]="'translate(' + node.pos.x + ',' + node.pos.y + ')'"
+               (click)="!node.isLocked && practice(node.skill)"
+               [attr.title]="node.isLocked ? (node.skill.name + ' – requires Lv.' + node.requiresLevel) : (node.skill.name + ' – click to practice')">
+
+              <!-- Ambient halo (unlocked only) -->
+              <circle *ngIf="!node.isLocked"
+                      r="46"
+                      [attr.fill]="node.skill.color"
+                      opacity="0.07"
+                      class="node-halo"/>
+
+              <!-- XP track ring (background) -->
+              <circle r="38"
+                      fill="none"
+                      [attr.stroke]="node.isLocked ? '#E2E8F0' : node.skill.color"
+                      stroke-width="5"
+                      [attr.opacity]="node.isLocked ? '0.3' : '0.18'"
+                      stroke-linecap="round"/>
+
+              <!-- XP progress arc (foreground) -->
+              <path *ngIf="!node.isLocked"
+                    [attr.d]="progressArc(node.skill.xp, node.skill.xpToNext, 38)"
+                    fill="none"
+                    [attr.stroke]="node.skill.level >= 10 ? '#F59E0B' : node.skill.color"
+                    stroke-width="5"
+                    stroke-linecap="round"
+                    class="progress-arc"
+                    [attr.filter]="node.skill.level >= 10 ? 'url(#glow-f)' : null"/>
+
+              <!-- Main body circle -->
+              <circle r="30"
+                      [attr.fill]="node.isLocked ? '#F1F5F9' : node.skill.bgColor"
+                      [attr.stroke]="node.isLocked ? '#CBD5E1' : node.skill.color"
+                      stroke-width="2.5"
+                      [attr.filter]="node.isLocked ? 'url(#grey-f)' : 'url(#shadow-f)'"
+                      class="node-body"/>
+
+              <!-- Mastered gold accent ring -->
+              <circle *ngIf="!node.isLocked && node.skill.level >= 10"
+                      r="30"
+                      fill="none"
+                      stroke="#F59E0B"
+                      stroke-width="3"
+                      opacity="0.55"
+                      class="mastered-ring"/>
+
+              <!-- Skill icon emoji -->
+              <text text-anchor="middle"
+                    dominant-baseline="central"
+                    font-size="18"
+                    class="node-emoji"
+                    [attr.opacity]="node.isLocked ? '0.3' : '1'">{{ node.skill.icon }}</text>
+
+              <!-- Level badge (top-right corner) -->
+              <g transform="translate(22,-26)" class="level-badge-g">
+                <circle r="12"
+                        [attr.fill]="node.isLocked ? '#94A3B8' : (node.skill.level >= 10 ? '#D97706' : node.skill.color)"
+                        stroke="white"
+                        stroke-width="2"
+                        class="level-badge-circle"/>
+                <text text-anchor="middle"
+                      dominant-baseline="central"
+                      fill="white"
+                      font-size="6.5"
+                      font-weight="bold"
+                      font-family="'Press Start 2P', monospace">{{ node.skill.level }}</text>
+              </g>
+
+              <!-- Skill name -->
+              <text text-anchor="middle"
+                    y="54"
+                    font-size="11"
+                    font-weight="700"
+                    font-family="Nunito, sans-serif"
+                    [attr.fill]="node.isLocked ? '#94A3B8' : '#1F2937'"
+                    class="node-label-name">{{ node.skill.name }}</text>
+
+              <!-- Tier / lock requirement -->
+              <text text-anchor="middle"
+                    y="68"
+                    font-size="9"
+                    font-weight="600"
+                    font-family="Nunito, sans-serif"
+                    [attr.fill]="node.isLocked ? '#CBD5E1' : getTierColor(node.skill.level)"
+                    class="node-label-tier">{{ node.isLocked ? ('Lv.' + node.requiresLevel + ' needed') : getTier(node.skill.level) }}</text>
+
+              <!-- Floating XP burst -->
+              <text *ngIf="!node.isLocked && xpBurst() === node.skill.id"
+                    text-anchor="middle"
+                    y="-55"
+                    font-size="13"
+                    font-weight="900"
+                    font-family="Nunito, sans-serif"
+                    [attr.fill]="node.skill.color"
+                    class="svg-xp-burst">+10 XP ✨</text>
+
+            </g>
+          </g>
+
+        </svg>
+      </div>
+
+      <!-- ── Legend ── -->
+      <div class="tree-legend">
+        <div class="legend-item">
+          <div class="legend-swatch swatch-unlocked"></div>
+          <span>Available – click to practice</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-swatch swatch-locked"></div>
+          <span>Locked – level up prerequisite first</span>
+        </div>
+        <div class="legend-item">
+          <svg width="28" height="12" style="flex-shrink:0">
+            <path d="M 2 6 Q 14 1 26 6" fill="none" stroke="var(--primary)" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+          <span>Skill dependency path</span>
+        </div>
+        <div class="legend-item">
+          <svg width="28" height="12" style="flex-shrink:0">
+            <path d="M 2 6 Q 14 1 26 6" fill="none" stroke="#CBD5E1" stroke-width="2" stroke-dasharray="5 4" stroke-linecap="round"/>
+          </svg>
+          <span>Locked path</span>
+        </div>
+      </div>
+
+    </div>
+  </ng-container>
+
+  <!-- ─── Skill Card Template (grid) ─── -->
   <ng-template #skillCard let-skill="skill">
     <div class="skill-card"
          [class.practicing]="isPracticing(skill.id)"
@@ -141,73 +340,41 @@
          [style.--sk-bg]="skill.bgColor"
          (mouseenter)="hoveredSkill.set(skill.id)"
          (mouseleave)="hoveredSkill.set(null)">
-
-      <!-- Glow orb -->
       <div class="card-orb"></div>
-
-      <!-- Mastered crown glow (only when mastered) -->
       <div class="mastered-glow" *ngIf="skill.level >= 10"></div>
-
-      <!-- Top row: icon + level + tier -->
       <div class="card-top">
-        <div class="icon-wrap">
-          <span class="skill-emoji">{{ skill.icon }}</span>
-        </div>
+        <div class="icon-wrap"><span class="skill-emoji">{{ skill.icon }}</span></div>
         <div class="level-col">
           <span class="level-badge pixel">Lv.{{ skill.level }}</span>
-          <span class="tier-badge"
-                [style.color]="getTierColor(skill.level)"
-                [style.background]="getTierBg(skill.level)">
+          <span class="tier-badge" [style.color]="getTierColor(skill.level)" [style.background]="getTierBg(skill.level)">
             {{ skill.level >= 10 ? '👑' : '' }} {{ getTier(skill.level) }}
           </span>
-          <span class="stars" [style.color]="skill.level >= 10 ? '#D97706' : skill.color">
-            {{ stars(skill.level) }}
-          </span>
+          <span class="stars" [style.color]="skill.level >= 10 ? '#D97706' : skill.color">{{ stars(skill.level) }}</span>
         </div>
       </div>
-
-      <!-- Name + description -->
       <div class="card-mid">
         <div class="skill-name">{{ skill.name }}</div>
         <div class="skill-desc">{{ skill.description }}</div>
       </div>
-
-      <!-- XP bar + milestone -->
       <div class="xp-area">
         <div class="xp-label">
           <span class="xp-label-left">Progress</span>
           <span class="xp-label-right">{{ skill.xp }} / {{ skill.xpToNext }} XP</span>
         </div>
         <div class="xp-track">
-          <div class="xp-fill"
-               [style.width.%]="xpPercent(skill)"
-               [style.background]="skill.level >= 10 ? 'linear-gradient(90deg,#f59e0b,#d97706)' : skill.color">
-          </div>
+          <div class="xp-fill" [style.width.%]="xpPercent(skill)" [style.background]="skill.level >= 10 ? 'linear-gradient(90deg,#f59e0b,#d97706)' : skill.color"></div>
           <div class="xp-shimmer"></div>
         </div>
         <div class="milestone-row">
-          <span class="milestone-text" *ngIf="skill.level < 10">
-            🎯 {{ xpNeeded(skill) }} XP to level up
-          </span>
-          <span class="milestone-text mastered-text" *ngIf="skill.level >= 10">
-            ✨ Maximum level reached!
-          </span>
+          <span class="milestone-text" *ngIf="skill.level < 10">🎯 {{ xpNeeded(skill) }} XP to level up</span>
+          <span class="milestone-text mastered-text" *ngIf="skill.level >= 10">✨ Maximum level reached!</span>
         </div>
       </div>
-
-      <!-- Practice button -->
       <button class="practice-btn" (click)="practice(skill)" [class.mastered-btn]="skill.level >= 10">
-        <span class="btn-spark">⚡</span>
-        Practice
-        <span class="btn-reward">+10 XP</span>
+        <span class="btn-spark">⚡</span>Practice<span class="btn-reward">+10 XP</span>
       </button>
-
-      <!-- Floating XP burst -->
       <div class="xp-burst" *ngIf="xpBurst() === skill.id">+10 XP ✨</div>
-
-      <!-- Level up badge -->
       <div class="levelup-badge" *ngIf="isLevelling(skill.id)">🎉 LEVEL UP!</div>
-
     </div>
   </ng-template>
 
@@ -224,9 +391,7 @@
       <span class="tier-arrow">→</span>
       <span class="tier-pill" style="color:#DC2626;background:#FEF2F2">👑 Master</span>
     </div>
-    <p class="tip-text">
-      <strong>Practice</strong> daily to earn XP and climb the tiers. Complete quests for bonus XP!
-    </p>
+    <p class="tip-text"><strong>Practice</strong> daily to earn XP and climb the tiers. Complete quests for bonus XP!</p>
   </div>
 
 </div>
