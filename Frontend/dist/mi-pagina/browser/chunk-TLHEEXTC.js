@@ -3,10 +3,12 @@ import {
   FormsModule,
   NgControlStatus,
   NgModel
-} from "./chunk-JZ6HHMZB.js";
+} from "./chunk-YY7JD6DV.js";
+import {
+  GameService
+} from "./chunk-7DFMREMJ.js";
 import {
   CommonModule,
-  GameService,
   NgClass,
   NgForOf,
   NgIf,
@@ -38,7 +40,7 @@ import {
   ɵɵtwoWayBindingSet,
   ɵɵtwoWayListener,
   ɵɵtwoWayProperty
-} from "./chunk-A4OUFFOQ.js";
+} from "./chunk-2HLPR2EO.js";
 
 // src/app/pages/calendar/calendar.component.ts
 var _c0 = () => [];
@@ -182,7 +184,7 @@ function CalendarComponent_div_24_button_14_Template(rf, ctx) {
       const ctx_r4 = \u0275\u0275nextContext(2);
       return \u0275\u0275resetView(ctx_r4.startAddNote());
     });
-    \u0275\u0275text(1, "\uFF0B Agregar");
+    \u0275\u0275text(1, "\uFF0B Add");
     \u0275\u0275elementEnd();
   }
 }
@@ -225,7 +227,7 @@ function CalendarComponent_div_24_div_15_div_1_Template(rf, ctx) {
     \u0275\u0275text(4);
     \u0275\u0275elementEnd();
     \u0275\u0275elementStart(5, "span", 64);
-    \u0275\u0275text(6, "\u270F\uFE0F editar");
+    \u0275\u0275text(6, "\u270F\uFE0F edit");
     \u0275\u0275elementEnd()();
     \u0275\u0275elementStart(7, "button", 65);
     \u0275\u0275listener("click", function CalendarComponent_div_24_div_15_div_1_Template_button_click_7_listener() {
@@ -264,7 +266,7 @@ function CalendarComponent_div_24_div_15_Template(rf, ctx) {
 function CalendarComponent_div_24_p_16_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "p", 69);
-    \u0275\u0275text(1, " Sin notas a\xFAn \u2728 ");
+    \u0275\u0275text(1, " No notes yet \u2728 ");
     \u0275\u0275elementEnd();
   }
 }
@@ -387,7 +389,7 @@ function CalendarComponent_div_24_div_17_Template(rf, ctx) {
       const ctx_r4 = \u0275\u0275nextContext(2);
       return \u0275\u0275resetView(ctx_r4.saveEditingNote());
     });
-    \u0275\u0275text(16, "Guardar \u2713");
+    \u0275\u0275text(16, "Save \u2713");
     \u0275\u0275elementEnd();
     \u0275\u0275elementStart(17, "button", 8);
     \u0275\u0275listener("click", function CalendarComponent_div_24_div_17_Template_button_click_17_listener() {
@@ -395,13 +397,13 @@ function CalendarComponent_div_24_div_17_Template(rf, ctx) {
       const ctx_r4 = \u0275\u0275nextContext(2);
       return \u0275\u0275resetView(ctx_r4.cancelEdit());
     });
-    \u0275\u0275text(18, "Cancelar");
+    \u0275\u0275text(18, "Cancel");
     \u0275\u0275elementEnd()()();
   }
   if (rf & 2) {
     const ctx_r4 = \u0275\u0275nextContext(2);
     \u0275\u0275advance(3);
-    \u0275\u0275textInterpolate(ctx_r4.editingNote().id ? "Editar nota" : "Nueva nota");
+    \u0275\u0275textInterpolate(ctx_r4.editingNote().id ? "Edit note" : "New note");
     \u0275\u0275advance(2);
     \u0275\u0275property("ngForOf", ctx_r4.NOTE_COLORS);
     \u0275\u0275advance(3);
@@ -480,9 +482,9 @@ function CalendarComponent_div_24_div_25_span_6_Template(rf, ctx) {
 function CalendarComponent_div_24_div_25_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "div", 94)(1, "span", 45);
-    \u0275\u0275text(2, "Mis stickers ");
+    \u0275\u0275text(2, "My stickers ");
     \u0275\u0275elementStart(3, "small");
-    \u0275\u0275text(4, "(toca para quitar)");
+    \u0275\u0275text(4, "(click to remove)");
     \u0275\u0275elementEnd()();
     \u0275\u0275elementStart(5, "div", 95);
     \u0275\u0275template(6, CalendarComponent_div_24_div_25_span_6_Template, 2, 1, "span", 96);
@@ -514,7 +516,7 @@ function CalendarComponent_div_24_Template(rf, ctx) {
     \u0275\u0275elementEnd()();
     \u0275\u0275element(9, "div", 42);
     \u0275\u0275elementStart(10, "div", 43)(11, "div", 44)(12, "span", 45);
-    \u0275\u0275text(13, "\u270F\uFE0F Notas del d\xEDa");
+    \u0275\u0275text(13, "\u270F\uFE0F Day Notes");
     \u0275\u0275elementEnd();
     \u0275\u0275template(14, CalendarComponent_div_24_button_14_Template, 2, 0, "button", 46);
     \u0275\u0275elementEnd();
@@ -536,7 +538,7 @@ function CalendarComponent_div_24_Template(rf, ctx) {
       const ctx_r4 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r4.clearDay());
     });
-    \u0275\u0275text(28, "\u{1F5D1}\uFE0F Limpiar todo");
+    \u0275\u0275text(28, "\u{1F5D1}\uFE0F Clear all");
     \u0275\u0275elementEnd()()();
   }
   if (rf & 2) {
@@ -567,30 +569,30 @@ function CalendarComponent_div_25_Template(rf, ctx) {
     \u0275\u0275text(3, "\u2728 \u{1F338} \u2728");
     \u0275\u0275elementEnd();
     \u0275\u0275elementStart(4, "p", 101);
-    \u0275\u0275text(5, "Mi diario");
+    \u0275\u0275text(5, "My Diary");
     \u0275\u0275elementEnd();
     \u0275\u0275elementStart(6, "p", 102);
-    \u0275\u0275text(7, "Toca un d\xEDa para decorarlo");
+    \u0275\u0275text(7, "Click a day to decorate it");
     \u0275\u0275element(8, "br");
-    \u0275\u0275text(9, "con stickers y notas");
+    \u0275\u0275text(9, "with stickers and notes");
     \u0275\u0275elementEnd();
     \u0275\u0275elementStart(10, "div", 103)(11, "div", 104)(12, "span", 105);
     \u0275\u0275text(13);
     \u0275\u0275elementEnd();
     \u0275\u0275elementStart(14, "span", 106);
-    \u0275\u0275text(15, "d\xEDas decorados");
+    \u0275\u0275text(15, "decorated days");
     \u0275\u0275elementEnd()();
     \u0275\u0275elementStart(16, "div", 104)(17, "span", 105);
     \u0275\u0275text(18);
     \u0275\u0275elementEnd();
     \u0275\u0275elementStart(19, "span", 106);
-    \u0275\u0275text(20, "notas escritas");
+    \u0275\u0275text(20, "notes written");
     \u0275\u0275elementEnd()()();
     \u0275\u0275elementStart(21, "div", 107)(22, "span");
-    \u0275\u0275text(23, "\u{1F338} clic \u2192 sticker");
+    \u0275\u0275text(23, "\u{1F338} click \u2192 sticker");
     \u0275\u0275elementEnd();
     \u0275\u0275elementStart(24, "span");
-    \u0275\u0275text(25, "\u270F\uFE0F escribe \u2192 nota");
+    \u0275\u0275text(25, "\u270F\uFE0F write \u2192 note");
     \u0275\u0275elementEnd()()()();
   }
   if (rf & 2) {
@@ -860,7 +862,7 @@ var CalendarComponent = class _CalendarComponent {
     };
   }
   static {
-    this.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _CalendarComponent, selectors: [["app-calendar"]], standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 26, vars: 6, consts: [[1, "calendar-page"], [1, "cal-topbar"], [1, "month-nav"], [1, "nav-btn", 3, "click"], [1, "month-display"], [1, "month-name", "pixel"], [1, "year-text"], [1, "topbar-right"], [1, "btn", "btn-ghost", 3, "click"], [1, "deco-emojis"], [1, "cal-layout"], [1, "cal-card", "card"], [1, "day-headers"], ["class", "day-header", 3, "weekend-hdr", 4, "ngFor", "ngForOf"], [1, "cal-grid"], ["class", "day-cell", 3, "empty", "today", "selected", "weekend-col", "click", 4, "ngFor", "ngForOf"], [1, "right-col"], ["class", "day-panel card", 4, "ngIf"], ["class", "empty-panel card", 4, "ngIf"], [1, "day-header"], [1, "day-cell", 3, "click"], ["class", "cell-inner", 4, "ngIf"], [1, "cell-inner"], [1, "day-num"], ["class", "cell-stickers", 4, "ngIf"], ["class", "cell-note-dots", 4, "ngIf"], [1, "cell-stickers"], ["class", "cell-sticker", 4, "ngFor", "ngForOf"], ["class", "sticker-more", 4, "ngIf"], [1, "cell-sticker"], [1, "sticker-more"], [1, "cell-note-dots"], ["class", "cell-note-dot", 3, "ngClass", 4, "ngFor", "ngForOf"], ["class", "dot-more", 4, "ngIf"], [1, "cell-note-dot", 3, "ngClass"], [1, "dot-more"], [1, "day-panel", "card"], [1, "panel-top"], [1, "panel-date"], [1, "panel-day-num", "pixel"], [1, "panel-month-name"], [1, "close-btn", 3, "click"], [1, "panel-divider", "stars-deco"], [1, "notes-section"], [1, "notes-header-row"], [1, "section-label"], ["class", "add-note-btn", 3, "click", 4, "ngIf"], ["class", "notes-list", 4, "ngIf"], ["class", "notes-empty", 4, "ngIf"], ["class", "note-form", 4, "ngIf"], [1, "sticker-section"], [1, "cat-tabs"], ["class", "cat-tab", 3, "active", "click", 4, "ngFor", "ngForOf"], [1, "picker-grid"], ["class", "picker-btn", 3, "click", 4, "ngFor", "ngForOf"], ["class", "placed-section", 4, "ngIf"], [1, "panel-footer"], [1, "add-note-btn", 3, "click"], [1, "notes-list"], ["class", "note-card", 3, "ngClass", "is-editing", 4, "ngFor", "ngForOf"], [1, "note-card", 3, "ngClass"], [1, "note-card-body", 3, "click"], ["class", "note-card-stickers", 4, "ngIf"], [1, "note-card-text"], [1, "note-edit-hint"], ["title", "Eliminar", 1, "note-delete-btn", 3, "click"], [1, "note-card-stickers"], ["class", "note-card-sticker", 4, "ngFor", "ngForOf"], [1, "note-card-sticker"], [1, "notes-empty"], [1, "note-form"], [1, "note-form-header"], [1, "note-form-title"], [1, "note-form-colors"], ["class", "color-dot", 3, "active", "background", "border-color", "title", "click", 4, "ngFor", "ngForOf"], [1, "note-sticker-picker"], [1, "note-sticker-cats"], ["class", "mini-cat-btn", 3, "active", "click", 4, "ngFor", "ngForOf"], [1, "note-sticker-grid"], ["class", "mini-sticker-btn", 3, "click", 4, "ngFor", "ngForOf"], ["class", "note-selected-stickers", 4, "ngIf"], [1, "note-paper", 3, "ngClass"], ["placeholder", "Escribe algo lindo aqu\xED... \u2728", "rows", "3", 1, "note-textarea", 3, "ngModelChange", "ngModel"], [1, "note-form-btns"], [1, "btn", "btn-primary", 3, "click"], [1, "color-dot", 3, "click", "title"], [1, "mini-cat-btn", 3, "click"], [1, "mini-sticker-btn", 3, "click"], [1, "note-selected-stickers"], ["class", "note-sel-sticker", "title", "Toca para quitar", 3, "click", 4, "ngFor", "ngForOf"], ["title", "Toca para quitar", 1, "note-sel-sticker", 3, "click"], [1, "cat-tab", 3, "click"], [1, "cat-name"], [1, "picker-btn", 3, "click"], [1, "placed-section"], [1, "placed-row"], ["class", "placed-sticker", 3, "click", 4, "ngFor", "ngForOf"], [1, "placed-sticker", 3, "click"], [1, "empty-panel", "card"], [1, "empty-content"], [1, "empty-deco", "sparkle"], [1, "empty-title", "pixel"], [1, "empty-desc"], [1, "month-stats"], [1, "stat-item"], [1, "stat-num", "pixel"], [1, "stat-label"], [1, "hint-row"]], template: function CalendarComponent_Template(rf, ctx) {
+    this.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _CalendarComponent, selectors: [["app-calendar"]], standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 26, vars: 6, consts: [[1, "calendar-page"], [1, "cal-topbar"], [1, "month-nav"], [1, "nav-btn", 3, "click"], [1, "month-display"], [1, "month-name", "pixel"], [1, "year-text"], [1, "topbar-right"], [1, "btn", "btn-ghost", 3, "click"], [1, "deco-emojis"], [1, "cal-layout"], [1, "cal-card", "card"], [1, "day-headers"], ["class", "day-header", 3, "weekend-hdr", 4, "ngFor", "ngForOf"], [1, "cal-grid"], ["class", "day-cell", 3, "empty", "today", "selected", "weekend-col", "click", 4, "ngFor", "ngForOf"], [1, "right-col"], ["class", "day-panel card", 4, "ngIf"], ["class", "empty-panel card", 4, "ngIf"], [1, "day-header"], [1, "day-cell", 3, "click"], ["class", "cell-inner", 4, "ngIf"], [1, "cell-inner"], [1, "day-num"], ["class", "cell-stickers", 4, "ngIf"], ["class", "cell-note-dots", 4, "ngIf"], [1, "cell-stickers"], ["class", "cell-sticker", 4, "ngFor", "ngForOf"], ["class", "sticker-more", 4, "ngIf"], [1, "cell-sticker"], [1, "sticker-more"], [1, "cell-note-dots"], ["class", "cell-note-dot", 3, "ngClass", 4, "ngFor", "ngForOf"], ["class", "dot-more", 4, "ngIf"], [1, "cell-note-dot", 3, "ngClass"], [1, "dot-more"], [1, "day-panel", "card"], [1, "panel-top"], [1, "panel-date"], [1, "panel-day-num", "pixel"], [1, "panel-month-name"], [1, "close-btn", 3, "click"], [1, "panel-divider", "stars-deco"], [1, "notes-section"], [1, "notes-header-row"], [1, "section-label"], ["class", "add-note-btn", 3, "click", 4, "ngIf"], ["class", "notes-list", 4, "ngIf"], ["class", "notes-empty", 4, "ngIf"], ["class", "note-form", 4, "ngIf"], [1, "sticker-section"], [1, "cat-tabs"], ["class", "cat-tab", 3, "active", "click", 4, "ngFor", "ngForOf"], [1, "picker-grid"], ["class", "picker-btn", 3, "click", 4, "ngFor", "ngForOf"], ["class", "placed-section", 4, "ngIf"], [1, "panel-footer"], [1, "add-note-btn", 3, "click"], [1, "notes-list"], ["class", "note-card", 3, "ngClass", "is-editing", 4, "ngFor", "ngForOf"], [1, "note-card", 3, "ngClass"], [1, "note-card-body", 3, "click"], ["class", "note-card-stickers", 4, "ngIf"], [1, "note-card-text"], [1, "note-edit-hint"], ["title", "Delete", 1, "note-delete-btn", 3, "click"], [1, "note-card-stickers"], ["class", "note-card-sticker", 4, "ngFor", "ngForOf"], [1, "note-card-sticker"], [1, "notes-empty"], [1, "note-form"], [1, "note-form-header"], [1, "note-form-title"], [1, "note-form-colors"], ["class", "color-dot", 3, "active", "background", "border-color", "title", "click", 4, "ngFor", "ngForOf"], [1, "note-sticker-picker"], [1, "note-sticker-cats"], ["class", "mini-cat-btn", 3, "active", "click", 4, "ngFor", "ngForOf"], [1, "note-sticker-grid"], ["class", "mini-sticker-btn", 3, "click", 4, "ngFor", "ngForOf"], ["class", "note-selected-stickers", 4, "ngIf"], [1, "note-paper", 3, "ngClass"], ["placeholder", "Write something nice here... \u2728", "rows", "3", 1, "note-textarea", 3, "ngModelChange", "ngModel"], [1, "note-form-btns"], [1, "btn", "btn-primary", 3, "click"], [1, "color-dot", 3, "click", "title"], [1, "mini-cat-btn", 3, "click"], [1, "mini-sticker-btn", 3, "click"], [1, "note-selected-stickers"], ["class", "note-sel-sticker", "title", "Click to remove", 3, "click", 4, "ngFor", "ngForOf"], ["title", "Click to remove", 1, "note-sel-sticker", 3, "click"], [1, "cat-tab", 3, "click"], [1, "cat-name"], [1, "picker-btn", 3, "click"], [1, "placed-section"], [1, "placed-row"], ["class", "placed-sticker", 3, "click", 4, "ngFor", "ngForOf"], [1, "placed-sticker", 3, "click"], [1, "empty-panel", "card"], [1, "empty-content"], [1, "empty-deco", "sparkle"], [1, "empty-title", "pixel"], [1, "empty-desc"], [1, "month-stats"], [1, "stat-item"], [1, "stat-num", "pixel"], [1, "stat-label"], [1, "hint-row"]], template: function CalendarComponent_Template(rf, ctx) {
       if (rf & 1) {
         \u0275\u0275elementStart(0, "div", 0)(1, "div", 1)(2, "div", 2)(3, "button", 3);
         \u0275\u0275listener("click", function CalendarComponent_Template_button_click_3_listener() {
@@ -884,7 +886,7 @@ var CalendarComponent = class _CalendarComponent {
         \u0275\u0275listener("click", function CalendarComponent_Template_button_click_13_listener() {
           return ctx.goToToday();
         });
-        \u0275\u0275text(14, "\u2726 Hoy");
+        \u0275\u0275text(14, "\u2726 Today");
         \u0275\u0275elementEnd();
         \u0275\u0275elementStart(15, "span", 9);
         \u0275\u0275text(16, "\u{1F338} \u2728 \u{1F319}");
@@ -922,4 +924,4 @@ var CalendarComponent = class _CalendarComponent {
 export {
   CalendarComponent
 };
-//# sourceMappingURL=chunk-UHI3M3RP.js.map
+//# sourceMappingURL=chunk-TLHEEXTC.js.map

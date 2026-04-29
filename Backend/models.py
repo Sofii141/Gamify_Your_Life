@@ -8,7 +8,9 @@ class User(Base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True)
-    username = Column(String, unique=True, index=True, default="sofia")
+    username = Column(String, unique=True, index=True)
+    email = Column(String, unique=True, index=True)
+    password_hash = Column(String)
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
 
     character = relationship("Character", back_populates="user", uselist=False, cascade="all, delete-orphan")

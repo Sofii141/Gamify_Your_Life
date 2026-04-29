@@ -95,3 +95,28 @@ class GameDataSchema(BaseModel):
     character: CharacterSchema
     quests: list[QuestSchema]
     skills: list[SkillSchema]
+
+
+class UserSignup(BaseModel):
+    username: str
+    email: str
+    password: str
+
+
+class UserLogin(BaseModel):
+    email: str
+    password: str
+
+
+class TokenResponse(BaseModel):
+    access_token: str
+    token_type: str = "bearer"
+    user_id: int
+    username: str
+
+
+class UserInfo(BaseModel):
+    id: int
+    username: str
+    email: str
+    created_at: str

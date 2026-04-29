@@ -4,10 +4,12 @@ import {
   MaxLengthValidator,
   NgControlStatus,
   NgModel
-} from "./chunk-JZ6HHMZB.js";
+} from "./chunk-YY7JD6DV.js";
+import {
+  GameService
+} from "./chunk-7DFMREMJ.js";
 import {
   CommonModule,
-  GameService,
   NgForOf,
   NgIf,
   computed,
@@ -35,7 +37,7 @@ import {
   ɵɵtextInterpolate,
   ɵɵtextInterpolate1,
   ɵɵtextInterpolate2
-} from "./chunk-A4OUFFOQ.js";
+} from "./chunk-2HLPR2EO.js";
 
 // src/app/pages/quests-page/quests-page.component.ts
 function QuestsPageComponent_button_17_Template(rf, ctx) {
@@ -339,4 +341,4 @@ var QuestsPageComponent = class _QuestsPageComponent {
 export {
   QuestsPageComponent
 };
-//# sourceMappingURL=chunk-P2ATGDS5.js.map
+//# sourceMappingURL=chunk-LZ5VP2KG.js.map

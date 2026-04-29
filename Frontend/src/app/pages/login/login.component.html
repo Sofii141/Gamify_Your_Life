@@ -1,0 +1,69 @@
+<div class="login-container">
+
+  <div class="login-box">
+    <div class="login-header">
+      <h1 class="pixel">✨ Gamify Your Life</h1>
+      <p class="subtitle">{{ isLogin() ? 'Welcome back!' : 'Join the adventure!' }}</p>
+    </div>
+
+    <form (ngSubmit)="submit()" class="login-form">
+
+      <div *ngIf="!isLogin()" class="form-group">
+        <label>Username</label>
+        <input
+          type="text"
+          [(ngModel)]="username"
+          name="username"
+          placeholder="Choose your name"
+          required
+          [disabled]="loading()">
+      </div>
+
+      <div class="form-group">
+        <label>Email</label>
+        <input
+          type="email"
+          [(ngModel)]="email"
+          name="email"
+          placeholder="your@email.com"
+          required
+          [disabled]="loading()">
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+        <input
+          type="password"
+          [(ngModel)]="password"
+          name="password"
+          placeholder="••••••••"
+          required
+          [disabled]="loading()">
+      </div>
+
+      <div *ngIf="error()" class="error-msg">
+        🚫 {{ error() }}
+      </div>
+
+      <button type="submit" class="login-btn" [disabled]="loading()">
+        {{ loading() ? '⏳ Loading...' : (isLogin() ? '✨ Login' : '🎮 Create Account') }}
+      </button>
+
+    </form>
+
+    <div class="login-toggle">
+      <span>{{ isLogin() ? "Don't have an account?" : 'Already have an account?' }}</span>
+      <button type="button" class="toggle-link" (click)="toggleMode()" [disabled]="loading()">
+        {{ isLogin() ? 'Sign up' : 'Login' }}
+      </button>
+    </div>
+
+    <div class="demo-creds" *ngIf="isLogin()">
+      <p class="pixel demo-title">🎯 Demo Credentials</p>
+      <code>{{ '📧 sofii@gamify.dev' }}</code>
+      <code>{{ '🔑 demo123456' }}</code>
+    </div>
+
+  </div>
+
+</div>

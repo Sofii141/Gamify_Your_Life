@@ -1,8 +1,12 @@
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.security import HTTPBearer, HTTPAuthCredentials
 from sqlalchemy.orm import Session
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 import math
+import os
+from jose import JWTError, jwt
+from passlib.context import CryptContext
 
 from database import get_db, engine, Base
 import models
@@ -20,7 +24,134 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-USER_ID = 1  # single-user app
+# ── Auth config ──
+SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret-key-change-in-production")
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 10080  # 7 days
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+security = HTTPBearer()
+
+
+def hash_password(password: str) -> str:
+    return pwd_context.hash(password)
+
+
+def verify_password(plain: str, hashed: str) -> bool:
+    return pwd_context.verify(plain, hashed)
+
+
+def create_access_token(user_id: int, username: str) -> str:
+    payload = {
+        "user_id": user_id,
+        "username": username,
+        "exp": datetime.now(timezone.utc) + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES),
+    }
+    return jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
+
+
+def get_current_user(credentials: HTTPAuthCredentials = Depends(security), db: Session = Depends(get_db)) -> models.User:
+    try:
+        payload = jwt.decode(credentials.credentials, SECRET_KEY, algorithms=[ALGORITHM])
+        user_id: int = payload.get("user_id")
+        if user_id is None:
+            raise HTTPException(status_code=401, detail="Invalid token")
+        user = db.get(models.User, user_id)
+        if not user:
+            raise HTTPException(status_code=401, detail="User not found")
+        return user
+    except JWTError:
+        raise HTTPException(status_code=401, detail="Invalid token")
+
+
+# ── Auth routes ──────────────────────────────────────────────────────────────
+
+@app.post("/api/auth/signup", response_model=schemas.TokenResponse)
+def signup(req: schemas.UserSignup, db: Session = Depends(get_db)):
+    """Create new user account and return token."""
+    # Check if user exists
+    if db.query(models.User).filter(models.User.email == req.email).first():
+        raise HTTPException(status_code=400, detail="Email already registered")
+    if db.query(models.User).filter(models.User.username == req.username).first():
+        raise HTTPException(status_code=400, detail="Username already taken")
+
+    # Create user
+    user = models.User(
+        username=req.username,
+        email=req.email,
+        password_hash=hash_password(req.password),
+    )
+    db.add(user)
+    db.commit()
+    db.refresh(user)
+
+    # Create character for user
+    character = models.Character(user_id=user.id)
+    db.add(character)
+    db.commit()
+
+    # Seed skills for user
+    skills_data = [
+        {"id": "python", "name": "Python", "icon": "🐍", "category": "Programming", "color": "#3776ab", "bg_color": "#dbeafe", "description": "Backend development"},
+        {"id": "js", "name": "JavaScript", "icon": "⚡", "category": "Programming", "color": "#f7df1e", "bg_color": "#fffbeb", "description": "Web scripting"},
+        {"id": "ts", "name": "TypeScript", "icon": "📘", "category": "Programming", "color": "#3178c6", "bg_color": "#eff6ff", "description": "Type-safe JS"},
+        {"id": "algo", "name": "Algorithms", "icon": "📊", "category": "Programming", "color": "#11998e", "bg_color": "#ccfbf1", "description": "Problem solving"},
+        {"id": "db", "name": "Databases", "icon": "🗄️", "category": "Programming", "color": "#336791", "bg_color": "#f0f9ff", "description": "Data management"},
+        {"id": "git", "name": "Git", "icon": "📁", "category": "Programming", "color": "#f34f29", "bg_color": "#fef2f2", "description": "Version control"},
+        {"id": "cpp", "name": "C++", "category": "Programming", "color": "#00599c", "bg_color": "#f0f4f8", "icon": "⚙️", "description": "Systems programming"},
+        {"id": "web", "name": "Web Dev", "icon": "🌐", "category": "Programming", "color": "#ff6b6b", "bg_color": "#ffe0e0", "description": "Full-stack web"},
+        {"id": "sysdesign", "name": "System Design", "icon": "🏗️", "category": "Programming", "color": "#1a5f7a", "bg_color": "#ecf0f1", "description": "Scalable systems"},
+        {"id": "creativity", "name": "Creativity", "icon": "✨", "category": "Creative", "color": "#e74c3c", "bg_color": "#fdeaea", "description": "Creative thinking"},
+        {"id": "writing", "name": "Writing", "icon": "✍️", "category": "Creative", "color": "#8e44ad", "bg_color": "#f4ecf7", "description": "Writing skills"},
+        {"id": "uiux", "name": "UI/UX Design", "icon": "🎨", "category": "Creative", "color": "#7c3aed", "bg_color": "#f3e8ff", "description": "Design & UX"},
+        {"id": "wellness", "name": "Wellness", "icon": "🌿", "category": "Life", "color": "#27ae60", "bg_color": "#eafaf1", "description": "Health & wellness"},
+        {"id": "focus", "name": "Focus", "icon": "🎯", "category": "Life", "color": "#f39c12", "bg_color": "#fef5e7", "description": "Deep focus"},
+        {"id": "social", "name": "Social Skills", "icon": "🤝", "category": "Life", "color": "#e91e63", "bg_color": "#fce4ec", "description": "Communication"},
+        {"id": "selfcare", "name": "Self-care", "icon": "💆", "category": "Life", "color": "#9b59b6", "bg_color": "#f4ecf7", "description": "Self-care practices"},
+        {"id": "study", "name": "Study", "icon": "📚", "category": "Life", "color": "#3498db", "bg_color": "#ebf5fb", "description": "Learning & study"},
+    ]
+
+    for skill_data in skills_data:
+        skill = models.Skill(
+            id=skill_data["id"],
+            user_id=user.id,
+            name=skill_data["name"],
+            icon=skill_data["icon"],
+            level=1,
+            xp=0,
+            xp_to_next=100,
+            color=skill_data["color"],
+            bg_color=skill_data["bg_color"],
+            category=skill_data["category"],
+            description=skill_data["description"],
+        )
+        db.add(skill)
+    db.commit()
+
+    token = create_access_token(user.id, user.username)
+    return schemas.TokenResponse(access_token=token, user_id=user.id, username=user.username)
+
+
+@app.post("/api/auth/login", response_model=schemas.TokenResponse)
+def login(req: schemas.UserLogin, db: Session = Depends(get_db)):
+    """Authenticate user and return token."""
+    user = db.query(models.User).filter(models.User.email == req.email).first()
+    if not user or not verify_password(req.password, user.password_hash):
+        raise HTTPException(status_code=401, detail="Invalid email or password")
+
+    token = create_access_token(user.id, user.username)
+    return schemas.TokenResponse(access_token=token, user_id=user.id, username=user.username)
+
+
+@app.get("/api/auth/me", response_model=schemas.UserInfo)
+def get_me(user: models.User = Depends(get_current_user)):
+    """Get current user info."""
+    return schemas.UserInfo(
+        id=user.id,
+        username=user.username,
+        email=user.email,
+        created_at=user.created_at.isoformat(),
+    )
 
 
 def get_or_404(db: Session, model, id):
@@ -61,10 +192,7 @@ def skill_to_schema(s: models.Skill) -> schemas.SkillSchema:
 # ── Game data ──────────────────────────────────────────────────────────────
 
 @app.get("/api/game", response_model=schemas.GameDataSchema)
-def get_game(db: Session = Depends(get_db)):
-    user = db.get(models.User, USER_ID)
-    if not user:
-        raise HTTPException(status_code=404, detail="User not found. Run seed.py first.")
+def get_game(user: models.User = Depends(get_current_user)):
     return schemas.GameDataSchema(
         character=char_to_schema(user.character),
         quests=[quest_to_schema(q) for q in user.quests],
@@ -75,9 +203,8 @@ def get_game(db: Session = Depends(get_db)):
 # ── Character ──────────────────────────────────────────────────────────────
 
 @app.put("/api/character", response_model=schemas.CharacterSchema)
-def update_character(updates: schemas.CharacterUpdate, db: Session = Depends(get_db)):
-    user = db.get(models.User, USER_ID)
-    if not user or not user.character:
+def update_character(updates: schemas.CharacterUpdate, user: models.User = Depends(get_current_user), db: Session = Depends(get_db)):
+    if not user.character:
         raise HTTPException(status_code=404, detail="Character not found.")
     c = user.character
     field_map = {
@@ -100,9 +227,8 @@ def update_character(updates: schemas.CharacterUpdate, db: Session = Depends(get
 
 
 @app.post("/api/character/check-in", response_model=schemas.CharacterSchema)
-def check_in(db: Session = Depends(get_db)):
-    user = db.get(models.User, USER_ID)
-    if not user or not user.character:
+def check_in(user: models.User = Depends(get_current_user), db: Session = Depends(get_db)):
+    if not user.character:
         raise HTTPException(status_code=404, detail="Character not found.")
     c = user.character
     today = datetime.now(timezone.utc).strftime("%a %b %d %Y")
@@ -133,18 +259,18 @@ def _check_level_up(c: models.Character):
 # ── Quests ─────────────────────────────────────────────────────────────────
 
 @app.get("/api/quests", response_model=list[schemas.QuestSchema])
-def get_quests(db: Session = Depends(get_db)):
-    quests = db.query(models.Quest).filter(models.Quest.user_id == USER_ID).all()
+def get_quests(user: models.User = Depends(get_current_user), db: Session = Depends(get_db)):
+    quests = db.query(models.Quest).filter(models.Quest.user_id == user.id).all()
     return [quest_to_schema(q) for q in quests]
 
 
 @app.post("/api/quests", response_model=schemas.QuestSchema)
-def add_quest(body: schemas.QuestCreate, db: Session = Depends(get_db)):
+def add_quest(body: schemas.QuestCreate, user: models.User = Depends(get_current_user), db: Session = Depends(get_db)):
     rewards = {"daily": (10, 5), "weekly": (30, 15), "custom": (20, 10)}
     xp, coins = rewards.get(body.category, (10, 5))
     quest = models.Quest(
         id=str(int(datetime.now(timezone.utc).timestamp() * 1000)),
-        user_id=USER_ID, title=body.title, category=body.category,
+        user_id=user.id, title=body.title, category=body.category,
         completed=False, xp_reward=xp, coin_reward=coins,
         created_at=datetime.now(timezone.utc).isoformat(),
     )
@@ -155,11 +281,10 @@ def add_quest(body: schemas.QuestCreate, db: Session = Depends(get_db)):
 
 
 @app.put("/api/quests/{quest_id}/toggle", response_model=schemas.GameDataSchema)
-def toggle_quest(quest_id: str, db: Session = Depends(get_db)):
+def toggle_quest(quest_id: str, user: models.User = Depends(get_current_user), db: Session = Depends(get_db)):
     quest = db.get(models.Quest, quest_id)
-    if not quest:
+    if not quest or quest.user_id != user.id:
         raise HTTPException(status_code=404, detail="Quest not found.")
-    user = db.get(models.User, USER_ID)
     c = user.character
     completing = not quest.completed
     quest.completed = completing
@@ -189,30 +314,30 @@ def delete_quest(quest_id: str, db: Session = Depends(get_db)):
 
 
 @app.post("/api/quests/reset-daily", response_model=list[schemas.QuestSchema])
-def reset_daily(db: Session = Depends(get_db)):
+def reset_daily(user: models.User = Depends(get_current_user), db: Session = Depends(get_db)):
     quests = db.query(models.Quest).filter(
-        models.Quest.user_id == USER_ID,
+        models.Quest.user_id == user.id,
         models.Quest.category == "daily"
     ).all()
     for q in quests:
         q.completed = False
     db.commit()
-    all_quests = db.query(models.Quest).filter(models.Quest.user_id == USER_ID).all()
+    all_quests = db.query(models.Quest).filter(models.Quest.user_id == user.id).all()
     return [quest_to_schema(q) for q in all_quests]
 
 
 # ── Skills ─────────────────────────────────────────────────────────────────
 
 @app.get("/api/skills", response_model=list[schemas.SkillSchema])
-def get_skills(db: Session = Depends(get_db)):
-    skills = db.query(models.Skill).filter(models.Skill.user_id == USER_ID).all()
+def get_skills(user: models.User = Depends(get_current_user), db: Session = Depends(get_db)):
+    skills = db.query(models.Skill).filter(models.Skill.user_id == user.id).all()
     return [skill_to_schema(s) for s in skills]
 
 
 @app.put("/api/skills/{skill_id}/xp", response_model=schemas.SkillSchema)
-def gain_skill_xp(skill_id: str, body: schemas.SkillXpUpdate, db: Session = Depends(get_db)):
+def gain_skill_xp(skill_id: str, body: schemas.SkillXpUpdate, user: models.User = Depends(get_current_user), db: Session = Depends(get_db)):
     skill = db.get(models.Skill, skill_id)
-    if not skill:
+    if not skill or skill.user_id != user.id:
         raise HTTPException(status_code=404, detail="Skill not found.")
     skill.xp += body.amount
     if skill.xp >= skill.xp_to_next:

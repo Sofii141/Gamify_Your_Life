@@ -1,33 +1,34 @@
 import {
-  Title
-} from "./chunk-Y6VDGAZN.js";
-import "./chunk-2IRRX5HF.js";
-import {
-  DOCUMENT,
-  HashLocationStrategy,
-  LOCATION_INITIALIZED,
-  Location,
-  LocationStrategy,
-  PathLocationStrategy,
-  ViewportScroller
-} from "./chunk-T76FZRMF.js";
-import {
   APP_BOOTSTRAP_LISTENER,
+  APP_ID,
   APP_INITIALIZER,
+  ApplicationModule,
   ApplicationRef,
   Attribute,
+  BehaviorSubject,
+  CSP_NONCE,
   ChangeDetectorRef,
+  CommonModule,
   Compiler,
   Component,
+  ConnectableObservable,
   Console,
   ContentChildren,
+  DOCUMENT,
   Directive,
+  DomAdapter,
+  EMPTY,
   ENVIRONMENT_INITIALIZER,
   ElementRef,
+  EmptyError,
   EnvironmentInjector,
+  ErrorHandler,
   EventEmitter,
+  HashLocationStrategy,
   HostBinding,
   HostListener,
+  HttpClient,
+  INJECTOR_SCOPE,
   Inject,
   InjectFlags,
   Injectable,
@@ -35,29 +36,100 @@ import {
   Injector,
   Input,
   InputFlags,
+  LOCATION_INITIALIZED,
+  Location,
+  LocationStrategy,
   NgModule,
   NgModuleFactory$1,
   NgZone,
   Optional,
   Output,
+  PLATFORM_BROWSER_ID,
+  PLATFORM_ID,
+  PLATFORM_INITIALIZER,
+  PathLocationStrategy,
   PendingTasks,
   Renderer2,
+  RendererFactory2,
+  RendererStyleFlags2,
   RuntimeError,
+  SecurityContext,
   SkipSelf,
+  Subject,
+  Subscription,
+  TESTABILITY,
+  TESTABILITY_GETTER,
+  Testability,
+  TestabilityRegistry,
   Version,
   ViewContainerRef,
+  ViewEncapsulation$1,
+  ViewportScroller,
+  XSS_SECURITY_URL,
+  XhrFactory,
+  __async,
+  __spreadProps,
+  __spreadValues,
+  _global,
+  _sanitizeHtml,
+  _sanitizeUrl,
   afterNextRender,
+  allowSanitizationBypassAndThrow,
   booleanAttribute,
+  bypassSanitizationTrustHtml,
+  bypassSanitizationTrustResourceUrl,
+  bypassSanitizationTrustScript,
+  bypassSanitizationTrustStyle,
+  bypassSanitizationTrustUrl,
+  catchError,
+  combineLatest,
+  concat,
+  concatMap,
   createEnvironmentInjector,
+  createPlatformFactory,
+  defaultIfEmpty,
+  defer,
+  environment,
+  filter,
+  finalize,
+  first,
+  firstValueFrom,
+  forwardRef,
+  from,
+  getDOM,
   inject,
+  internalCreateApplication,
   isInjectable,
   isNgModule,
+  isObservable,
+  isPlatformServer,
   isPromise,
   isStandalone,
+  last,
   makeEnvironmentProviders,
+  map,
+  mapTo,
+  mergeAll,
+  mergeMap,
+  of,
+  parseCookieValue,
+  pipe,
+  platformCore,
+  refCount,
   reflectComponentType,
   runInInjectionContext,
+  scan,
   setClassMetadata,
+  setDocument,
+  setRootDomAdapter,
+  startWith,
+  switchMap,
+  take,
+  takeLast,
+  takeUntil,
+  tap,
+  throwError,
+  unwrapSafeValue,
   ɵɵInputTransformsFeature,
   ɵɵNgOnChangesFeature,
   ɵɵStandaloneFeature,
@@ -78,49 +150,1672 @@ import {
   ɵɵloadQuery,
   ɵɵqueryRefresh,
   ɵɵsanitizeUrlOrResourceUrl
-} from "./chunk-6JJ7KVRE.js";
-import {
-  BehaviorSubject,
-  ConnectableObservable,
-  EMPTY,
-  EmptyError,
-  Subject,
-  Subscription,
-  __async,
-  __spreadProps,
-  __spreadValues,
-  catchError,
-  combineLatest,
-  concat,
-  concatMap,
-  defaultIfEmpty,
-  defer,
-  filter,
-  finalize,
-  first,
-  from,
-  isObservable,
-  last,
-  map,
-  mapTo,
-  mergeAll,
-  mergeMap,
-  of,
-  pipe,
-  refCount,
-  scan,
-  startWith,
-  switchMap,
-  take,
-  takeLast,
-  takeUntil,
-  tap,
-  throwError
-} from "./chunk-T4QU4GDF.js";
+} from "./chunk-2HLPR2EO.js";
+
+// node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs
+var GenericBrowserDomAdapter = class extends DomAdapter {
+  constructor() {
+    super(...arguments);
+    this.supportsDOMEvents = true;
+  }
+};
+var BrowserDomAdapter = class _BrowserDomAdapter extends GenericBrowserDomAdapter {
+  static makeCurrent() {
+    setRootDomAdapter(new _BrowserDomAdapter());
+  }
+  onAndCancel(el, evt, listener) {
+    el.addEventListener(evt, listener);
+    return () => {
+      el.removeEventListener(evt, listener);
+    };
+  }
+  dispatchEvent(el, evt) {
+    el.dispatchEvent(evt);
+  }
+  remove(node) {
+    if (node.parentNode) {
+      node.parentNode.removeChild(node);
+    }
+  }
+  createElement(tagName, doc) {
+    doc = doc || this.getDefaultDocument();
+    return doc.createElement(tagName);
+  }
+  createHtmlDocument() {
+    return document.implementation.createHTMLDocument("fakeTitle");
+  }
+  getDefaultDocument() {
+    return document;
+  }
+  isElementNode(node) {
+    return node.nodeType === Node.ELEMENT_NODE;
+  }
+  isShadowRoot(node) {
+    return node instanceof DocumentFragment;
+  }
+  /** @deprecated No longer being used in Ivy code. To be removed in version 14. */
+  getGlobalEventTarget(doc, target) {
+    if (target === "window") {
+      return window;
+    }
+    if (target === "document") {
+      return doc;
+    }
+    if (target === "body") {
+      return doc.body;
+    }
+    return null;
+  }
+  getBaseHref(doc) {
+    const href = getBaseElementHref();
+    return href == null ? null : relativePath(href);
+  }
+  resetBaseElement() {
+    baseElement = null;
+  }
+  getUserAgent() {
+    return window.navigator.userAgent;
+  }
+  getCookie(name) {
+    return parseCookieValue(document.cookie, name);
+  }
+};
+var baseElement = null;
+function getBaseElementHref() {
+  baseElement = baseElement || document.querySelector("base");
+  return baseElement ? baseElement.getAttribute("href") : null;
+}
+function relativePath(url) {
+  return new URL(url, document.baseURI).pathname;
+}
+var BrowserGetTestability = class {
+  addToWindow(registry) {
+    _global["getAngularTestability"] = (elem, findInAncestors = true) => {
+      const testability = registry.findTestabilityInTree(elem, findInAncestors);
+      if (testability == null) {
+        throw new RuntimeError(5103, (typeof ngDevMode === "undefined" || ngDevMode) && "Could not find testability for element.");
+      }
+      return testability;
+    };
+    _global["getAllAngularTestabilities"] = () => registry.getAllTestabilities();
+    _global["getAllAngularRootElements"] = () => registry.getAllRootElements();
+    const whenAllStable = (callback) => {
+      const testabilities = _global["getAllAngularTestabilities"]();
+      let count = testabilities.length;
+      const decrement = function() {
+        count--;
+        if (count == 0) {
+          callback();
+        }
+      };
+      testabilities.forEach((testability) => {
+        testability.whenStable(decrement);
+      });
+    };
+    if (!_global["frameworkStabilizers"]) {
+      _global["frameworkStabilizers"] = [];
+    }
+    _global["frameworkStabilizers"].push(whenAllStable);
+  }
+  findTestabilityInTree(registry, elem, findInAncestors) {
+    if (elem == null) {
+      return null;
+    }
+    const t = registry.getTestability(elem);
+    if (t != null) {
+      return t;
+    } else if (!findInAncestors) {
+      return null;
+    }
+    if (getDOM().isShadowRoot(elem)) {
+      return this.findTestabilityInTree(registry, elem.host, true);
+    }
+    return this.findTestabilityInTree(registry, elem.parentElement, true);
+  }
+};
+var BrowserXhr = class _BrowserXhr {
+  build() {
+    return new XMLHttpRequest();
+  }
+  static {
+    this.\u0275fac = function BrowserXhr_Factory(t) {
+      return new (t || _BrowserXhr)();
+    };
+  }
+  static {
+    this.\u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({
+      token: _BrowserXhr,
+      factory: _BrowserXhr.\u0275fac
+    });
+  }
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(BrowserXhr, [{
+    type: Injectable
+  }], null, null);
+})();
+var EVENT_MANAGER_PLUGINS = new InjectionToken(ngDevMode ? "EventManagerPlugins" : "");
+var EventManager = class _EventManager {
+  /**
+   * Initializes an instance of the event-manager service.
+   */
+  constructor(plugins, _zone) {
+    this._zone = _zone;
+    this._eventNameToPlugin = /* @__PURE__ */ new Map();
+    plugins.forEach((plugin) => {
+      plugin.manager = this;
+    });
+    this._plugins = plugins.slice().reverse();
+  }
+  /**
+   * Registers a handler for a specific element and event.
+   *
+   * @param element The HTML element to receive event notifications.
+   * @param eventName The name of the event to listen for.
+   * @param handler A function to call when the notification occurs. Receives the
+   * event object as an argument.
+   * @returns  A callback function that can be used to remove the handler.
+   */
+  addEventListener(element, eventName, handler) {
+    const plugin = this._findPluginFor(eventName);
+    return plugin.addEventListener(element, eventName, handler);
+  }
+  /**
+   * Retrieves the compilation zone in which event listeners are registered.
+   */
+  getZone() {
+    return this._zone;
+  }
+  /** @internal */
+  _findPluginFor(eventName) {
+    let plugin = this._eventNameToPlugin.get(eventName);
+    if (plugin) {
+      return plugin;
+    }
+    const plugins = this._plugins;
+    plugin = plugins.find((plugin2) => plugin2.supports(eventName));
+    if (!plugin) {
+      throw new RuntimeError(5101, (typeof ngDevMode === "undefined" || ngDevMode) && `No event manager plugin found for event ${eventName}`);
+    }
+    this._eventNameToPlugin.set(eventName, plugin);
+    return plugin;
+  }
+  static {
+    this.\u0275fac = function EventManager_Factory(t) {
+      return new (t || _EventManager)(\u0275\u0275inject(EVENT_MANAGER_PLUGINS), \u0275\u0275inject(NgZone));
+    };
+  }
+  static {
+    this.\u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({
+      token: _EventManager,
+      factory: _EventManager.\u0275fac
+    });
+  }
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(EventManager, [{
+    type: Injectable
+  }], () => [{
+    type: void 0,
+    decorators: [{
+      type: Inject,
+      args: [EVENT_MANAGER_PLUGINS]
+    }]
+  }, {
+    type: NgZone
+  }], null);
+})();
+var EventManagerPlugin = class {
+  // TODO: remove (has some usage in G3)
+  constructor(_doc) {
+    this._doc = _doc;
+  }
+};
+var APP_ID_ATTRIBUTE_NAME = "ng-app-id";
+var SharedStylesHost = class _SharedStylesHost {
+  constructor(doc, appId, nonce, platformId = {}) {
+    this.doc = doc;
+    this.appId = appId;
+    this.nonce = nonce;
+    this.platformId = platformId;
+    this.styleRef = /* @__PURE__ */ new Map();
+    this.hostNodes = /* @__PURE__ */ new Set();
+    this.styleNodesInDOM = this.collectServerRenderedStyles();
+    this.platformIsServer = isPlatformServer(platformId);
+    this.resetHostNodes();
+  }
+  addStyles(styles) {
+    for (const style of styles) {
+      const usageCount = this.changeUsageCount(style, 1);
+      if (usageCount === 1) {
+        this.onStyleAdded(style);
+      }
+    }
+  }
+  removeStyles(styles) {
+    for (const style of styles) {
+      const usageCount = this.changeUsageCount(style, -1);
+      if (usageCount <= 0) {
+        this.onStyleRemoved(style);
+      }
+    }
+  }
+  ngOnDestroy() {
+    const styleNodesInDOM = this.styleNodesInDOM;
+    if (styleNodesInDOM) {
+      styleNodesInDOM.forEach((node) => node.remove());
+      styleNodesInDOM.clear();
+    }
+    for (const style of this.getAllStyles()) {
+      this.onStyleRemoved(style);
+    }
+    this.resetHostNodes();
+  }
+  addHost(hostNode) {
+    this.hostNodes.add(hostNode);
+    for (const style of this.getAllStyles()) {
+      this.addStyleToHost(hostNode, style);
+    }
+  }
+  removeHost(hostNode) {
+    this.hostNodes.delete(hostNode);
+  }
+  getAllStyles() {
+    return this.styleRef.keys();
+  }
+  onStyleAdded(style) {
+    for (const host of this.hostNodes) {
+      this.addStyleToHost(host, style);
+    }
+  }
+  onStyleRemoved(style) {
+    const styleRef = this.styleRef;
+    styleRef.get(style)?.elements?.forEach((node) => node.remove());
+    styleRef.delete(style);
+  }
+  collectServerRenderedStyles() {
+    const styles = this.doc.head?.querySelectorAll(`style[${APP_ID_ATTRIBUTE_NAME}="${this.appId}"]`);
+    if (styles?.length) {
+      const styleMap = /* @__PURE__ */ new Map();
+      styles.forEach((style) => {
+        if (style.textContent != null) {
+          styleMap.set(style.textContent, style);
+        }
+      });
+      return styleMap;
+    }
+    return null;
+  }
+  changeUsageCount(style, delta) {
+    const map2 = this.styleRef;
+    if (map2.has(style)) {
+      const styleRefValue = map2.get(style);
+      styleRefValue.usage += delta;
+      return styleRefValue.usage;
+    }
+    map2.set(style, {
+      usage: delta,
+      elements: []
+    });
+    return delta;
+  }
+  getStyleElement(host, style) {
+    const styleNodesInDOM = this.styleNodesInDOM;
+    const styleEl = styleNodesInDOM?.get(style);
+    if (styleEl?.parentNode === host) {
+      styleNodesInDOM.delete(style);
+      styleEl.removeAttribute(APP_ID_ATTRIBUTE_NAME);
+      if (typeof ngDevMode === "undefined" || ngDevMode) {
+        styleEl.setAttribute("ng-style-reused", "");
+      }
+      return styleEl;
+    } else {
+      const styleEl2 = this.doc.createElement("style");
+      if (this.nonce) {
+        styleEl2.setAttribute("nonce", this.nonce);
+      }
+      styleEl2.textContent = style;
+      if (this.platformIsServer) {
+        styleEl2.setAttribute(APP_ID_ATTRIBUTE_NAME, this.appId);
+      }
+      host.appendChild(styleEl2);
+      return styleEl2;
+    }
+  }
+  addStyleToHost(host, style) {
+    const styleEl = this.getStyleElement(host, style);
+    const styleRef = this.styleRef;
+    const styleElRef = styleRef.get(style)?.elements;
+    if (styleElRef) {
+      styleElRef.push(styleEl);
+    } else {
+      styleRef.set(style, {
+        elements: [styleEl],
+        usage: 1
+      });
+    }
+  }
+  resetHostNodes() {
+    const hostNodes = this.hostNodes;
+    hostNodes.clear();
+    hostNodes.add(this.doc.head);
+  }
+  static {
+    this.\u0275fac = function SharedStylesHost_Factory(t) {
+      return new (t || _SharedStylesHost)(\u0275\u0275inject(DOCUMENT), \u0275\u0275inject(APP_ID), \u0275\u0275inject(CSP_NONCE, 8), \u0275\u0275inject(PLATFORM_ID));
+    };
+  }
+  static {
+    this.\u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({
+      token: _SharedStylesHost,
+      factory: _SharedStylesHost.\u0275fac
+    });
+  }
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(SharedStylesHost, [{
+    type: Injectable
+  }], () => [{
+    type: Document,
+    decorators: [{
+      type: Inject,
+      args: [DOCUMENT]
+    }]
+  }, {
+    type: void 0,
+    decorators: [{
+      type: Inject,
+      args: [APP_ID]
+    }]
+  }, {
+    type: void 0,
+    decorators: [{
+      type: Inject,
+      args: [CSP_NONCE]
+    }, {
+      type: Optional
+    }]
+  }, {
+    type: void 0,
+    decorators: [{
+      type: Inject,
+      args: [PLATFORM_ID]
+    }]
+  }], null);
+})();
+var NAMESPACE_URIS = {
+  "svg": "http://www.w3.org/2000/svg",
+  "xhtml": "http://www.w3.org/1999/xhtml",
+  "xlink": "http://www.w3.org/1999/xlink",
+  "xml": "http://www.w3.org/XML/1998/namespace",
+  "xmlns": "http://www.w3.org/2000/xmlns/",
+  "math": "http://www.w3.org/1998/MathML/"
+};
+var COMPONENT_REGEX = /%COMP%/g;
+var COMPONENT_VARIABLE = "%COMP%";
+var HOST_ATTR = `_nghost-${COMPONENT_VARIABLE}`;
+var CONTENT_ATTR = `_ngcontent-${COMPONENT_VARIABLE}`;
+var REMOVE_STYLES_ON_COMPONENT_DESTROY_DEFAULT = true;
+var REMOVE_STYLES_ON_COMPONENT_DESTROY = new InjectionToken(ngDevMode ? "RemoveStylesOnCompDestroy" : "", {
+  providedIn: "root",
+  factory: () => REMOVE_STYLES_ON_COMPONENT_DESTROY_DEFAULT
+});
+function shimContentAttribute(componentShortId) {
+  return CONTENT_ATTR.replace(COMPONENT_REGEX, componentShortId);
+}
+function shimHostAttribute(componentShortId) {
+  return HOST_ATTR.replace(COMPONENT_REGEX, componentShortId);
+}
+function shimStylesContent(compId, styles) {
+  return styles.map((s) => s.replace(COMPONENT_REGEX, compId));
+}
+var DomRendererFactory2 = class _DomRendererFactory2 {
+  constructor(eventManager, sharedStylesHost, appId, removeStylesOnCompDestroy, doc, platformId, ngZone, nonce = null) {
+    this.eventManager = eventManager;
+    this.sharedStylesHost = sharedStylesHost;
+    this.appId = appId;
+    this.removeStylesOnCompDestroy = removeStylesOnCompDestroy;
+    this.doc = doc;
+    this.platformId = platformId;
+    this.ngZone = ngZone;
+    this.nonce = nonce;
+    this.rendererByCompId = /* @__PURE__ */ new Map();
+    this.platformIsServer = isPlatformServer(platformId);
+    this.defaultRenderer = new DefaultDomRenderer2(eventManager, doc, ngZone, this.platformIsServer);
+  }
+  createRenderer(element, type) {
+    if (!element || !type) {
+      return this.defaultRenderer;
+    }
+    if (this.platformIsServer && type.encapsulation === ViewEncapsulation$1.ShadowDom) {
+      type = __spreadProps(__spreadValues({}, type), {
+        encapsulation: ViewEncapsulation$1.Emulated
+      });
+    }
+    const renderer = this.getOrCreateRenderer(element, type);
+    if (renderer instanceof EmulatedEncapsulationDomRenderer2) {
+      renderer.applyToHost(element);
+    } else if (renderer instanceof NoneEncapsulationDomRenderer) {
+      renderer.applyStyles();
+    }
+    return renderer;
+  }
+  getOrCreateRenderer(element, type) {
+    const rendererByCompId = this.rendererByCompId;
+    let renderer = rendererByCompId.get(type.id);
+    if (!renderer) {
+      const doc = this.doc;
+      const ngZone = this.ngZone;
+      const eventManager = this.eventManager;
+      const sharedStylesHost = this.sharedStylesHost;
+      const removeStylesOnCompDestroy = this.removeStylesOnCompDestroy;
+      const platformIsServer = this.platformIsServer;
+      switch (type.encapsulation) {
+        case ViewEncapsulation$1.Emulated:
+          renderer = new EmulatedEncapsulationDomRenderer2(eventManager, sharedStylesHost, type, this.appId, removeStylesOnCompDestroy, doc, ngZone, platformIsServer);
+          break;
+        case ViewEncapsulation$1.ShadowDom:
+          return new ShadowDomRenderer(eventManager, sharedStylesHost, element, type, doc, ngZone, this.nonce, platformIsServer);
+        default:
+          renderer = new NoneEncapsulationDomRenderer(eventManager, sharedStylesHost, type, removeStylesOnCompDestroy, doc, ngZone, platformIsServer);
+          break;
+      }
+      rendererByCompId.set(type.id, renderer);
+    }
+    return renderer;
+  }
+  ngOnDestroy() {
+    this.rendererByCompId.clear();
+  }
+  static {
+    this.\u0275fac = function DomRendererFactory2_Factory(t) {
+      return new (t || _DomRendererFactory2)(\u0275\u0275inject(EventManager), \u0275\u0275inject(SharedStylesHost), \u0275\u0275inject(APP_ID), \u0275\u0275inject(REMOVE_STYLES_ON_COMPONENT_DESTROY), \u0275\u0275inject(DOCUMENT), \u0275\u0275inject(PLATFORM_ID), \u0275\u0275inject(NgZone), \u0275\u0275inject(CSP_NONCE));
+    };
+  }
+  static {
+    this.\u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({
+      token: _DomRendererFactory2,
+      factory: _DomRendererFactory2.\u0275fac
+    });
+  }
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(DomRendererFactory2, [{
+    type: Injectable
+  }], () => [{
+    type: EventManager
+  }, {
+    type: SharedStylesHost
+  }, {
+    type: void 0,
+    decorators: [{
+      type: Inject,
+      args: [APP_ID]
+    }]
+  }, {
+    type: void 0,
+    decorators: [{
+      type: Inject,
+      args: [REMOVE_STYLES_ON_COMPONENT_DESTROY]
+    }]
+  }, {
+    type: Document,
+    decorators: [{
+      type: Inject,
+      args: [DOCUMENT]
+    }]
+  }, {
+    type: Object,
+    decorators: [{
+      type: Inject,
+      args: [PLATFORM_ID]
+    }]
+  }, {
+    type: NgZone
+  }, {
+    type: void 0,
+    decorators: [{
+      type: Inject,
+      args: [CSP_NONCE]
+    }]
+  }], null);
+})();
+var DefaultDomRenderer2 = class {
+  constructor(eventManager, doc, ngZone, platformIsServer) {
+    this.eventManager = eventManager;
+    this.doc = doc;
+    this.ngZone = ngZone;
+    this.platformIsServer = platformIsServer;
+    this.data = /* @__PURE__ */ Object.create(null);
+    this.throwOnSyntheticProps = true;
+    this.destroyNode = null;
+  }
+  destroy() {
+  }
+  createElement(name, namespace) {
+    if (namespace) {
+      return this.doc.createElementNS(NAMESPACE_URIS[namespace] || namespace, name);
+    }
+    return this.doc.createElement(name);
+  }
+  createComment(value) {
+    return this.doc.createComment(value);
+  }
+  createText(value) {
+    return this.doc.createTextNode(value);
+  }
+  appendChild(parent, newChild) {
+    const targetParent = isTemplateNode(parent) ? parent.content : parent;
+    targetParent.appendChild(newChild);
+  }
+  insertBefore(parent, newChild, refChild) {
+    if (parent) {
+      const targetParent = isTemplateNode(parent) ? parent.content : parent;
+      targetParent.insertBefore(newChild, refChild);
+    }
+  }
+  removeChild(parent, oldChild) {
+    if (parent) {
+      parent.removeChild(oldChild);
+    }
+  }
+  selectRootElement(selectorOrNode, preserveContent) {
+    let el = typeof selectorOrNode === "string" ? this.doc.querySelector(selectorOrNode) : selectorOrNode;
+    if (!el) {
+      throw new RuntimeError(-5104, (typeof ngDevMode === "undefined" || ngDevMode) && `The selector "${selectorOrNode}" did not match any elements`);
+    }
+    if (!preserveContent) {
+      el.textContent = "";
+    }
+    return el;
+  }
+  parentNode(node) {
+    return node.parentNode;
+  }
+  nextSibling(node) {
+    return node.nextSibling;
+  }
+  setAttribute(el, name, value, namespace) {
+    if (namespace) {
+      name = namespace + ":" + name;
+      const namespaceUri = NAMESPACE_URIS[namespace];
+      if (namespaceUri) {
+        el.setAttributeNS(namespaceUri, name, value);
+      } else {
+        el.setAttribute(name, value);
+      }
+    } else {
+      el.setAttribute(name, value);
+    }
+  }
+  removeAttribute(el, name, namespace) {
+    if (namespace) {
+      const namespaceUri = NAMESPACE_URIS[namespace];
+      if (namespaceUri) {
+        el.removeAttributeNS(namespaceUri, name);
+      } else {
+        el.removeAttribute(`${namespace}:${name}`);
+      }
+    } else {
+      el.removeAttribute(name);
+    }
+  }
+  addClass(el, name) {
+    el.classList.add(name);
+  }
+  removeClass(el, name) {
+    el.classList.remove(name);
+  }
+  setStyle(el, style, value, flags) {
+    if (flags & (RendererStyleFlags2.DashCase | RendererStyleFlags2.Important)) {
+      el.style.setProperty(style, value, flags & RendererStyleFlags2.Important ? "important" : "");
+    } else {
+      el.style[style] = value;
+    }
+  }
+  removeStyle(el, style, flags) {
+    if (flags & RendererStyleFlags2.DashCase) {
+      el.style.removeProperty(style);
+    } else {
+      el.style[style] = "";
+    }
+  }
+  setProperty(el, name, value) {
+    if (el == null) {
+      return;
+    }
+    (typeof ngDevMode === "undefined" || ngDevMode) && this.throwOnSyntheticProps && checkNoSyntheticProp(name, "property");
+    el[name] = value;
+  }
+  setValue(node, value) {
+    node.nodeValue = value;
+  }
+  listen(target, event, callback) {
+    (typeof ngDevMode === "undefined" || ngDevMode) && this.throwOnSyntheticProps && checkNoSyntheticProp(event, "listener");
+    if (typeof target === "string") {
+      target = getDOM().getGlobalEventTarget(this.doc, target);
+      if (!target) {
+        throw new Error(`Unsupported event target ${target} for event ${event}`);
+      }
+    }
+    return this.eventManager.addEventListener(target, event, this.decoratePreventDefault(callback));
+  }
+  decoratePreventDefault(eventHandler) {
+    return (event) => {
+      if (event === "__ngUnwrap__") {
+        return eventHandler;
+      }
+      const allowDefaultBehavior = this.platformIsServer ? this.ngZone.runGuarded(() => eventHandler(event)) : eventHandler(event);
+      if (allowDefaultBehavior === false) {
+        event.preventDefault();
+      }
+      return void 0;
+    };
+  }
+};
+var AT_CHARCODE = (() => "@".charCodeAt(0))();
+function checkNoSyntheticProp(name, nameKind) {
+  if (name.charCodeAt(0) === AT_CHARCODE) {
+    throw new RuntimeError(5105, `Unexpected synthetic ${nameKind} ${name} found. Please make sure that:
+  - Either \`BrowserAnimationsModule\` or \`NoopAnimationsModule\` are imported in your application.
+  - There is corresponding configuration for the animation named \`${name}\` defined in the \`animations\` field of the \`@Component\` decorator (see https://angular.io/api/core/Component#animations).`);
+  }
+}
+function isTemplateNode(node) {
+  return node.tagName === "TEMPLATE" && node.content !== void 0;
+}
+var ShadowDomRenderer = class extends DefaultDomRenderer2 {
+  constructor(eventManager, sharedStylesHost, hostEl, component, doc, ngZone, nonce, platformIsServer) {
+    super(eventManager, doc, ngZone, platformIsServer);
+    this.sharedStylesHost = sharedStylesHost;
+    this.hostEl = hostEl;
+    this.shadowRoot = hostEl.attachShadow({
+      mode: "open"
+    });
+    this.sharedStylesHost.addHost(this.shadowRoot);
+    const styles = shimStylesContent(component.id, component.styles);
+    for (const style of styles) {
+      const styleEl = document.createElement("style");
+      if (nonce) {
+        styleEl.setAttribute("nonce", nonce);
+      }
+      styleEl.textContent = style;
+      this.shadowRoot.appendChild(styleEl);
+    }
+  }
+  nodeOrShadowRoot(node) {
+    return node === this.hostEl ? this.shadowRoot : node;
+  }
+  appendChild(parent, newChild) {
+    return super.appendChild(this.nodeOrShadowRoot(parent), newChild);
+  }
+  insertBefore(parent, newChild, refChild) {
+    return super.insertBefore(this.nodeOrShadowRoot(parent), newChild, refChild);
+  }
+  removeChild(parent, oldChild) {
+    return super.removeChild(this.nodeOrShadowRoot(parent), oldChild);
+  }
+  parentNode(node) {
+    return this.nodeOrShadowRoot(super.parentNode(this.nodeOrShadowRoot(node)));
+  }
+  destroy() {
+    this.sharedStylesHost.removeHost(this.shadowRoot);
+  }
+};
+var NoneEncapsulationDomRenderer = class extends DefaultDomRenderer2 {
+  constructor(eventManager, sharedStylesHost, component, removeStylesOnCompDestroy, doc, ngZone, platformIsServer, compId) {
+    super(eventManager, doc, ngZone, platformIsServer);
+    this.sharedStylesHost = sharedStylesHost;
+    this.removeStylesOnCompDestroy = removeStylesOnCompDestroy;
+    this.styles = compId ? shimStylesContent(compId, component.styles) : component.styles;
+  }
+  applyStyles() {
+    this.sharedStylesHost.addStyles(this.styles);
+  }
+  destroy() {
+    if (!this.removeStylesOnCompDestroy) {
+      return;
+    }
+    this.sharedStylesHost.removeStyles(this.styles);
+  }
+};
+var EmulatedEncapsulationDomRenderer2 = class extends NoneEncapsulationDomRenderer {
+  constructor(eventManager, sharedStylesHost, component, appId, removeStylesOnCompDestroy, doc, ngZone, platformIsServer) {
+    const compId = appId + "-" + component.id;
+    super(eventManager, sharedStylesHost, component, removeStylesOnCompDestroy, doc, ngZone, platformIsServer, compId);
+    this.contentAttr = shimContentAttribute(compId);
+    this.hostAttr = shimHostAttribute(compId);
+  }
+  applyToHost(element) {
+    this.applyStyles();
+    this.setAttribute(element, this.hostAttr, "");
+  }
+  createElement(parent, name) {
+    const el = super.createElement(parent, name);
+    super.setAttribute(el, this.contentAttr, "");
+    return el;
+  }
+};
+var DomEventsPlugin = class _DomEventsPlugin extends EventManagerPlugin {
+  constructor(doc) {
+    super(doc);
+  }
+  // This plugin should come last in the list of plugins, because it accepts all
+  // events.
+  supports(eventName) {
+    return true;
+  }
+  addEventListener(element, eventName, handler) {
+    element.addEventListener(eventName, handler, false);
+    return () => this.removeEventListener(element, eventName, handler);
+  }
+  removeEventListener(target, eventName, callback) {
+    return target.removeEventListener(eventName, callback);
+  }
+  static {
+    this.\u0275fac = function DomEventsPlugin_Factory(t) {
+      return new (t || _DomEventsPlugin)(\u0275\u0275inject(DOCUMENT));
+    };
+  }
+  static {
+    this.\u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({
+      token: _DomEventsPlugin,
+      factory: _DomEventsPlugin.\u0275fac
+    });
+  }
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(DomEventsPlugin, [{
+    type: Injectable
+  }], () => [{
+    type: void 0,
+    decorators: [{
+      type: Inject,
+      args: [DOCUMENT]
+    }]
+  }], null);
+})();
+var MODIFIER_KEYS = ["alt", "control", "meta", "shift"];
+var _keyMap = {
+  "\b": "Backspace",
+  "	": "Tab",
+  "\x7F": "Delete",
+  "\x1B": "Escape",
+  "Del": "Delete",
+  "Esc": "Escape",
+  "Left": "ArrowLeft",
+  "Right": "ArrowRight",
+  "Up": "ArrowUp",
+  "Down": "ArrowDown",
+  "Menu": "ContextMenu",
+  "Scroll": "ScrollLock",
+  "Win": "OS"
+};
+var MODIFIER_KEY_GETTERS = {
+  "alt": (event) => event.altKey,
+  "control": (event) => event.ctrlKey,
+  "meta": (event) => event.metaKey,
+  "shift": (event) => event.shiftKey
+};
+var KeyEventsPlugin = class _KeyEventsPlugin extends EventManagerPlugin {
+  /**
+   * Initializes an instance of the browser plug-in.
+   * @param doc The document in which key events will be detected.
+   */
+  constructor(doc) {
+    super(doc);
+  }
+  /**
+   * Reports whether a named key event is supported.
+   * @param eventName The event name to query.
+   * @return True if the named key event is supported.
+   */
+  supports(eventName) {
+    return _KeyEventsPlugin.parseEventName(eventName) != null;
+  }
+  /**
+   * Registers a handler for a specific element and key event.
+   * @param element The HTML element to receive event notifications.
+   * @param eventName The name of the key event to listen for.
+   * @param handler A function to call when the notification occurs. Receives the
+   * event object as an argument.
+   * @returns The key event that was registered.
+   */
+  addEventListener(element, eventName, handler) {
+    const parsedEvent = _KeyEventsPlugin.parseEventName(eventName);
+    const outsideHandler = _KeyEventsPlugin.eventCallback(parsedEvent["fullKey"], handler, this.manager.getZone());
+    return this.manager.getZone().runOutsideAngular(() => {
+      return getDOM().onAndCancel(element, parsedEvent["domEventName"], outsideHandler);
+    });
+  }
+  /**
+   * Parses the user provided full keyboard event definition and normalizes it for
+   * later internal use. It ensures the string is all lowercase, converts special
+   * characters to a standard spelling, and orders all the values consistently.
+   *
+   * @param eventName The name of the key event to listen for.
+   * @returns an object with the full, normalized string, and the dom event name
+   * or null in the case when the event doesn't match a keyboard event.
+   */
+  static parseEventName(eventName) {
+    const parts = eventName.toLowerCase().split(".");
+    const domEventName = parts.shift();
+    if (parts.length === 0 || !(domEventName === "keydown" || domEventName === "keyup")) {
+      return null;
+    }
+    const key = _KeyEventsPlugin._normalizeKey(parts.pop());
+    let fullKey = "";
+    let codeIX = parts.indexOf("code");
+    if (codeIX > -1) {
+      parts.splice(codeIX, 1);
+      fullKey = "code.";
+    }
+    MODIFIER_KEYS.forEach((modifierName) => {
+      const index = parts.indexOf(modifierName);
+      if (index > -1) {
+        parts.splice(index, 1);
+        fullKey += modifierName + ".";
+      }
+    });
+    fullKey += key;
+    if (parts.length != 0 || key.length === 0) {
+      return null;
+    }
+    const result = {};
+    result["domEventName"] = domEventName;
+    result["fullKey"] = fullKey;
+    return result;
+  }
+  /**
+   * Determines whether the actual keys pressed match the configured key code string.
+   * The `fullKeyCode` event is normalized in the `parseEventName` method when the
+   * event is attached to the DOM during the `addEventListener` call. This is unseen
+   * by the end user and is normalized for internal consistency and parsing.
+   *
+   * @param event The keyboard event.
+   * @param fullKeyCode The normalized user defined expected key event string
+   * @returns boolean.
+   */
+  static matchEventFullKeyCode(event, fullKeyCode) {
+    let keycode = _keyMap[event.key] || event.key;
+    let key = "";
+    if (fullKeyCode.indexOf("code.") > -1) {
+      keycode = event.code;
+      key = "code.";
+    }
+    if (keycode == null || !keycode)
+      return false;
+    keycode = keycode.toLowerCase();
+    if (keycode === " ") {
+      keycode = "space";
+    } else if (keycode === ".") {
+      keycode = "dot";
+    }
+    MODIFIER_KEYS.forEach((modifierName) => {
+      if (modifierName !== keycode) {
+        const modifierGetter = MODIFIER_KEY_GETTERS[modifierName];
+        if (modifierGetter(event)) {
+          key += modifierName + ".";
+        }
+      }
+    });
+    key += keycode;
+    return key === fullKeyCode;
+  }
+  /**
+   * Configures a handler callback for a key event.
+   * @param fullKey The event name that combines all simultaneous keystrokes.
+   * @param handler The function that responds to the key event.
+   * @param zone The zone in which the event occurred.
+   * @returns A callback function.
+   */
+  static eventCallback(fullKey, handler, zone) {
+    return (event) => {
+      if (_KeyEventsPlugin.matchEventFullKeyCode(event, fullKey)) {
+        zone.runGuarded(() => handler(event));
+      }
+    };
+  }
+  /** @internal */
+  static _normalizeKey(keyName) {
+    return keyName === "esc" ? "escape" : keyName;
+  }
+  static {
+    this.\u0275fac = function KeyEventsPlugin_Factory(t) {
+      return new (t || _KeyEventsPlugin)(\u0275\u0275inject(DOCUMENT));
+    };
+  }
+  static {
+    this.\u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({
+      token: _KeyEventsPlugin,
+      factory: _KeyEventsPlugin.\u0275fac
+    });
+  }
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(KeyEventsPlugin, [{
+    type: Injectable
+  }], () => [{
+    type: void 0,
+    decorators: [{
+      type: Inject,
+      args: [DOCUMENT]
+    }]
+  }], null);
+})();
+function bootstrapApplication(rootComponent, options) {
+  return internalCreateApplication(__spreadValues({
+    rootComponent
+  }, createProvidersConfig(options)));
+}
+function createProvidersConfig(options) {
+  return {
+    appProviders: [...BROWSER_MODULE_PROVIDERS, ...options?.providers ?? []],
+    platformProviders: INTERNAL_BROWSER_PLATFORM_PROVIDERS
+  };
+}
+function initDomAdapter() {
+  BrowserDomAdapter.makeCurrent();
+}
+function errorHandler() {
+  return new ErrorHandler();
+}
+function _document() {
+  setDocument(document);
+  return document;
+}
+var INTERNAL_BROWSER_PLATFORM_PROVIDERS = [{
+  provide: PLATFORM_ID,
+  useValue: PLATFORM_BROWSER_ID
+}, {
+  provide: PLATFORM_INITIALIZER,
+  useValue: initDomAdapter,
+  multi: true
+}, {
+  provide: DOCUMENT,
+  useFactory: _document,
+  deps: []
+}];
+var platformBrowser = createPlatformFactory(platformCore, "browser", INTERNAL_BROWSER_PLATFORM_PROVIDERS);
+var BROWSER_MODULE_PROVIDERS_MARKER = new InjectionToken(typeof ngDevMode === "undefined" || ngDevMode ? "BrowserModule Providers Marker" : "");
+var TESTABILITY_PROVIDERS = [{
+  provide: TESTABILITY_GETTER,
+  useClass: BrowserGetTestability,
+  deps: []
+}, {
+  provide: TESTABILITY,
+  useClass: Testability,
+  deps: [NgZone, TestabilityRegistry, TESTABILITY_GETTER]
+}, {
+  provide: Testability,
+  // Also provide as `Testability` for backwards-compatibility.
+  useClass: Testability,
+  deps: [NgZone, TestabilityRegistry, TESTABILITY_GETTER]
+}];
+var BROWSER_MODULE_PROVIDERS = [{
+  provide: INJECTOR_SCOPE,
+  useValue: "root"
+}, {
+  provide: ErrorHandler,
+  useFactory: errorHandler,
+  deps: []
+}, {
+  provide: EVENT_MANAGER_PLUGINS,
+  useClass: DomEventsPlugin,
+  multi: true,
+  deps: [DOCUMENT, NgZone, PLATFORM_ID]
+}, {
+  provide: EVENT_MANAGER_PLUGINS,
+  useClass: KeyEventsPlugin,
+  multi: true,
+  deps: [DOCUMENT]
+}, DomRendererFactory2, SharedStylesHost, EventManager, {
+  provide: RendererFactory2,
+  useExisting: DomRendererFactory2
+}, {
+  provide: XhrFactory,
+  useClass: BrowserXhr,
+  deps: []
+}, typeof ngDevMode === "undefined" || ngDevMode ? {
+  provide: BROWSER_MODULE_PROVIDERS_MARKER,
+  useValue: true
+} : []];
+var BrowserModule = class _BrowserModule {
+  constructor(providersAlreadyPresent) {
+    if ((typeof ngDevMode === "undefined" || ngDevMode) && providersAlreadyPresent) {
+      throw new RuntimeError(5100, `Providers from the \`BrowserModule\` have already been loaded. If you need access to common directives such as NgIf and NgFor, import the \`CommonModule\` instead.`);
+    }
+  }
+  /**
+   * Configures a browser-based app to transition from a server-rendered app, if
+   * one is present on the page.
+   *
+   * @param params An object containing an identifier for the app to transition.
+   * The ID must match between the client and server versions of the app.
+   * @returns The reconfigured `BrowserModule` to import into the app's root `AppModule`.
+   *
+   * @deprecated Use {@link APP_ID} instead to set the application ID.
+   */
+  static withServerTransition(params) {
+    return {
+      ngModule: _BrowserModule,
+      providers: [{
+        provide: APP_ID,
+        useValue: params.appId
+      }]
+    };
+  }
+  static {
+    this.\u0275fac = function BrowserModule_Factory(t) {
+      return new (t || _BrowserModule)(\u0275\u0275inject(BROWSER_MODULE_PROVIDERS_MARKER, 12));
+    };
+  }
+  static {
+    this.\u0275mod = /* @__PURE__ */ \u0275\u0275defineNgModule({
+      type: _BrowserModule
+    });
+  }
+  static {
+    this.\u0275inj = /* @__PURE__ */ \u0275\u0275defineInjector({
+      providers: [...BROWSER_MODULE_PROVIDERS, ...TESTABILITY_PROVIDERS],
+      imports: [CommonModule, ApplicationModule]
+    });
+  }
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(BrowserModule, [{
+    type: NgModule,
+    args: [{
+      providers: [...BROWSER_MODULE_PROVIDERS, ...TESTABILITY_PROVIDERS],
+      exports: [CommonModule, ApplicationModule]
+    }]
+  }], () => [{
+    type: void 0,
+    decorators: [{
+      type: Optional
+    }, {
+      type: SkipSelf
+    }, {
+      type: Inject,
+      args: [BROWSER_MODULE_PROVIDERS_MARKER]
+    }]
+  }], null);
+})();
+var Meta = class _Meta {
+  constructor(_doc) {
+    this._doc = _doc;
+    this._dom = getDOM();
+  }
+  /**
+   * Retrieves or creates a specific `<meta>` tag element in the current HTML document.
+   * In searching for an existing tag, Angular attempts to match the `name` or `property` attribute
+   * values in the provided tag definition, and verifies that all other attribute values are equal.
+   * If an existing element is found, it is returned and is not modified in any way.
+   * @param tag The definition of a `<meta>` element to match or create.
+   * @param forceCreation True to create a new element without checking whether one already exists.
+   * @returns The existing element with the same attributes and values if found,
+   * the new element if no match is found, or `null` if the tag parameter is not defined.
+   */
+  addTag(tag, forceCreation = false) {
+    if (!tag)
+      return null;
+    return this._getOrCreateElement(tag, forceCreation);
+  }
+  /**
+   * Retrieves or creates a set of `<meta>` tag elements in the current HTML document.
+   * In searching for an existing tag, Angular attempts to match the `name` or `property` attribute
+   * values in the provided tag definition, and verifies that all other attribute values are equal.
+   * @param tags An array of tag definitions to match or create.
+   * @param forceCreation True to create new elements without checking whether they already exist.
+   * @returns The matching elements if found, or the new elements.
+   */
+  addTags(tags, forceCreation = false) {
+    if (!tags)
+      return [];
+    return tags.reduce((result, tag) => {
+      if (tag) {
+        result.push(this._getOrCreateElement(tag, forceCreation));
+      }
+      return result;
+    }, []);
+  }
+  /**
+   * Retrieves a `<meta>` tag element in the current HTML document.
+   * @param attrSelector The tag attribute and value to match against, in the format
+   * `"tag_attribute='value string'"`.
+   * @returns The matching element, if any.
+   */
+  getTag(attrSelector) {
+    if (!attrSelector)
+      return null;
+    return this._doc.querySelector(`meta[${attrSelector}]`) || null;
+  }
+  /**
+   * Retrieves a set of `<meta>` tag elements in the current HTML document.
+   * @param attrSelector The tag attribute and value to match against, in the format
+   * `"tag_attribute='value string'"`.
+   * @returns The matching elements, if any.
+   */
+  getTags(attrSelector) {
+    if (!attrSelector)
+      return [];
+    const list = this._doc.querySelectorAll(`meta[${attrSelector}]`);
+    return list ? [].slice.call(list) : [];
+  }
+  /**
+   * Modifies an existing `<meta>` tag element in the current HTML document.
+   * @param tag The tag description with which to replace the existing tag content.
+   * @param selector A tag attribute and value to match against, to identify
+   * an existing tag. A string in the format `"tag_attribute=`value string`"`.
+   * If not supplied, matches a tag with the same `name` or `property` attribute value as the
+   * replacement tag.
+   * @return The modified element.
+   */
+  updateTag(tag, selector) {
+    if (!tag)
+      return null;
+    selector = selector || this._parseSelector(tag);
+    const meta = this.getTag(selector);
+    if (meta) {
+      return this._setMetaElementAttributes(tag, meta);
+    }
+    return this._getOrCreateElement(tag, true);
+  }
+  /**
+   * Removes an existing `<meta>` tag element from the current HTML document.
+   * @param attrSelector A tag attribute and value to match against, to identify
+   * an existing tag. A string in the format `"tag_attribute=`value string`"`.
+   */
+  removeTag(attrSelector) {
+    this.removeTagElement(this.getTag(attrSelector));
+  }
+  /**
+   * Removes an existing `<meta>` tag element from the current HTML document.
+   * @param meta The tag definition to match against to identify an existing tag.
+   */
+  removeTagElement(meta) {
+    if (meta) {
+      this._dom.remove(meta);
+    }
+  }
+  _getOrCreateElement(meta, forceCreation = false) {
+    if (!forceCreation) {
+      const selector = this._parseSelector(meta);
+      const elem = this.getTags(selector).filter((elem2) => this._containsAttributes(meta, elem2))[0];
+      if (elem !== void 0)
+        return elem;
+    }
+    const element = this._dom.createElement("meta");
+    this._setMetaElementAttributes(meta, element);
+    const head = this._doc.getElementsByTagName("head")[0];
+    head.appendChild(element);
+    return element;
+  }
+  _setMetaElementAttributes(tag, el) {
+    Object.keys(tag).forEach((prop) => el.setAttribute(this._getMetaKeyMap(prop), tag[prop]));
+    return el;
+  }
+  _parseSelector(tag) {
+    const attr = tag.name ? "name" : "property";
+    return `${attr}="${tag[attr]}"`;
+  }
+  _containsAttributes(tag, elem) {
+    return Object.keys(tag).every((key) => elem.getAttribute(this._getMetaKeyMap(key)) === tag[key]);
+  }
+  _getMetaKeyMap(prop) {
+    return META_KEYS_MAP[prop] || prop;
+  }
+  static {
+    this.\u0275fac = function Meta_Factory(t) {
+      return new (t || _Meta)(\u0275\u0275inject(DOCUMENT));
+    };
+  }
+  static {
+    this.\u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({
+      token: _Meta,
+      factory: _Meta.\u0275fac,
+      providedIn: "root"
+    });
+  }
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(Meta, [{
+    type: Injectable,
+    args: [{
+      providedIn: "root"
+    }]
+  }], () => [{
+    type: void 0,
+    decorators: [{
+      type: Inject,
+      args: [DOCUMENT]
+    }]
+  }], null);
+})();
+var META_KEYS_MAP = {
+  httpEquiv: "http-equiv"
+};
+var Title = class _Title {
+  constructor(_doc) {
+    this._doc = _doc;
+  }
+  /**
+   * Get the title of the current HTML document.
+   */
+  getTitle() {
+    return this._doc.title;
+  }
+  /**
+   * Set the title of the current HTML document.
+   * @param newTitle
+   */
+  setTitle(newTitle) {
+    this._doc.title = newTitle || "";
+  }
+  static {
+    this.\u0275fac = function Title_Factory(t) {
+      return new (t || _Title)(\u0275\u0275inject(DOCUMENT));
+    };
+  }
+  static {
+    this.\u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({
+      token: _Title,
+      factory: _Title.\u0275fac,
+      providedIn: "root"
+    });
+  }
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(Title, [{
+    type: Injectable,
+    args: [{
+      providedIn: "root"
+    }]
+  }], () => [{
+    type: void 0,
+    decorators: [{
+      type: Inject,
+      args: [DOCUMENT]
+    }]
+  }], null);
+})();
+var EVENT_NAMES = {
+  // pan
+  "pan": true,
+  "panstart": true,
+  "panmove": true,
+  "panend": true,
+  "pancancel": true,
+  "panleft": true,
+  "panright": true,
+  "panup": true,
+  "pandown": true,
+  // pinch
+  "pinch": true,
+  "pinchstart": true,
+  "pinchmove": true,
+  "pinchend": true,
+  "pinchcancel": true,
+  "pinchin": true,
+  "pinchout": true,
+  // press
+  "press": true,
+  "pressup": true,
+  // rotate
+  "rotate": true,
+  "rotatestart": true,
+  "rotatemove": true,
+  "rotateend": true,
+  "rotatecancel": true,
+  // swipe
+  "swipe": true,
+  "swipeleft": true,
+  "swiperight": true,
+  "swipeup": true,
+  "swipedown": true,
+  // tap
+  "tap": true,
+  "doubletap": true
+};
+var HAMMER_GESTURE_CONFIG = new InjectionToken("HammerGestureConfig");
+var HAMMER_LOADER = new InjectionToken("HammerLoader");
+var HammerGestureConfig = class _HammerGestureConfig {
+  constructor() {
+    this.events = [];
+    this.overrides = {};
+  }
+  /**
+   * Creates a [HammerJS Manager](https://hammerjs.github.io/api/#hammermanager)
+   * and attaches it to a given HTML element.
+   * @param element The element that will recognize gestures.
+   * @returns A HammerJS event-manager object.
+   */
+  buildHammer(element) {
+    const mc = new Hammer(element, this.options);
+    mc.get("pinch").set({
+      enable: true
+    });
+    mc.get("rotate").set({
+      enable: true
+    });
+    for (const eventName in this.overrides) {
+      mc.get(eventName).set(this.overrides[eventName]);
+    }
+    return mc;
+  }
+  static {
+    this.\u0275fac = function HammerGestureConfig_Factory(t) {
+      return new (t || _HammerGestureConfig)();
+    };
+  }
+  static {
+    this.\u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({
+      token: _HammerGestureConfig,
+      factory: _HammerGestureConfig.\u0275fac
+    });
+  }
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(HammerGestureConfig, [{
+    type: Injectable
+  }], null, null);
+})();
+var HammerGesturesPlugin = class _HammerGesturesPlugin extends EventManagerPlugin {
+  constructor(doc, _config, console2, loader) {
+    super(doc);
+    this._config = _config;
+    this.console = console2;
+    this.loader = loader;
+    this._loaderPromise = null;
+  }
+  supports(eventName) {
+    if (!EVENT_NAMES.hasOwnProperty(eventName.toLowerCase()) && !this.isCustomEvent(eventName)) {
+      return false;
+    }
+    if (!window.Hammer && !this.loader) {
+      if (typeof ngDevMode === "undefined" || ngDevMode) {
+        this.console.warn(`The "${eventName}" event cannot be bound because Hammer.JS is not loaded and no custom loader has been specified.`);
+      }
+      return false;
+    }
+    return true;
+  }
+  addEventListener(element, eventName, handler) {
+    const zone = this.manager.getZone();
+    eventName = eventName.toLowerCase();
+    if (!window.Hammer && this.loader) {
+      this._loaderPromise = this._loaderPromise || zone.runOutsideAngular(() => this.loader());
+      let cancelRegistration = false;
+      let deregister = () => {
+        cancelRegistration = true;
+      };
+      zone.runOutsideAngular(() => this._loaderPromise.then(() => {
+        if (!window.Hammer) {
+          if (typeof ngDevMode === "undefined" || ngDevMode) {
+            this.console.warn(`The custom HAMMER_LOADER completed, but Hammer.JS is not present.`);
+          }
+          deregister = () => {
+          };
+          return;
+        }
+        if (!cancelRegistration) {
+          deregister = this.addEventListener(element, eventName, handler);
+        }
+      }).catch(() => {
+        if (typeof ngDevMode === "undefined" || ngDevMode) {
+          this.console.warn(`The "${eventName}" event cannot be bound because the custom Hammer.JS loader failed.`);
+        }
+        deregister = () => {
+        };
+      }));
+      return () => {
+        deregister();
+      };
+    }
+    return zone.runOutsideAngular(() => {
+      const mc = this._config.buildHammer(element);
+      const callback = function(eventObj) {
+        zone.runGuarded(function() {
+          handler(eventObj);
+        });
+      };
+      mc.on(eventName, callback);
+      return () => {
+        mc.off(eventName, callback);
+        if (typeof mc.destroy === "function") {
+          mc.destroy();
+        }
+      };
+    });
+  }
+  isCustomEvent(eventName) {
+    return this._config.events.indexOf(eventName) > -1;
+  }
+  static {
+    this.\u0275fac = function HammerGesturesPlugin_Factory(t) {
+      return new (t || _HammerGesturesPlugin)(\u0275\u0275inject(DOCUMENT), \u0275\u0275inject(HAMMER_GESTURE_CONFIG), \u0275\u0275inject(Console), \u0275\u0275inject(HAMMER_LOADER, 8));
+    };
+  }
+  static {
+    this.\u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({
+      token: _HammerGesturesPlugin,
+      factory: _HammerGesturesPlugin.\u0275fac
+    });
+  }
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(HammerGesturesPlugin, [{
+    type: Injectable
+  }], () => [{
+    type: void 0,
+    decorators: [{
+      type: Inject,
+      args: [DOCUMENT]
+    }]
+  }, {
+    type: HammerGestureConfig,
+    decorators: [{
+      type: Inject,
+      args: [HAMMER_GESTURE_CONFIG]
+    }]
+  }, {
+    type: Console
+  }, {
+    type: void 0,
+    decorators: [{
+      type: Optional
+    }, {
+      type: Inject,
+      args: [HAMMER_LOADER]
+    }]
+  }], null);
+})();
+var HammerModule = class _HammerModule {
+  static {
+    this.\u0275fac = function HammerModule_Factory(t) {
+      return new (t || _HammerModule)();
+    };
+  }
+  static {
+    this.\u0275mod = /* @__PURE__ */ \u0275\u0275defineNgModule({
+      type: _HammerModule
+    });
+  }
+  static {
+    this.\u0275inj = /* @__PURE__ */ \u0275\u0275defineInjector({
+      providers: [{
+        provide: EVENT_MANAGER_PLUGINS,
+        useClass: HammerGesturesPlugin,
+        multi: true,
+        deps: [DOCUMENT, HAMMER_GESTURE_CONFIG, Console, [new Optional(), HAMMER_LOADER]]
+      }, {
+        provide: HAMMER_GESTURE_CONFIG,
+        useClass: HammerGestureConfig,
+        deps: []
+      }]
+    });
+  }
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(HammerModule, [{
+    type: NgModule,
+    args: [{
+      providers: [{
+        provide: EVENT_MANAGER_PLUGINS,
+        useClass: HammerGesturesPlugin,
+        multi: true,
+        deps: [DOCUMENT, HAMMER_GESTURE_CONFIG, Console, [new Optional(), HAMMER_LOADER]]
+      }, {
+        provide: HAMMER_GESTURE_CONFIG,
+        useClass: HammerGestureConfig,
+        deps: []
+      }]
+    }]
+  }], null, null);
+})();
+var DomSanitizer = class _DomSanitizer {
+  static {
+    this.\u0275fac = function DomSanitizer_Factory(t) {
+      return new (t || _DomSanitizer)();
+    };
+  }
+  static {
+    this.\u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({
+      token: _DomSanitizer,
+      factory: function DomSanitizer_Factory(t) {
+        let r = null;
+        if (t) {
+          r = new (t || _DomSanitizer)();
+        } else {
+          r = \u0275\u0275inject(DomSanitizerImpl);
+        }
+        return r;
+      },
+      providedIn: "root"
+    });
+  }
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(DomSanitizer, [{
+    type: Injectable,
+    args: [{
+      providedIn: "root",
+      useExisting: forwardRef(() => DomSanitizerImpl)
+    }]
+  }], null, null);
+})();
+var DomSanitizerImpl = class _DomSanitizerImpl extends DomSanitizer {
+  constructor(_doc) {
+    super();
+    this._doc = _doc;
+  }
+  sanitize(ctx, value) {
+    if (value == null)
+      return null;
+    switch (ctx) {
+      case SecurityContext.NONE:
+        return value;
+      case SecurityContext.HTML:
+        if (allowSanitizationBypassAndThrow(
+          value,
+          "HTML"
+          /* BypassType.Html */
+        )) {
+          return unwrapSafeValue(value);
+        }
+        return _sanitizeHtml(this._doc, String(value)).toString();
+      case SecurityContext.STYLE:
+        if (allowSanitizationBypassAndThrow(
+          value,
+          "Style"
+          /* BypassType.Style */
+        )) {
+          return unwrapSafeValue(value);
+        }
+        return value;
+      case SecurityContext.SCRIPT:
+        if (allowSanitizationBypassAndThrow(
+          value,
+          "Script"
+          /* BypassType.Script */
+        )) {
+          return unwrapSafeValue(value);
+        }
+        throw new RuntimeError(5200, (typeof ngDevMode === "undefined" || ngDevMode) && "unsafe value used in a script context");
+      case SecurityContext.URL:
+        if (allowSanitizationBypassAndThrow(
+          value,
+          "URL"
+          /* BypassType.Url */
+        )) {
+          return unwrapSafeValue(value);
+        }
+        return _sanitizeUrl(String(value));
+      case SecurityContext.RESOURCE_URL:
+        if (allowSanitizationBypassAndThrow(
+          value,
+          "ResourceURL"
+          /* BypassType.ResourceUrl */
+        )) {
+          return unwrapSafeValue(value);
+        }
+        throw new RuntimeError(5201, (typeof ngDevMode === "undefined" || ngDevMode) && `unsafe value used in a resource URL context (see ${XSS_SECURITY_URL})`);
+      default:
+        throw new RuntimeError(5202, (typeof ngDevMode === "undefined" || ngDevMode) && `Unexpected SecurityContext ${ctx} (see ${XSS_SECURITY_URL})`);
+    }
+  }
+  bypassSecurityTrustHtml(value) {
+    return bypassSanitizationTrustHtml(value);
+  }
+  bypassSecurityTrustStyle(value) {
+    return bypassSanitizationTrustStyle(value);
+  }
+  bypassSecurityTrustScript(value) {
+    return bypassSanitizationTrustScript(value);
+  }
+  bypassSecurityTrustUrl(value) {
+    return bypassSanitizationTrustUrl(value);
+  }
+  bypassSecurityTrustResourceUrl(value) {
+    return bypassSanitizationTrustResourceUrl(value);
+  }
+  static {
+    this.\u0275fac = function DomSanitizerImpl_Factory(t) {
+      return new (t || _DomSanitizerImpl)(\u0275\u0275inject(DOCUMENT));
+    };
+  }
+  static {
+    this.\u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({
+      token: _DomSanitizerImpl,
+      factory: _DomSanitizerImpl.\u0275fac,
+      providedIn: "root"
+    });
+  }
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(DomSanitizerImpl, [{
+    type: Injectable,
+    args: [{
+      providedIn: "root"
+    }]
+  }], () => [{
+    type: void 0,
+    decorators: [{
+      type: Inject,
+      args: [DOCUMENT]
+    }]
+  }], null);
+})();
+var HydrationFeatureKind;
+(function(HydrationFeatureKind2) {
+  HydrationFeatureKind2[HydrationFeatureKind2["NoHttpTransferCache"] = 0] = "NoHttpTransferCache";
+  HydrationFeatureKind2[HydrationFeatureKind2["HttpTransferCacheOptions"] = 1] = "HttpTransferCacheOptions";
+})(HydrationFeatureKind || (HydrationFeatureKind = {}));
+var VERSION = new Version("17.3.12");
 
 // node_modules/@angular/router/fesm2022/router.mjs
 var PRIMARY_OUTLET = "primary";
-var RouteTitleKey = Symbol("RouteTitle");
+var RouteTitleKey = /* @__PURE__ */ Symbol("RouteTitle");
 var ParamsAsMap = class {
   constructor(params) {
     this.params = params || {};
@@ -174,9 +1869,11 @@ function defaultUrlMatcher(segments, segmentGroup, route) {
   };
 }
 function shallowEqualArrays(a, b) {
-  if (a.length !== b.length) return false;
+  if (a.length !== b.length)
+    return false;
   for (let i = 0; i < a.length; ++i) {
-    if (!shallowEqual(a[i], b[i])) return false;
+    if (!shallowEqual(a[i], b[i]))
+      return false;
   }
   return true;
 }
@@ -200,7 +1897,8 @@ function getDataKeys(obj) {
 }
 function equalArraysOrString(a, b) {
   if (Array.isArray(a) && Array.isArray(b)) {
-    if (a.length !== b.length) return false;
+    if (a.length !== b.length)
+      return false;
     const aSorted = [...a].sort();
     const bSorted = [...b].sort();
     return aSorted.every((val, index) => bSorted[index] === val);
@@ -236,14 +1934,18 @@ function equalParams(container, containee) {
   return shallowEqual(container, containee);
 }
 function equalSegmentGroups(container, containee, matrixParams) {
-  if (!equalPath(container.segments, containee.segments)) return false;
+  if (!equalPath(container.segments, containee.segments))
+    return false;
   if (!matrixParamsMatch(container.segments, containee.segments, matrixParams)) {
     return false;
   }
-  if (container.numberOfChildren !== containee.numberOfChildren) return false;
+  if (container.numberOfChildren !== containee.numberOfChildren)
+    return false;
   for (const c in containee.children) {
-    if (!container.children[c]) return false;
-    if (!equalSegmentGroups(container.children[c], containee.children[c], matrixParams)) return false;
+    if (!container.children[c])
+      return false;
+    if (!equalSegmentGroups(container.children[c], containee.children[c], matrixParams))
+      return false;
   }
   return true;
 }
@@ -256,15 +1958,21 @@ function containsSegmentGroup(container, containee, matrixParams) {
 function containsSegmentGroupHelper(container, containee, containeePaths, matrixParams) {
   if (container.segments.length > containeePaths.length) {
     const current = container.segments.slice(0, containeePaths.length);
-    if (!equalPath(current, containeePaths)) return false;
-    if (containee.hasChildren()) return false;
-    if (!matrixParamsMatch(current, containeePaths, matrixParams)) return false;
+    if (!equalPath(current, containeePaths))
+      return false;
+    if (containee.hasChildren())
+      return false;
+    if (!matrixParamsMatch(current, containeePaths, matrixParams))
+      return false;
     return true;
   } else if (container.segments.length === containeePaths.length) {
-    if (!equalPath(container.segments, containeePaths)) return false;
-    if (!matrixParamsMatch(container.segments, containeePaths, matrixParams)) return false;
+    if (!equalPath(container.segments, containeePaths))
+      return false;
+    if (!matrixParamsMatch(container.segments, containeePaths, matrixParams))
+      return false;
     for (const c in containee.children) {
-      if (!container.children[c]) return false;
+      if (!container.children[c])
+        return false;
       if (!containsSegmentGroup(container.children[c], containee.children[c], matrixParams)) {
         return false;
       }
@@ -273,9 +1981,12 @@ function containsSegmentGroupHelper(container, containee, containeePaths, matrix
   } else {
     const current = containeePaths.slice(0, container.segments.length);
     const next = containeePaths.slice(container.segments.length);
-    if (!equalPath(container.segments, current)) return false;
-    if (!matrixParamsMatch(container.segments, current, matrixParams)) return false;
-    if (!container.children[PRIMARY_OUTLET]) return false;
+    if (!equalPath(container.segments, current))
+      return false;
+    if (!matrixParamsMatch(container.segments, current, matrixParams))
+      return false;
+    if (!container.children[PRIMARY_OUTLET])
+      return false;
     return containsSegmentGroupHelper(container.children[PRIMARY_OUTLET], containee, next, matrixParams);
   }
 }
@@ -342,7 +2053,8 @@ function equalSegments(as, bs) {
   return equalPath(as, bs) && as.every((a, i) => shallowEqual(a.parameters, bs[i].parameters));
 }
 function equalPath(as, bs) {
-  if (as.length !== bs.length) return false;
+  if (as.length !== bs.length)
+    return false;
   return as.every((a, i) => a.path === bs[i].path);
 }
 function mapChildrenIntoArray(segment, fn) {
@@ -361,12 +2073,12 @@ function mapChildrenIntoArray(segment, fn) {
 }
 var UrlSerializer = class _UrlSerializer {
   static {
-    this.ɵfac = function UrlSerializer_Factory(t) {
+    this.\u0275fac = function UrlSerializer_Factory(t) {
       return new (t || _UrlSerializer)();
     };
   }
   static {
-    this.ɵprov = ɵɵdefineInjectable({
+    this.\u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({
       token: _UrlSerializer,
       factory: () => (() => new DefaultUrlSerializer())(),
       providedIn: "root"
@@ -887,7 +2599,8 @@ function prefixedWith(segmentGroup, startIndex, commands) {
     commandIndex: 0
   };
   while (currentPathIndex < segmentGroup.segments.length) {
-    if (currentCommandIndex >= commands.length) return noMatch2;
+    if (currentCommandIndex >= commands.length)
+      return noMatch2;
     const path = segmentGroup.segments[currentPathIndex];
     const command = commands[currentCommandIndex];
     if (isCommandWithOutlets(command)) {
@@ -895,12 +2608,15 @@ function prefixedWith(segmentGroup, startIndex, commands) {
     }
     const curr = `${command}`;
     const next = currentCommandIndex < commands.length - 1 ? commands[currentCommandIndex + 1] : null;
-    if (currentPathIndex > 0 && curr === void 0) break;
+    if (currentPathIndex > 0 && curr === void 0)
+      break;
     if (curr && next && typeof next === "object" && next.outlets === void 0) {
-      if (!compare(curr, next, path)) return noMatch2;
+      if (!compare(curr, next, path))
+        return noMatch2;
       currentCommandIndex += 2;
     } else {
-      if (!compare(curr, {}, path)) return noMatch2;
+      if (!compare(curr, {}, path))
+        return noMatch2;
       currentCommandIndex++;
     }
     currentPathIndex++;
@@ -1280,14 +2996,14 @@ var ChildrenOutletContexts = class _ChildrenOutletContexts {
     return this.contexts.get(childName) || null;
   }
   static {
-    this.ɵfac = function ChildrenOutletContexts_Factory(t) {
+    this.\u0275fac = function ChildrenOutletContexts_Factory(t) {
       return new (t || _ChildrenOutletContexts)();
     };
   }
   static {
-    this.ɵprov = ɵɵdefineInjectable({
+    this.\u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({
       token: _ChildrenOutletContexts,
-      factory: _ChildrenOutletContexts.ɵfac,
+      factory: _ChildrenOutletContexts.\u0275fac,
       providedIn: "root"
     });
   }
@@ -1333,7 +3049,8 @@ var Tree = class {
    */
   siblings(t) {
     const p = findPath(t, this._root);
-    if (p.length < 2) return [];
+    if (p.length < 2)
+      return [];
     const c = p[p.length - 2].children.map((c2) => c2.value);
     return c.filter((cc) => cc !== t);
   }
@@ -1345,15 +3062,18 @@ var Tree = class {
   }
 };
 function findNode(value, node) {
-  if (value === node.value) return node;
+  if (value === node.value)
+    return node;
   for (const child of node.children) {
     const node2 = findNode(value, child);
-    if (node2) return node2;
+    if (node2)
+      return node2;
   }
   return null;
 }
 function findPath(value, node) {
-  if (value === node.value) return [node];
+  if (value === node.value)
+    return [node];
   for (const child of node.children) {
     const path = findPath(value, child);
     if (path.length) {
@@ -1675,11 +3395,13 @@ var RouterOutlet = class _RouterOutlet {
    * @throws An error if the outlet is not activated.
    */
   get component() {
-    if (!this.activated) throw new RuntimeError(4012, (typeof ngDevMode === "undefined" || ngDevMode) && "Outlet is not activated");
+    if (!this.activated)
+      throw new RuntimeError(4012, (typeof ngDevMode === "undefined" || ngDevMode) && "Outlet is not activated");
     return this.activated.instance;
   }
   get activatedRoute() {
-    if (!this.activated) throw new RuntimeError(4012, (typeof ngDevMode === "undefined" || ngDevMode) && "Outlet is not activated");
+    if (!this.activated)
+      throw new RuntimeError(4012, (typeof ngDevMode === "undefined" || ngDevMode) && "Outlet is not activated");
     return this._activatedRoute;
   }
   get activatedRouteData() {
@@ -1692,7 +3414,8 @@ var RouterOutlet = class _RouterOutlet {
    * Called when the `RouteReuseStrategy` instructs to detach the subtree
    */
   detach() {
-    if (!this.activated) throw new RuntimeError(4012, (typeof ngDevMode === "undefined" || ngDevMode) && "Outlet is not activated");
+    if (!this.activated)
+      throw new RuntimeError(4012, (typeof ngDevMode === "undefined" || ngDevMode) && "Outlet is not activated");
     this.location.detach();
     const cmp = this.activated;
     this.activated = null;
@@ -1739,12 +3462,12 @@ var RouterOutlet = class _RouterOutlet {
     this.activateEvents.emit(this.activated.instance);
   }
   static {
-    this.ɵfac = function RouterOutlet_Factory(t) {
+    this.\u0275fac = function RouterOutlet_Factory(t) {
       return new (t || _RouterOutlet)();
     };
   }
   static {
-    this.ɵdir = ɵɵdefineDirective({
+    this.\u0275dir = /* @__PURE__ */ \u0275\u0275defineDirective({
       type: _RouterOutlet,
       selectors: [["router-outlet"]],
       inputs: {
@@ -1758,7 +3481,7 @@ var RouterOutlet = class _RouterOutlet {
       },
       exportAs: ["outlet"],
       standalone: true,
-      features: [ɵɵNgOnChangesFeature]
+      features: [\u0275\u0275NgOnChangesFeature]
     });
   }
 };
@@ -1868,14 +3591,14 @@ var RoutedComponentInputBinder = class _RoutedComponentInputBinder {
     this.outletDataSubscriptions.set(outlet, dataSubscription);
   }
   static {
-    this.ɵfac = function RoutedComponentInputBinder_Factory(t) {
+    this.\u0275fac = function RoutedComponentInputBinder_Factory(t) {
       return new (t || _RoutedComponentInputBinder)();
     };
   }
   static {
-    this.ɵprov = ɵɵdefineInjectable({
+    this.\u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({
       token: _RoutedComponentInputBinder,
-      factory: _RoutedComponentInputBinder.ɵfac
+      factory: _RoutedComponentInputBinder.\u0275fac
     });
   }
 };
@@ -1948,23 +3671,23 @@ function isRedirectingNavigationCancelingError(error) {
 function isNavigationCancelingError(error) {
   return !!error && error[NAVIGATION_CANCELING_ERROR];
 }
-var ɵEmptyOutletComponent = class _ɵEmptyOutletComponent {
+var \u0275EmptyOutletComponent = class _\u0275EmptyOutletComponent {
   static {
-    this.ɵfac = function ɵEmptyOutletComponent_Factory(t) {
-      return new (t || _ɵEmptyOutletComponent)();
+    this.\u0275fac = function \u0275EmptyOutletComponent_Factory(t) {
+      return new (t || _\u0275EmptyOutletComponent)();
     };
   }
   static {
-    this.ɵcmp = ɵɵdefineComponent({
-      type: _ɵEmptyOutletComponent,
+    this.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
+      type: _\u0275EmptyOutletComponent,
       selectors: [["ng-component"]],
       standalone: true,
-      features: [ɵɵStandaloneFeature],
+      features: [\u0275\u0275StandaloneFeature],
       decls: 1,
       vars: 0,
       template: function _EmptyOutletComponent_Template(rf, ctx) {
         if (rf & 1) {
-          ɵɵelement(0, "router-outlet");
+          \u0275\u0275element(0, "router-outlet");
         }
       },
       dependencies: [RouterOutlet],
@@ -1973,7 +3696,7 @@ var ɵEmptyOutletComponent = class _ɵEmptyOutletComponent {
   }
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(ɵEmptyOutletComponent, [{
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(\u0275EmptyOutletComponent, [{
     type: Component,
     args: [{
       template: `<router-outlet></router-outlet>`,
@@ -2085,7 +3808,7 @@ function standardizeConfig(r) {
     children
   }) : __spreadValues({}, r);
   if (!c.component && !c.loadComponent && (children || c.loadChildren) && c.outlet && c.outlet !== PRIMARY_OUTLET) {
-    c.component = ɵEmptyOutletComponent;
+    c.component = \u0275EmptyOutletComponent;
   }
   return c;
 }
@@ -2098,14 +3821,17 @@ function sortByMatchingOutlets(routes, outletName) {
   return sortedConfig;
 }
 function getClosestRouteInjector(snapshot) {
-  if (!snapshot) return null;
+  if (!snapshot)
+    return null;
   if (snapshot.routeConfig?._injector) {
     return snapshot.routeConfig._injector;
   }
   for (let s = snapshot.parent; s; s = s.parent) {
     const route = s.routeConfig;
-    if (route?._loadedInjector) return route._loadedInjector;
-    if (route?._injector) return route._injector;
+    if (route?._loadedInjector)
+      return route._loadedInjector;
+    if (route?._injector)
+      return route._injector;
   }
   return null;
 }
@@ -2277,7 +4003,8 @@ function getAllRouteGuards(future, curr, parentContexts) {
 }
 function getCanActivateChild(p) {
   const canActivateChild = p.routeConfig ? p.routeConfig.canActivateChild : null;
-  if (!canActivateChild || canActivateChild.length === 0) return null;
+  if (!canActivateChild || canActivateChild.length === 0)
+    return null;
   return {
     node: p,
     guards: canActivateChild
@@ -2405,7 +4132,7 @@ function isCanMatch(guard) {
 function isEmptyError(e) {
   return e instanceof EmptyError || e?.name === "EmptyError";
 }
-var INITIAL_VALUE = Symbol("INITIAL_VALUE");
+var INITIAL_VALUE = /* @__PURE__ */ Symbol("INITIAL_VALUE");
 function prioritizedGuardValue() {
   return switchMap((obs) => {
     return combineLatest(obs.map((o) => o.pipe(take(1), startWith(INITIAL_VALUE)))).pipe(map((results) => {
@@ -2470,7 +4197,8 @@ function fireChildActivationStart(snapshot, forwardEvent) {
 }
 function runCanActivate(futureRSS, futureARS, injector) {
   const canActivate = futureARS.routeConfig ? futureARS.routeConfig.canActivate : null;
-  if (!canActivate || canActivate.length === 0) return of(true);
+  if (!canActivate || canActivate.length === 0)
+    return of(true);
   const canActivateObservables = canActivate.map((canActivate2) => {
     return defer(() => {
       const closestInjector = getClosestRouteInjector(futureARS) ?? injector;
@@ -2499,7 +4227,8 @@ function runCanActivateChild(futureRSS, path, injector) {
 }
 function runCanDeactivate(component, currARS, currRSS, futureRSS, injector) {
   const canDeactivate = currARS && currARS.routeConfig ? currARS.routeConfig.canDeactivate : null;
-  if (!canDeactivate || canDeactivate.length === 0) return of(true);
+  if (!canDeactivate || canDeactivate.length === 0)
+    return of(true);
   const canDeactivateObservables = canDeactivate.map((c) => {
     const closestInjector = getClosestRouteInjector(currARS) ?? injector;
     const guard = getTokenOrFunctionIdentity(c, closestInjector);
@@ -2522,13 +4251,15 @@ function runCanLoadGuards(injector, route, segments, urlSerializer) {
 }
 function redirectIfUrlTree(urlSerializer) {
   return pipe(tap((result) => {
-    if (!isUrlTree(result)) return;
+    if (!isUrlTree(result))
+      return;
     throw redirectingNavigationError(urlSerializer, result);
   }), map((result) => result === true));
 }
 function runCanMatchGuards(injector, route, segments, urlSerializer) {
   const canMatch = route.canMatch;
-  if (!canMatch || canMatch.length === 0) return of(true);
+  if (!canMatch || canMatch.length === 0)
+    return of(true);
   const canMatchObservables = canMatch.map((injectionToken) => {
     const guard = getTokenOrFunctionIdentity(injectionToken, injector);
     const guardVal = isCanMatch(guard) ? guard.canMatch(route, segments) : runInInjectionContext(injector, () => guard(route, segments));
@@ -2612,7 +4343,8 @@ var ApplyRedirects = class {
   }
   findPosParam(redirectTo, redirectToUrlSegment, posParams) {
     const pos = posParams[redirectToUrlSegment.path.substring(1)];
-    if (!pos) throw new RuntimeError(4001, (typeof ngDevMode === "undefined" || ngDevMode) && `Cannot redirect to '${redirectTo}'. Cannot find '${redirectToUrlSegment.path}'.`);
+    if (!pos)
+      throw new RuntimeError(4001, (typeof ngDevMode === "undefined" || ngDevMode) && `Cannot redirect to '${redirectTo}'. Cannot find '${redirectToUrlSegment.path}'.`);
     return pos;
   }
   findOrReturn(redirectToUrlSegment, actualSegments) {
@@ -2660,7 +4392,8 @@ function match(segmentGroup, route, segments) {
   }
   const matcher = route.matcher || defaultUrlMatcher;
   const res = matcher(segments, segmentGroup, route);
-  if (!res) return __spreadValues({}, noMatch);
+  if (!res)
+    return __spreadValues({}, noMatch);
   const posParams = {};
   Object.entries(res.posParams ?? {}).forEach(([k, v]) => {
     posParams[k] = v.path;
@@ -2836,7 +4569,8 @@ var Recognizer = class {
       children.push(...outletChildren);
       return children;
     }), defaultIfEmpty(null), last(), mergeMap((children) => {
-      if (children === null) return noMatch$1(segmentGroup);
+      if (children === null)
+        return noMatch$1(segmentGroup);
       const mergedChildren = mergeEmptyPathMatches(children);
       if (typeof ngDevMode === "undefined" || ngDevMode) {
         checkOutletNameUniqueness(mergedChildren);
@@ -2864,7 +4598,8 @@ var Recognizer = class {
     }));
   }
   processSegmentAgainstRoute(injector, routes, route, rawSegment, segments, outlet, allowRedirects) {
-    if (!isImmediateMatch(route, rawSegment, segments, outlet)) return noMatch$1(rawSegment);
+    if (!isImmediateMatch(route, rawSegment, segments, outlet))
+      return noMatch$1(rawSegment);
     if (route.redirectTo === void 0) {
       return this.matchSegmentAgainstRoute(injector, rawSegment, route, segments, outlet);
     }
@@ -2880,7 +4615,8 @@ var Recognizer = class {
       positionalParamSegments,
       remainingSegments
     } = match(segmentGroup, route, segments);
-    if (!matched) return noMatch$1(segmentGroup);
+    if (!matched)
+      return noMatch$1(segmentGroup);
     if (route.redirectTo.startsWith("/")) {
       this.absoluteRedirectCount++;
       if (this.absoluteRedirectCount > MAX_ALLOWED_REDIRECTS) {
@@ -2970,8 +4706,10 @@ This is currently a dev mode only error but will become a call stack size exceed
 };
 function sortActivatedRouteSnapshots(nodes) {
   nodes.sort((a, b) => {
-    if (a.value.outlet === PRIMARY_OUTLET) return -1;
-    if (b.value.outlet === PRIMARY_OUTLET) return 1;
+    if (a.value.outlet === PRIMARY_OUTLET)
+      return -1;
+    if (b.value.outlet === PRIMARY_OUTLET)
+      return 1;
     return a.value.outlet.localeCompare(b.value.outlet);
   });
 }
@@ -3124,12 +4862,12 @@ var TitleStrategy = class _TitleStrategy {
     return snapshot.data[RouteTitleKey];
   }
   static {
-    this.ɵfac = function TitleStrategy_Factory(t) {
+    this.\u0275fac = function TitleStrategy_Factory(t) {
       return new (t || _TitleStrategy)();
     };
   }
   static {
-    this.ɵprov = ɵɵdefineInjectable({
+    this.\u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({
       token: _TitleStrategy,
       factory: () => (() => inject(DefaultTitleStrategy))(),
       providedIn: "root"
@@ -3162,14 +4900,14 @@ var DefaultTitleStrategy = class _DefaultTitleStrategy extends TitleStrategy {
     }
   }
   static {
-    this.ɵfac = function DefaultTitleStrategy_Factory(t) {
-      return new (t || _DefaultTitleStrategy)(ɵɵinject(Title));
+    this.\u0275fac = function DefaultTitleStrategy_Factory(t) {
+      return new (t || _DefaultTitleStrategy)(\u0275\u0275inject(Title));
     };
   }
   static {
-    this.ɵprov = ɵɵdefineInjectable({
+    this.\u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({
       token: _DefaultTitleStrategy,
-      factory: _DefaultTitleStrategy.ɵfac,
+      factory: _DefaultTitleStrategy.\u0275fac,
       providedIn: "root"
     });
   }
@@ -3238,14 +4976,14 @@ var RouterConfigLoader = class _RouterConfigLoader {
     return loader;
   }
   static {
-    this.ɵfac = function RouterConfigLoader_Factory(t) {
+    this.\u0275fac = function RouterConfigLoader_Factory(t) {
       return new (t || _RouterConfigLoader)();
     };
   }
   static {
-    this.ɵprov = ɵɵdefineInjectable({
+    this.\u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({
       token: _RouterConfigLoader,
-      factory: _RouterConfigLoader.ɵfac,
+      factory: _RouterConfigLoader.\u0275fac,
       providedIn: "root"
     });
   }
@@ -3298,12 +5036,12 @@ function maybeUnwrapDefaultExport(input) {
 }
 var UrlHandlingStrategy = class _UrlHandlingStrategy {
   static {
-    this.ɵfac = function UrlHandlingStrategy_Factory(t) {
+    this.\u0275fac = function UrlHandlingStrategy_Factory(t) {
       return new (t || _UrlHandlingStrategy)();
     };
   }
   static {
-    this.ɵprov = ɵɵdefineInjectable({
+    this.\u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({
       token: _UrlHandlingStrategy,
       factory: () => (() => inject(DefaultUrlHandlingStrategy))(),
       providedIn: "root"
@@ -3330,14 +5068,14 @@ var DefaultUrlHandlingStrategy = class _DefaultUrlHandlingStrategy {
     return newUrlPart;
   }
   static {
-    this.ɵfac = function DefaultUrlHandlingStrategy_Factory(t) {
+    this.\u0275fac = function DefaultUrlHandlingStrategy_Factory(t) {
       return new (t || _DefaultUrlHandlingStrategy)();
     };
   }
   static {
-    this.ɵprov = ɵɵdefineInjectable({
+    this.\u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({
       token: _DefaultUrlHandlingStrategy,
-      factory: _DefaultUrlHandlingStrategy.ɵfac,
+      factory: _DefaultUrlHandlingStrategy.\u0275fac,
       providedIn: "root"
     });
   }
@@ -3354,9 +5092,9 @@ var CREATE_VIEW_TRANSITION = new InjectionToken(ngDevMode ? "view transition hel
 var VIEW_TRANSITION_OPTIONS = new InjectionToken(ngDevMode ? "view transition options" : "");
 function createViewTransition(injector, from2, to) {
   const transitionOptions = injector.get(VIEW_TRANSITION_OPTIONS);
-  const document = injector.get(DOCUMENT);
+  const document2 = injector.get(DOCUMENT);
   return injector.get(NgZone).runOutsideAngular(() => {
-    if (!document.startViewTransition || transitionOptions.skipNextTransition) {
+    if (!document2.startViewTransition || transitionOptions.skipNextTransition) {
       transitionOptions.skipNextTransition = false;
       return new Promise((resolve) => setTimeout(resolve));
     }
@@ -3364,7 +5102,7 @@ function createViewTransition(injector, from2, to) {
     const viewTransitionStarted = new Promise((resolve) => {
       resolveViewTransitionStarted = resolve;
     });
-    const transition = document.startViewTransition(() => {
+    const transition = document2.startViewTransition(() => {
       resolveViewTransitionStarted();
       return createRenderPromise(injector);
     });
@@ -3716,14 +5454,14 @@ var NavigationTransitions = class _NavigationTransitions {
     return extractedBrowserUrl.toString() !== this.currentTransition?.extractedUrl.toString() && !this.currentTransition?.extras.skipLocationChange;
   }
   static {
-    this.ɵfac = function NavigationTransitions_Factory(t) {
+    this.\u0275fac = function NavigationTransitions_Factory(t) {
       return new (t || _NavigationTransitions)();
     };
   }
   static {
-    this.ɵprov = ɵɵdefineInjectable({
+    this.\u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({
       token: _NavigationTransitions,
-      factory: _NavigationTransitions.ɵfac,
+      factory: _NavigationTransitions.\u0275fac,
       providedIn: "root"
     });
   }
@@ -3741,12 +5479,12 @@ function isBrowserTriggeredNavigation(source) {
 }
 var RouteReuseStrategy = class _RouteReuseStrategy {
   static {
-    this.ɵfac = function RouteReuseStrategy_Factory(t) {
+    this.\u0275fac = function RouteReuseStrategy_Factory(t) {
       return new (t || _RouteReuseStrategy)();
     };
   }
   static {
-    this.ɵprov = ɵɵdefineInjectable({
+    this.\u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({
       token: _RouteReuseStrategy,
       factory: () => (() => inject(DefaultRouteReuseStrategy))(),
       providedIn: "root"
@@ -3794,17 +5532,17 @@ var BaseRouteReuseStrategy = class {
 };
 var DefaultRouteReuseStrategy = class _DefaultRouteReuseStrategy extends BaseRouteReuseStrategy {
   static {
-    this.ɵfac = /* @__PURE__ */ (() => {
-      let ɵDefaultRouteReuseStrategy_BaseFactory;
+    this.\u0275fac = /* @__PURE__ */ (() => {
+      let \u0275DefaultRouteReuseStrategy_BaseFactory;
       return function DefaultRouteReuseStrategy_Factory(t) {
-        return (ɵDefaultRouteReuseStrategy_BaseFactory || (ɵDefaultRouteReuseStrategy_BaseFactory = ɵɵgetInheritedFactory(_DefaultRouteReuseStrategy)))(t || _DefaultRouteReuseStrategy);
+        return (\u0275DefaultRouteReuseStrategy_BaseFactory || (\u0275DefaultRouteReuseStrategy_BaseFactory = \u0275\u0275getInheritedFactory(_DefaultRouteReuseStrategy)))(t || _DefaultRouteReuseStrategy);
       };
     })();
   }
   static {
-    this.ɵprov = ɵɵdefineInjectable({
+    this.\u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({
       token: _DefaultRouteReuseStrategy,
-      factory: _DefaultRouteReuseStrategy.ɵfac,
+      factory: _DefaultRouteReuseStrategy.\u0275fac,
       providedIn: "root"
     });
   }
@@ -3819,12 +5557,12 @@ var DefaultRouteReuseStrategy = class _DefaultRouteReuseStrategy extends BaseRou
 })();
 var StateManager = class _StateManager {
   static {
-    this.ɵfac = function StateManager_Factory(t) {
+    this.\u0275fac = function StateManager_Factory(t) {
       return new (t || _StateManager)();
     };
   }
   static {
-    this.ɵprov = ɵɵdefineInjectable({
+    this.\u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({
       token: _StateManager,
       factory: () => (() => inject(HistoryStateManager))(),
       providedIn: "root"
@@ -3876,7 +5614,7 @@ var HistoryStateManager = class _HistoryStateManager extends StateManager {
     if (this.canceledNavigationResolution !== "computed") {
       return this.currentPageId;
     }
-    return this.restoredState()?.ɵrouterPageId ?? this.currentPageId;
+    return this.restoredState()?.\u0275routerPageId ?? this.currentPageId;
   }
   getRouterState() {
     return this.routerState;
@@ -3970,7 +5708,7 @@ var HistoryStateManager = class _HistoryStateManager extends StateManager {
     if (this.canceledNavigationResolution === "computed") {
       return {
         navigationId,
-        ɵrouterPageId: routerPageId
+        \u0275routerPageId: routerPageId
       };
     }
     return {
@@ -3978,17 +5716,17 @@ var HistoryStateManager = class _HistoryStateManager extends StateManager {
     };
   }
   static {
-    this.ɵfac = /* @__PURE__ */ (() => {
-      let ɵHistoryStateManager_BaseFactory;
+    this.\u0275fac = /* @__PURE__ */ (() => {
+      let \u0275HistoryStateManager_BaseFactory;
       return function HistoryStateManager_Factory(t) {
-        return (ɵHistoryStateManager_BaseFactory || (ɵHistoryStateManager_BaseFactory = ɵɵgetInheritedFactory(_HistoryStateManager)))(t || _HistoryStateManager);
+        return (\u0275HistoryStateManager_BaseFactory || (\u0275HistoryStateManager_BaseFactory = \u0275\u0275getInheritedFactory(_HistoryStateManager)))(t || _HistoryStateManager);
       };
     })();
   }
   static {
-    this.ɵprov = ɵɵdefineInjectable({
+    this.\u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({
       token: _HistoryStateManager,
-      factory: _HistoryStateManager.ɵfac,
+      factory: _HistoryStateManager.\u0275fac,
       providedIn: "root"
     });
   }
@@ -4167,7 +5905,7 @@ var Router = class _Router {
     if (state) {
       const stateCopy = __spreadValues({}, state);
       delete stateCopy.navigationId;
-      delete stateCopy.ɵrouterPageId;
+      delete stateCopy.\u0275routerPageId;
       if (Object.keys(stateCopy).length !== 0) {
         extras.state = stateCopy;
       }
@@ -4457,14 +6195,14 @@ var Router = class _Router {
     });
   }
   static {
-    this.ɵfac = function Router_Factory(t) {
+    this.\u0275fac = function Router_Factory(t) {
       return new (t || _Router)();
     };
   }
   static {
-    this.ɵprov = ɵɵdefineInjectable({
+    this.\u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({
       token: _Router,
-      factory: _Router.ɵfac,
+      factory: _Router.\u0275fac,
       providedIn: "root"
     });
   }
@@ -4588,7 +6326,7 @@ var RouterLink = class _RouterLink {
       // Note: we should investigate whether we can switch to using `@HostBinding('attr.href')`
       // instead of applying a value via a renderer, after a final merge of the
       // `RouterLinkWithHref` directive.
-      ɵɵsanitizeUrlOrResourceUrl(this.href, this.el.nativeElement.tagName.toLowerCase(), "href")
+      \u0275\u0275sanitizeUrlOrResourceUrl(this.href, this.el.nativeElement.tagName.toLowerCase(), "href")
     );
     this.applyAttributeValue("href", sanitizedValue);
   }
@@ -4616,23 +6354,23 @@ var RouterLink = class _RouterLink {
     });
   }
   static {
-    this.ɵfac = function RouterLink_Factory(t) {
-      return new (t || _RouterLink)(ɵɵdirectiveInject(Router), ɵɵdirectiveInject(ActivatedRoute), ɵɵinjectAttribute("tabindex"), ɵɵdirectiveInject(Renderer2), ɵɵdirectiveInject(ElementRef), ɵɵdirectiveInject(LocationStrategy));
+    this.\u0275fac = function RouterLink_Factory(t) {
+      return new (t || _RouterLink)(\u0275\u0275directiveInject(Router), \u0275\u0275directiveInject(ActivatedRoute), \u0275\u0275injectAttribute("tabindex"), \u0275\u0275directiveInject(Renderer2), \u0275\u0275directiveInject(ElementRef), \u0275\u0275directiveInject(LocationStrategy));
     };
   }
   static {
-    this.ɵdir = ɵɵdefineDirective({
+    this.\u0275dir = /* @__PURE__ */ \u0275\u0275defineDirective({
       type: _RouterLink,
       selectors: [["", "routerLink", ""]],
       hostVars: 1,
       hostBindings: function RouterLink_HostBindings(rf, ctx) {
         if (rf & 1) {
-          ɵɵlistener("click", function RouterLink_click_HostBindingHandler($event) {
+          \u0275\u0275listener("click", function RouterLink_click_HostBindingHandler($event) {
             return ctx.onClick($event.button, $event.ctrlKey, $event.shiftKey, $event.altKey, $event.metaKey);
           });
         }
         if (rf & 2) {
-          ɵɵattribute("target", ctx.target);
+          \u0275\u0275attribute("target", ctx.target);
         }
       },
       inputs: {
@@ -4649,7 +6387,7 @@ var RouterLink = class _RouterLink {
         routerLink: "routerLink"
       },
       standalone: true,
-      features: [ɵɵInputTransformsFeature, ɵɵNgOnChangesFeature]
+      features: [\u0275\u0275InputTransformsFeature, \u0275\u0275NgOnChangesFeature]
     });
   }
 };
@@ -4780,7 +6518,8 @@ var RouterLinkActive = class _RouterLinkActive {
     this.linkInputChangesSubscription?.unsubscribe();
   }
   update() {
-    if (!this.links || !this.router.navigated) return;
+    if (!this.links || !this.router.navigated)
+      return;
     queueMicrotask(() => {
       const hasActiveLinks = this.hasActiveLinks();
       this.classes.forEach((c) => {
@@ -4817,21 +6556,21 @@ var RouterLinkActive = class _RouterLinkActive {
     return this.link && isActiveCheckFn(this.link) || this.links.some(isActiveCheckFn);
   }
   static {
-    this.ɵfac = function RouterLinkActive_Factory(t) {
-      return new (t || _RouterLinkActive)(ɵɵdirectiveInject(Router), ɵɵdirectiveInject(ElementRef), ɵɵdirectiveInject(Renderer2), ɵɵdirectiveInject(ChangeDetectorRef), ɵɵdirectiveInject(RouterLink, 8));
+    this.\u0275fac = function RouterLinkActive_Factory(t) {
+      return new (t || _RouterLinkActive)(\u0275\u0275directiveInject(Router), \u0275\u0275directiveInject(ElementRef), \u0275\u0275directiveInject(Renderer2), \u0275\u0275directiveInject(ChangeDetectorRef), \u0275\u0275directiveInject(RouterLink, 8));
     };
   }
   static {
-    this.ɵdir = ɵɵdefineDirective({
+    this.\u0275dir = /* @__PURE__ */ \u0275\u0275defineDirective({
       type: _RouterLinkActive,
       selectors: [["", "routerLinkActive", ""]],
       contentQueries: function RouterLinkActive_ContentQueries(rf, ctx, dirIndex) {
         if (rf & 1) {
-          ɵɵcontentQuery(dirIndex, RouterLink, 5);
+          \u0275\u0275contentQuery(dirIndex, RouterLink, 5);
         }
         if (rf & 2) {
           let _t;
-          ɵɵqueryRefresh(_t = ɵɵloadQuery()) && (ctx.links = _t);
+          \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.links = _t);
         }
       },
       inputs: {
@@ -4844,7 +6583,7 @@ var RouterLinkActive = class _RouterLinkActive {
       },
       exportAs: ["routerLinkActive"],
       standalone: true,
-      features: [ɵɵNgOnChangesFeature]
+      features: [\u0275\u0275NgOnChangesFeature]
     });
   }
 };
@@ -4900,14 +6639,14 @@ var PreloadAllModules = class _PreloadAllModules {
     return fn().pipe(catchError(() => of(null)));
   }
   static {
-    this.ɵfac = function PreloadAllModules_Factory(t) {
+    this.\u0275fac = function PreloadAllModules_Factory(t) {
       return new (t || _PreloadAllModules)();
     };
   }
   static {
-    this.ɵprov = ɵɵdefineInjectable({
+    this.\u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({
       token: _PreloadAllModules,
-      factory: _PreloadAllModules.ɵfac,
+      factory: _PreloadAllModules.\u0275fac,
       providedIn: "root"
     });
   }
@@ -4925,14 +6664,14 @@ var NoPreloading = class _NoPreloading {
     return of(null);
   }
   static {
-    this.ɵfac = function NoPreloading_Factory(t) {
+    this.\u0275fac = function NoPreloading_Factory(t) {
       return new (t || _NoPreloading)();
     };
   }
   static {
-    this.ɵprov = ɵɵdefineInjectable({
+    this.\u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({
       token: _NoPreloading,
-      factory: _NoPreloading.ɵfac,
+      factory: _NoPreloading.\u0275fac,
       providedIn: "root"
     });
   }
@@ -5007,14 +6746,14 @@ var RouterPreloader = class _RouterPreloader {
     });
   }
   static {
-    this.ɵfac = function RouterPreloader_Factory(t) {
-      return new (t || _RouterPreloader)(ɵɵinject(Router), ɵɵinject(Compiler), ɵɵinject(EnvironmentInjector), ɵɵinject(PreloadingStrategy), ɵɵinject(RouterConfigLoader));
+    this.\u0275fac = function RouterPreloader_Factory(t) {
+      return new (t || _RouterPreloader)(\u0275\u0275inject(Router), \u0275\u0275inject(Compiler), \u0275\u0275inject(EnvironmentInjector), \u0275\u0275inject(PreloadingStrategy), \u0275\u0275inject(RouterConfigLoader));
     };
   }
   static {
-    this.ɵprov = ɵɵdefineInjectable({
+    this.\u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({
       token: _RouterPreloader,
-      factory: _RouterPreloader.ɵfac,
+      factory: _RouterPreloader.\u0275fac,
       providedIn: "root"
     });
   }
@@ -5079,7 +6818,8 @@ var RouterScroller = class _RouterScroller {
   }
   consumeScrollEvents() {
     return this.transitions.events.subscribe((e) => {
-      if (!(e instanceof Scroll)) return;
+      if (!(e instanceof Scroll))
+        return;
       if (e.position) {
         if (this.options.scrollPositionRestoration === "top") {
           this.viewportScroller.scrollToPosition([0, 0]);
@@ -5118,14 +6858,14 @@ var RouterScroller = class _RouterScroller {
     this.scrollEventsSubscription?.unsubscribe();
   }
   static {
-    this.ɵfac = function RouterScroller_Factory(t) {
-      ɵɵinvalidFactory();
+    this.\u0275fac = function RouterScroller_Factory(t) {
+      \u0275\u0275invalidFactory();
     };
   }
   static {
-    this.ɵprov = ɵɵdefineInjectable({
+    this.\u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({
       token: _RouterScroller,
-      factory: _RouterScroller.ɵfac
+      factory: _RouterScroller.\u0275fac
     });
   }
 };
@@ -5160,52 +6900,21 @@ function provideRouter(routes, ...features) {
     provide: APP_BOOTSTRAP_LISTENER,
     multi: true,
     useFactory: getBootstrapListener
-  }, features.map((feature) => feature.ɵproviders)]);
+  }, features.map((feature) => feature.\u0275providers)]);
 }
 function rootRoute(router) {
   return router.routerState.root;
 }
 function routerFeature(kind, providers) {
   return {
-    ɵkind: kind,
-    ɵproviders: providers
+    \u0275kind: kind,
+    \u0275providers: providers
   };
 }
 var ROUTER_IS_PROVIDED = new InjectionToken("", {
   providedIn: "root",
   factory: () => false
 });
-var routerIsProvidedDevModeCheck = {
-  provide: ENVIRONMENT_INITIALIZER,
-  multi: true,
-  useFactory() {
-    return () => {
-      if (!inject(ROUTER_IS_PROVIDED)) {
-        console.warn("`provideRoutes` was called without `provideRouter` or `RouterModule.forRoot`. This is likely a mistake.");
-      }
-    };
-  }
-};
-function provideRoutes(routes) {
-  return [{
-    provide: ROUTES,
-    multi: true,
-    useValue: routes
-  }, typeof ngDevMode === "undefined" || ngDevMode ? routerIsProvidedDevModeCheck : []];
-}
-function withInMemoryScrolling(options = {}) {
-  const providers = [{
-    provide: ROUTER_SCROLLER,
-    useFactory: () => {
-      const viewportScroller = inject(ViewportScroller);
-      const zone = inject(NgZone);
-      const transitions = inject(NavigationTransitions);
-      const urlSerializer = inject(UrlSerializer);
-      return new RouterScroller(urlSerializer, transitions, viewportScroller, zone, options);
-    }
-  }];
-  return routerFeature(4, providers);
-}
 function getBootstrapListener() {
   const injector = inject(Injector);
   return (bootstrappedComponentRef) => {
@@ -5318,35 +7027,6 @@ function withPreloading(preloadingStrategy) {
   }];
   return routerFeature(0, providers);
 }
-function withRouterConfig(options) {
-  const providers = [{
-    provide: ROUTER_CONFIGURATION,
-    useValue: options
-  }];
-  return routerFeature(5, providers);
-}
-function withHashLocation() {
-  const providers = [{
-    provide: LocationStrategy,
-    useClass: HashLocationStrategy
-  }];
-  return routerFeature(6, providers);
-}
-function withNavigationErrorHandler(fn) {
-  const providers = [{
-    provide: ENVIRONMENT_INITIALIZER,
-    multi: true,
-    useValue: () => {
-      const injector = inject(EnvironmentInjector);
-      inject(Router).events.subscribe((e) => {
-        if (e instanceof NavigationError) {
-          runInInjectionContext(injector, () => fn(e));
-        }
-      });
-    }
-  }];
-  return routerFeature(7, providers);
-}
 function withComponentInputBinding() {
   const providers = [RoutedComponentInputBinder, {
     provide: INPUT_BINDER,
@@ -5366,7 +7046,7 @@ function withViewTransitions(options) {
   }];
   return routerFeature(9, providers);
 }
-var ROUTER_DIRECTIVES = [RouterOutlet, RouterLink, RouterLinkActive, ɵEmptyOutletComponent];
+var ROUTER_DIRECTIVES = [RouterOutlet, RouterLink, RouterLinkActive, \u0275EmptyOutletComponent];
 var ROUTER_FORROOT_GUARD = new InjectionToken(typeof ngDevMode === "undefined" || ngDevMode ? "router duplicate forRoot guard" : "ROUTER_FORROOT_GUARD");
 var ROUTER_PROVIDERS = [
   Location,
@@ -5413,7 +7093,7 @@ var RouterModule = class _RouterModule {
   static forRoot(routes, config) {
     return {
       ngModule: _RouterModule,
-      providers: [ROUTER_PROVIDERS, typeof ngDevMode === "undefined" || ngDevMode ? config?.enableTracing ? withDebugTracing().ɵproviders : [] : [], {
+      providers: [ROUTER_PROVIDERS, typeof ngDevMode === "undefined" || ngDevMode ? config?.enableTracing ? withDebugTracing().\u0275providers : [] : [], {
         provide: ROUTES,
         multi: true,
         useValue: routes
@@ -5424,7 +7104,7 @@ var RouterModule = class _RouterModule {
       }, {
         provide: ROUTER_CONFIGURATION,
         useValue: config ? config : {}
-      }, config?.useHash ? provideHashLocationStrategy() : providePathLocationStrategy(), provideRouterScroller(), config?.preloadingStrategy ? withPreloading(config.preloadingStrategy).ɵproviders : [], config?.initialNavigation ? provideInitialNavigation(config) : [], config?.bindToComponentInputs ? withComponentInputBinding().ɵproviders : [], config?.enableViewTransitions ? withViewTransitions().ɵproviders : [], provideRouterInitializer()]
+      }, config?.useHash ? provideHashLocationStrategy() : providePathLocationStrategy(), provideRouterScroller(), config?.preloadingStrategy ? withPreloading(config.preloadingStrategy).\u0275providers : [], config?.initialNavigation ? provideInitialNavigation(config) : [], config?.bindToComponentInputs ? withComponentInputBinding().\u0275providers : [], config?.enableViewTransitions ? withViewTransitions().\u0275providers : [], provideRouterInitializer()]
     };
   }
   /**
@@ -5454,19 +7134,17 @@ var RouterModule = class _RouterModule {
     };
   }
   static {
-    this.ɵfac = function RouterModule_Factory(t) {
-      return new (t || _RouterModule)(ɵɵinject(ROUTER_FORROOT_GUARD, 8));
+    this.\u0275fac = function RouterModule_Factory(t) {
+      return new (t || _RouterModule)(\u0275\u0275inject(ROUTER_FORROOT_GUARD, 8));
     };
   }
   static {
-    this.ɵmod = ɵɵdefineNgModule({
-      type: _RouterModule,
-      imports: [RouterOutlet, RouterLink, RouterLinkActive, ɵEmptyOutletComponent],
-      exports: [RouterOutlet, RouterLink, RouterLinkActive, ɵEmptyOutletComponent]
+    this.\u0275mod = /* @__PURE__ */ \u0275\u0275defineNgModule({
+      type: _RouterModule
     });
   }
   static {
-    this.ɵinj = ɵɵdefineInjector({});
+    this.\u0275inj = /* @__PURE__ */ \u0275\u0275defineInjector({});
   }
 };
 (() => {
@@ -5521,7 +7199,7 @@ function provideForRootGuard(router) {
   return "guarded";
 }
 function provideInitialNavigation(config) {
-  return [config.initialNavigation === "disabled" ? withDisabledInitialNavigation().ɵproviders : [], config.initialNavigation === "enabledBlocking" ? withEnabledBlockingInitialNavigation().ɵproviders : []];
+  return [config.initialNavigation === "disabled" ? withDisabledInitialNavigation().\u0275providers : [], config.initialNavigation === "enabledBlocking" ? withEnabledBlockingInitialNavigation().\u0275providers : []];
 }
 var ROUTER_INITIALIZER = new InjectionToken(typeof ngDevMode === "undefined" || ngDevMode ? "Router Initializer" : "");
 function provideRouterInitializer() {
@@ -5539,101 +7217,84 @@ function provideRouterInitializer() {
     }
   ];
 }
-function mapToCanMatch(providers) {
-  return providers.map((provider) => (...params) => inject(provider).canMatch(...params));
-}
-function mapToCanActivate(providers) {
-  return providers.map((provider) => (...params) => inject(provider).canActivate(...params));
-}
-function mapToCanActivateChild(providers) {
-  return providers.map((provider) => (...params) => inject(provider).canActivateChild(...params));
-}
-function mapToCanDeactivate(providers) {
-  return providers.map((provider) => (...params) => inject(provider).canDeactivate(...params));
-}
-function mapToResolve(provider) {
-  return (...params) => inject(provider).resolve(...params);
-}
-var VERSION = new Version("17.3.12");
+var VERSION2 = new Version("17.3.12");
+
+// src/app/services/auth.service.ts
+var AuthService = class _AuthService {
+  constructor(http) {
+    this.http = http;
+    this.apiUrl = environment.apiUrl;
+    this.tokenKey = "gamify_token";
+    this.userKey = "gamify_user";
+  }
+  signup(username, email, password) {
+    return __async(this, null, function* () {
+      const res = yield firstValueFrom(this.http.post(`${this.apiUrl}/auth/signup`, {
+        username,
+        email,
+        password
+      }));
+      this.setToken(res.access_token);
+      this.setUser({ id: res.user_id, username: res.username });
+    });
+  }
+  login(email, password) {
+    return __async(this, null, function* () {
+      const res = yield firstValueFrom(this.http.post(`${this.apiUrl}/auth/login`, {
+        email,
+        password
+      }));
+      this.setToken(res.access_token);
+      this.setUser({ id: res.user_id, username: res.username });
+    });
+  }
+  logout() {
+    localStorage.removeItem(this.tokenKey);
+    localStorage.removeItem(this.userKey);
+  }
+  getToken() {
+    return localStorage.getItem(this.tokenKey);
+  }
+  getUser() {
+    const user = localStorage.getItem(this.userKey);
+    return user ? JSON.parse(user) : null;
+  }
+  isLoggedIn() {
+    return !!this.getToken();
+  }
+  setToken(token) {
+    localStorage.setItem(this.tokenKey, token);
+  }
+  setUser(user) {
+    localStorage.setItem(this.userKey, JSON.stringify(user));
+  }
+  static {
+    this.\u0275fac = function AuthService_Factory(t) {
+      return new (t || _AuthService)(\u0275\u0275inject(HttpClient));
+    };
+  }
+  static {
+    this.\u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({ token: _AuthService, factory: _AuthService.\u0275fac, providedIn: "root" });
+  }
+};
+
 export {
-  ActivatedRoute,
-  ActivatedRouteSnapshot,
-  ActivationEnd,
-  ActivationStart,
-  BaseRouteReuseStrategy,
-  ChildActivationEnd,
-  ChildActivationStart,
-  ChildrenOutletContexts,
-  DefaultTitleStrategy,
-  DefaultUrlSerializer,
-  EventType,
-  GuardsCheckEnd,
-  GuardsCheckStart,
-  NavigationCancel,
-  NavigationCancellationCode,
-  NavigationEnd,
-  NavigationError,
-  NavigationSkipped,
-  NavigationSkippedCode,
-  NavigationStart,
-  NoPreloading,
-  OutletContext,
-  PRIMARY_OUTLET,
-  PreloadAllModules,
-  PreloadingStrategy,
-  ROUTER_CONFIGURATION,
-  ROUTER_INITIALIZER,
-  ROUTES,
-  ResolveEnd,
-  ResolveStart,
-  RouteConfigLoadEnd,
-  RouteConfigLoadStart,
-  RouteReuseStrategy,
+  bootstrapApplication,
+  RouterOutlet,
   Router,
-  RouterEvent,
   RouterLink,
   RouterLinkActive,
-  RouterLink as RouterLinkWithHref,
-  RouterModule,
-  RouterOutlet,
-  RouterPreloader,
-  RouterState,
-  RouterStateSnapshot,
-  RoutesRecognized,
-  Scroll,
-  TitleStrategy,
-  UrlHandlingStrategy,
-  UrlSegment,
-  UrlSegmentGroup,
-  UrlSerializer,
-  UrlTree,
-  VERSION,
-  convertToParamMap,
-  createUrlTreeFromSnapshot,
-  defaultUrlMatcher,
-  mapToCanActivate,
-  mapToCanActivateChild,
-  mapToCanDeactivate,
-  mapToCanMatch,
-  mapToResolve,
   provideRouter,
-  provideRoutes,
-  withComponentInputBinding,
-  withDebugTracing,
-  withDisabledInitialNavigation,
-  withEnabledBlockingInitialNavigation,
-  withHashLocation,
-  withInMemoryScrolling,
-  withNavigationErrorHandler,
-  withPreloading,
-  withRouterConfig,
-  withViewTransitions,
-  ɵEmptyOutletComponent,
-  ROUTER_PROVIDERS as ɵROUTER_PROVIDERS,
-  afterNextNavigation as ɵafterNextNavigation,
-  loadChildren as ɵloadChildren
+  AuthService
 };
 /*! Bundled license information:
+
+@angular/platform-browser/fesm2022/platform-browser.mjs:
+  (**
+   * @license Angular v17.3.12
+   * (c) 2010-2024 Google LLC. https://angular.io/
+   * License: MIT
+   *)
 
 @angular/router/fesm2022/router.mjs:
   (**
@@ -5642,4 +7303,4 @@ export {
    * License: MIT
    *)
 */
-//# sourceMappingURL=@angular_router.js.map
+//# sourceMappingURL=chunk-OEGGXVIH.js.map

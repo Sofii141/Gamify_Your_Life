@@ -1,9 +1,11 @@
 import {
   FormsModule
-} from "./chunk-JZ6HHMZB.js";
+} from "./chunk-YY7JD6DV.js";
+import {
+  GameService
+} from "./chunk-7DFMREMJ.js";
 import {
   CommonModule,
-  GameService,
   NgForOf,
   NgIf,
   inject,
@@ -27,7 +29,7 @@ import {
   ɵɵtextInterpolate,
   ɵɵtextInterpolate1,
   ɵɵtextInterpolate2
-} from "./chunk-A4OUFFOQ.js";
+} from "./chunk-2HLPR2EO.js";
 
 // src/app/pages/settings/settings.component.ts
 function SettingsComponent_button_10_span_4_Template(rf, ctx) {
@@ -211,4 +213,4 @@ var SettingsComponent = class _SettingsComponent {
 export {
   SettingsComponent
 };
-//# sourceMappingURL=chunk-AI3BC4KC.js.map
+//# sourceMappingURL=chunk-JBDET647.js.map
