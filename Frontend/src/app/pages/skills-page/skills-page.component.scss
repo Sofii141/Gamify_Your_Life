@@ -773,3 +773,355 @@
   80%  { opacity: 1; transform: translateY(-12px); }
   100% { opacity: 0; transform: translateY(-22px); }
 }
+
+/* ══════════════════════════════════════════
+   ROADMAP VIEW
+══════════════════════════════════════════ */
+
+.roadmap-view {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ── Overview header ── */
+.rm-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  background: var(--bg-card);
+  border: 2px solid var(--border);
+  border-radius: 22px;
+  padding: 1.35rem 1.6rem;
+  box-shadow: 0 4px 20px rgba(0,0,0,.05);
+}
+
+.rm-title     { font-size: .65rem; color: var(--primary-d); margin-bottom: .35rem; }
+.rm-subtitle  { font-size: .84rem; font-weight: 600; color: var(--text-muted); }
+
+.rm-overall {
+  min-width: 230px;
+  display: flex;
+  flex-direction: column;
+  gap: .45rem;
+}
+
+.rm-overall-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rm-overall-text {
+  font-size: .72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--text-muted);
+}
+
+.rm-overall-val { font-size: .58rem; color: var(--primary-d); }
+
+.rm-overall-track {
+  height: 13px;
+  background: var(--primary-l);
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1.5px solid var(--border);
+}
+
+.rm-overall-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  border-radius: 999px;
+  transition: width .9s cubic-bezier(.34,1.56,.64,1);
+}
+
+.rm-stat-row {
+  display: flex;
+  gap: .5rem;
+  font-size: .73rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.rm-dot { color: var(--border); }
+
+/* ── Focus Now ── */
+.focus-section  { display: flex; flex-direction: column; gap: .75rem; }
+
+.focus-header {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  flex-wrap: wrap;
+}
+
+.focus-title { font-size: .95rem; font-weight: 900; color: var(--text); }
+.focus-sub   { font-size: .78rem; font-weight: 600; color: var(--text-muted); }
+
+.focus-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: .85rem;
+}
+
+.focus-card {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  background: color-mix(in srgb, var(--fc-bg, var(--bg-card)) 80%, white);
+  border: 2px solid color-mix(in srgb, var(--fc-color, var(--primary)) 22%, transparent);
+  border-radius: 18px;
+  padding: .9rem 1rem;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform .22s cubic-bezier(.34,1.56,.64,1), box-shadow .22s;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 28px color-mix(in srgb, var(--fc-color, var(--primary)) 20%, transparent);
+  }
+}
+
+.fc-orb {
+  position: absolute;
+  top: -20px; right: -20px;
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--fc-color) 18%, transparent), transparent 70%);
+  pointer-events: none;
+}
+
+.fc-icon { font-size: 1.9rem; flex-shrink: 0; }
+.fc-info { flex: 1; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.fc-name { font-weight: 900; font-size: .9rem; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fc-meta { font-size: .7rem; font-weight: 700; color: var(--text-muted); }
+
+.fc-track {
+  height: 7px;
+  background: color-mix(in srgb, var(--fc-color) 10%, white);
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--fc-color) 15%, transparent);
+}
+
+.fc-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width .7s cubic-bezier(.34,1.56,.64,1);
+}
+
+.fc-pct {
+  font-size: .5rem;
+  color: var(--fc-color);
+  flex-shrink: 0;
+  min-width: 30px;
+  text-align: center;
+}
+
+.fc-btn {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  border: 2px solid color-mix(in srgb, var(--fc-color) 28%, transparent);
+  background: color-mix(in srgb, var(--fc-color) 10%, white);
+  font-size: 1rem;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all .15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background: var(--fc-color);
+    border-color: var(--fc-color);
+    transform: scale(1.12);
+  }
+  &:active { transform: scale(.95); }
+}
+
+/* ── Path section ── */
+.path-section {
+  display: flex;
+  flex-direction: column;
+  gap: .9rem;
+  background: var(--bg-card);
+  border: 2px solid var(--border);
+  border-radius: 22px;
+  padding: 1.35rem 1.5rem;
+  box-shadow: 0 4px 20px rgba(0,0,0,.04);
+}
+
+.path-header    { display: flex; flex-direction: column; gap: .5rem; }
+
+.path-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: .5rem;
+}
+
+.path-mastered-label { font-size: .78rem; font-weight: 700; color: var(--text-muted); }
+
+.path-progress-row   { display: flex; align-items: center; gap: .75rem; }
+
+.path-progress-track {
+  flex: 1;
+  height: 9px;
+  background: var(--primary-l);
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1.5px solid var(--border);
+}
+
+.path-progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width .9s cubic-bezier(.34,1.56,.64,1);
+}
+
+.path-progress-pct {
+  font-size: .73rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  min-width: 36px;
+  text-align: right;
+}
+
+/* ── Road strip ── */
+.road-scroll {
+  overflow-x: auto;
+  padding-bottom: .5rem;
+
+  &::-webkit-scrollbar { height: 4px; }
+  &::-webkit-scrollbar-track { background: var(--primary-l); border-radius: 2px; }
+  &::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+}
+
+.road-row {
+  display: flex;
+  align-items: flex-start;
+  padding: .5rem 0 .25rem;
+  min-width: max-content;
+}
+
+/* ── Waypoint stop ── */
+.road-stop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .3rem;
+  width: 112px;
+  flex-shrink: 0;
+  cursor: pointer;
+  position: relative;
+  transition: transform .22s cubic-bezier(.34,1.56,.64,1);
+
+  &:hover:not(.stop-locked) { transform: translateY(-5px); }
+  &.stop-locked { opacity: .6; cursor: not-allowed; }
+}
+
+.stop-ring-wrap {
+  position: relative;
+  width: 76px;
+  height: 76px;
+}
+
+.stop-arc { transition: stroke-dashoffset .8s ease; }
+
+.stop-level-badge {
+  position: absolute;
+  bottom: -2px;
+  right: -4px;
+  color: #fff;
+  font-size: .42rem;
+  padding: .15rem .38rem;
+  border-radius: 7px;
+  white-space: nowrap;
+  box-shadow: 0 2px 7px rgba(0,0,0,.18);
+}
+
+.stop-label-name {
+  font-weight: 800;
+  font-size: .82rem;
+  color: var(--text);
+  text-align: center;
+  line-height: 1.3;
+
+  &.stop-label-locked { color: var(--text-muted); }
+}
+
+.stop-label-tier {
+  font-size: .68rem;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.xp-burst-stop {
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--primary);
+  color: #fff;
+  font-size: .75rem;
+  font-weight: 900;
+  padding: .2rem .55rem;
+  border-radius: 8px;
+  pointer-events: none;
+  white-space: nowrap;
+  animation: floatUpFade .9s ease forwards;
+}
+
+/* ── Connector ── */
+.road-connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 76px;
+  flex-shrink: 0;
+  gap: 1px;
+}
+
+.conn-rail {
+  width: 100%;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--border);
+  opacity: .5;
+
+  .connector-locked & {
+    height: 2px;
+    background: repeating-linear-gradient(
+      90deg,
+      #CBD5E1 0px, #CBD5E1 5px,
+      transparent 5px, transparent 9px
+    ) !important;
+    opacity: .6;
+  }
+}
+
+.conn-chevron {
+  font-size: 1.3rem;
+  font-weight: 900;
+  line-height: 1;
+  opacity: .55;
+  margin-top: -2px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .rm-header    { flex-direction: column; }
+  .rm-overall   { min-width: unset; width: 100%; }
+  .focus-cards  { grid-template-columns: 1fr; }
+  .path-section { padding: 1rem; }
+  .roadmap-view { gap: 1.1rem; }
+}

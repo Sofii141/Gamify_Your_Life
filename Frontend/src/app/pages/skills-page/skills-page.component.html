@@ -54,6 +54,9 @@
     <div class="cat-filter" *ngIf="viewMode() === 'tree'">
       <span class="tree-hint">🌳 Skills connected by dependencies — unlock by leveling up prerequisites</span>
     </div>
+    <div class="cat-filter" *ngIf="viewMode() === 'path'">
+      <span class="tree-hint">🗺️ Click any waypoint to practice · Scroll each path to see all skills</span>
+    </div>
 
     <div class="view-modes">
       <button *ngFor="let vm of viewModes"
@@ -325,6 +328,154 @@
           </svg>
           <span>Locked path</span>
         </div>
+      </div>
+
+    </div>
+  </ng-container>
+
+  <!-- ══════════════════════════════════════
+       ROADMAP VIEW
+  ══════════════════════════════════════ -->
+  <ng-container *ngIf="viewMode() === 'path'">
+    <div class="roadmap-view">
+
+      <!-- ── Overview header ── -->
+      <div class="rm-header">
+        <div class="rm-header-left">
+          <h2 class="pixel rm-title">🗺️ Learning Roadmap</h2>
+          <p class="rm-subtitle">Your journey from Novice to Master across all skills</p>
+        </div>
+        <div class="rm-overall">
+          <div class="rm-overall-label">
+            <span class="rm-overall-text">Overall Mastery</span>
+            <span class="pixel rm-overall-val">{{ overallProgress() }}%</span>
+          </div>
+          <div class="rm-overall-track">
+            <div class="rm-overall-fill" [style.width.%]="overallProgress()"></div>
+          </div>
+          <div class="rm-stat-row">
+            <span>{{ masteredCount() }} skills mastered</span>
+            <span class="rm-dot">·</span>
+            <span>{{ totalXpEarned() }} total XP</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Focus Now ── -->
+      <div class="focus-section" *ngIf="focusSkills().length">
+        <div class="focus-header">
+          <span class="focus-title">🎯 Focus Now</span>
+          <span class="focus-sub">Skills closest to your next level-up</span>
+        </div>
+        <div class="focus-cards">
+          <div *ngFor="let item of focusSkills()"
+               class="focus-card"
+               [style.--fc-color]="item.skill.color"
+               [style.--fc-bg]="item.skill.bgColor">
+            <div class="fc-orb"></div>
+            <span class="fc-icon">{{ item.skill.icon }}</span>
+            <div class="fc-info">
+              <div class="fc-name">{{ item.skill.name }}</div>
+              <div class="fc-meta">Lv.{{ item.skill.level }} · {{ item.needed }} XP to go</div>
+              <div class="fc-track">
+                <div class="fc-fill" [style.width.%]="item.pct" [style.background]="item.skill.color"></div>
+              </div>
+            </div>
+            <span class="pixel fc-pct">{{ item.pct }}%</span>
+            <button class="fc-btn" (click)="practice(item.skill)">⚡</button>
+            <div class="xp-burst" *ngIf="xpBurst() === item.skill.id">+10 XP ✨</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Paths ── -->
+      <div *ngFor="let path of roadmapPaths()" class="path-section">
+
+        <!-- Path header -->
+        <div class="path-header">
+          <div class="path-title-row">
+            <div class="section-tag" [ngClass]="path.tagClass">
+              <span>{{ path.icon }}</span>
+              <span>{{ path.label }}</span>
+            </div>
+            <span class="path-mastered-label">{{ path.masteredCount }}/{{ path.totalStops }} mastered</span>
+          </div>
+          <div class="path-progress-row">
+            <div class="path-progress-track">
+              <div class="path-progress-fill"
+                   [style.width.%]="path.pathProgress"
+                   [style.background]="path.color"></div>
+            </div>
+            <span class="path-progress-pct">{{ path.pathProgress }}%</span>
+          </div>
+        </div>
+
+        <!-- Road -->
+        <div class="road-scroll">
+          <div class="road-row">
+            <ng-container *ngFor="let stop of path.stops; let last = last; let i = index">
+
+              <!-- Stop waypoint -->
+              <div class="road-stop"
+                   [class.stop-locked]="stop.isLocked"
+                   [class.stop-mastered]="stop.isMastered"
+                   (click)="!stop.isLocked && practice(stop.skill)">
+
+                <!-- SVG XP ring + body -->
+                <div class="stop-ring-wrap">
+                  <svg width="76" height="76" viewBox="-38 -38 76 76">
+                    <!-- Track ring -->
+                    <circle r="34" fill="none"
+                            [attr.stroke]="stop.isLocked ? '#E2E8F0' : stop.skill.color"
+                            stroke-width="5"
+                            [attr.opacity]="stop.isLocked ? '0.3' : '0.15'"
+                            stroke-linecap="round"/>
+                    <!-- Progress arc -->
+                    <path *ngIf="!stop.isLocked && stop.skill.xp > 0"
+                          [attr.d]="progressArc(stop.skill.xp, stop.skill.xpToNext, 34)"
+                          fill="none"
+                          [attr.stroke]="stop.isMastered ? '#F59E0B' : stop.skill.color"
+                          stroke-width="5"
+                          stroke-linecap="round"
+                          class="stop-arc"/>
+                    <!-- Body circle -->
+                    <circle r="26"
+                            [attr.fill]="stop.isLocked ? '#F1F5F9' : stop.skill.bgColor"
+                            [attr.stroke]="stop.isLocked ? '#CBD5E1' : stop.skill.color"
+                            stroke-width="2.5"/>
+                    <!-- Icon -->
+                    <text text-anchor="middle" dominant-baseline="central"
+                          font-size="17" [attr.opacity]="stop.isLocked ? '0.3' : '1'">{{ stop.skill.icon }}</text>
+                    <!-- Mastered crown -->
+                    <text *ngIf="stop.isMastered" text-anchor="middle" y="-30" font-size="13">👑</text>
+                  </svg>
+                  <!-- Level badge -->
+                  <div class="stop-level-badge pixel"
+                       [style.background]="stop.isLocked ? '#94A3B8' : (stop.isMastered ? '#D97706' : stop.skill.color)">
+                    Lv.{{ stop.skill.level }}
+                  </div>
+                </div>
+
+                <div class="stop-label-name" [class.stop-label-locked]="stop.isLocked">{{ stop.skill.name }}</div>
+                <div class="stop-label-tier"
+                     [style.color]="stop.isLocked ? '#CBD5E1' : getTierColor(stop.skill.level)">
+                  {{ stop.isLocked ? ('Lv.' + stop.requiresLevel + ' req.') : getTier(stop.skill.level) }}
+                </div>
+                <div class="xp-burst-stop" *ngIf="!stop.isLocked && xpBurst() === stop.skill.id">+10 XP ✨</div>
+              </div>
+
+              <!-- Connector arrow -->
+              <div *ngIf="!last" class="road-connector"
+                   [class.connector-locked]="i + 1 < path.stops.length && path.stops[i + 1].isLocked">
+                <div class="conn-rail"
+                     [style.background]="(i + 1 < path.stops.length && path.stops[i+1].isLocked) ? undefined : path.color"></div>
+                <div class="conn-chevron" [style.color]="(i + 1 < path.stops.length && path.stops[i+1].isLocked) ? '#CBD5E1' : path.color">›</div>
+              </div>
+
+            </ng-container>
+          </div>
+        </div>
+
       </div>
 
     </div>

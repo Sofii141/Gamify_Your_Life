@@ -29,6 +29,35 @@ interface SvgConnection {
   parentName:    string;
 }
 
+interface RoadmapStop {
+  skill:         Skill;
+  index:         number;
+  isLocked:      boolean;
+  isMastered:    boolean;
+  xpPercent:     number;
+  requiresLevel: number;
+  parentId:      string;
+}
+
+interface RoadmapPathData {
+  id:            TreeCat;
+  icon:          string;
+  label:         string;
+  color:         string;
+  bgColor:       string;
+  tagClass:      string;
+  stops:         RoadmapStop[];
+  masteredCount: number;
+  totalStops:    number;
+  pathProgress:  number;
+}
+
+interface FocusSkill {
+  skill:  Skill;
+  pct:    number;
+  needed: number;
+}
+
 /* ── Skill dependency map ── */
 const SKILL_DEPS: Record<string, SkillDep> = {
   'algo':      { parent: 'python', requiresLevel: 2 },
@@ -77,6 +106,19 @@ const SVG_CONFIGS: Record<TreeCat, { width: number; height: number; positions: R
   }
 };
 
+/* ── Roadmap ordered progression ── */
+const ROADMAP_ORDER: Record<TreeCat, string[]> = {
+  Programming: ['python', 'js', 'git', 'cpp', 'algo', 'ts', 'db', 'web', 'sysdesign'],
+  Creative:    ['creativity', 'writing', 'uiux'],
+  Life:        ['wellness', 'focus', 'social', 'selfcare', 'study'],
+};
+
+const PATH_DEFS: { id: TreeCat; icon: string; label: string; color: string; bgColor: string; tagClass: string }[] = [
+  { id: 'Programming', icon: '💻', label: 'Programming Path', color: '#3776ab', bgColor: '#dbeafe', tagClass: 'programming-tag' },
+  { id: 'Creative',    icon: '🎨', label: 'Creative Path',    color: '#7c3aed', bgColor: '#f3e8ff', tagClass: 'creative-tag'    },
+  { id: 'Life',        icon: '🌸', label: 'Life Mastery',     color: '#be185d', bgColor: '#fdf2f8', tagClass: 'life-tag'        },
+];
+
 @Component({
   selector: 'app-skills-page',
   standalone: true,
@@ -107,9 +149,9 @@ export class SkillsPageComponent {
   ];
 
   viewModes = [
-    { id: 'grid' as ViewMode, icon: '⊞', label: 'Cards',   available: true  },
-    { id: 'tree' as ViewMode, icon: '🌳', label: 'Tree',    available: true  },
-    { id: 'path' as ViewMode, icon: '🗺️', label: 'Roadmap', available: false },
+    { id: 'grid' as ViewMode, icon: '⊞', label: 'Cards',   available: true },
+    { id: 'tree' as ViewMode, icon: '🌳', label: 'Tree',    available: true },
+    { id: 'path' as ViewMode, icon: '🗺️', label: 'Roadmap', available: true },
   ];
 
   /* ── Grid signals ── */
@@ -172,6 +214,55 @@ export class SkillsPageComponent {
   });
 
   getSvgConfig() { return SVG_CONFIGS[this.svgCategory()]; }
+
+  /* ── Roadmap signals ── */
+  roadmapPaths = computed<RoadmapPathData[]>(() => {
+    const skills   = this.game.skills();
+    const skillMap = new Map(skills.map(s => [s.id, s]));
+
+    return PATH_DEFS.map(path => {
+      const stops = ROADMAP_ORDER[path.id].map((id, index) => {
+        const skill = skillMap.get(id);
+        if (!skill) return null;
+        const dep      = SKILL_DEPS[id];
+        const isLocked = dep ? (skillMap.get(dep.parent)?.level ?? 0) < dep.requiresLevel : false;
+        return {
+          skill,
+          index,
+          isLocked,
+          isMastered:    skill.level >= 10,
+          xpPercent:     Math.min(100, (skill.xp / skill.xpToNext) * 100),
+          requiresLevel: dep?.requiresLevel ?? 0,
+          parentId:      dep?.parent ?? '',
+        } as RoadmapStop;
+      }).filter((s): s is RoadmapStop => s !== null);
+
+      const masteredCount = stops.filter(s => s.isMastered).length;
+      const pathProgress  = stops.length
+        ? Math.round(stops.reduce((sum, s) => sum + s.skill.xp / s.skill.xpToNext, 0) / stops.length * 100)
+        : 0;
+
+      return { ...path, stops, masteredCount, totalStops: stops.length, pathProgress };
+    });
+  });
+
+  focusSkills = computed<FocusSkill[]>(() =>
+    this.game.skills()
+      .filter(s => s.level < 10)
+      .map(s => ({
+        skill:  s,
+        pct:    Math.round((s.xp / s.xpToNext) * 100),
+        needed: s.xpToNext - s.xp,
+      }))
+      .sort((a, b) => b.pct - a.pct)
+      .slice(0, 3)
+  );
+
+  overallProgress = computed(() => {
+    const skills = this.game.skills();
+    if (!skills.length) return 0;
+    return Math.round(skills.reduce((sum, s) => sum + s.xp / s.xpToNext, 0) / skills.length * 100);
+  });
 
   bezierPath(from: NodePos, to: NodePos): string {
     const dx = (to.x - from.x) * 0.55;
