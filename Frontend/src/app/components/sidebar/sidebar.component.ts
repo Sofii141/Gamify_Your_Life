@@ -18,12 +18,12 @@ export class SidebarComponent {
   mobileOpen = signal(false);
 
   nav: NavItem[] = [
-    { icon: '🏠', label: 'Home',      route: '/dashboard' },
-    { icon: '⚔️',  label: 'Quests',   route: '/quests'    },
-    { icon: '✨',  label: 'Skills',   route: '/skills'    },
-    { icon: '👤',  label: 'Character',route: '/character' },
-    { icon: '🗓️',  label: 'Calendar', route: '/calendar'  },
-    { icon: '⚙️',  label: 'Settings', route: '/settings'  },
+    { icon: 'home',      label: 'Home',      route: '/dashboard' },
+    { icon: 'quests',    label: 'Quests',    route: '/quests'    },
+    { icon: 'skills',    label: 'Skills',    route: '/skills'    },
+    { icon: 'character', label: 'Character', route: '/character' },
+    { icon: 'calendar',  label: 'Calendar',  route: '/calendar'  },
+    { icon: 'settings',  label: 'Settings',  route: '/settings'  },
   ];
 
   toggle() { this.collapsed.update(v => !v); }

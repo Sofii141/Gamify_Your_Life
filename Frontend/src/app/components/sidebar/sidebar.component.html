@@ -1,6 +1,8 @@
 <!-- Mobile hamburger button -->
 <button class="hamburger-btn" (click)="openMobile()" aria-label="Open menu">
-  <span>☰</span>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+    <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+  </svg>
 </button>
 
 <!-- Mobile backdrop -->
@@ -11,14 +13,21 @@
 
   <div class="sidebar-top">
     <div class="sidebar-logo" (click)="toggle()">
-      <span class="logo-icon pixel">♠</span>
-      <span class="logo-text" *ngIf="!collapsed()">GameLife</span>
+      <svg class="logo-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"
+              fill="var(--primary)" stroke="var(--primary)" stroke-width="1" stroke-linejoin="round"/>
+      </svg>
+      <span class="logo-text pixel" *ngIf="!collapsed()">GameLife</span>
     </div>
-    <button class="mobile-close-btn" (click)="closeMobile()" aria-label="Close menu">✕</button>
+    <button class="mobile-close-btn" (click)="closeMobile()" aria-label="Close menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
   </div>
 
   <div class="streak-badge" *ngIf="!collapsed()">
-    <span>🔥</span>
+    <svg viewBox="0 0 24 24" width="14" height="14" fill="#f97316"><path d="M12 2C9 7 6 9.5 6 14a6 6 0 0012 0c0-4.5-3-7-6-12z"/></svg>
     <span>{{ game.character().streak }} day streak</span>
   </div>
 
@@ -29,7 +38,48 @@
          class="nav-item"
          [title]="item.label"
          (click)="closeMobile()">
-        <span class="nav-icon">{{ item.icon }}</span>
+
+        <!-- Home -->
+        <svg *ngIf="item.icon === 'home'" class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/>
+          <path d="M9 21V12h6v9"/>
+        </svg>
+
+        <!-- Quests / sword -->
+        <svg *ngIf="item.icon === 'quests'" class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14.5 2.5l7 7-10 10-3-1-1-3 10-10z"/>
+          <path d="M7 17l-4.5 4.5"/>
+          <path d="M14.5 9.5l-5 5"/>
+        </svg>
+
+        <!-- Skills / sparkle star -->
+        <svg *ngIf="item.icon === 'skills'" class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+        </svg>
+
+        <!-- Character / person -->
+        <svg *ngIf="item.icon === 'character'" class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="7" r="4"/>
+          <path d="M4 21v-1a8 8 0 0116 0v1"/>
+        </svg>
+
+        <!-- Calendar -->
+        <svg *ngIf="item.icon === 'calendar'" class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="18" rx="2"/>
+          <line x1="16" y1="2" x2="16" y2="6"/>
+          <line x1="8" y1="2" x2="8" y2="6"/>
+          <line x1="3" y1="10" x2="21" y2="10"/>
+          <circle cx="8" cy="15" r="1" fill="currentColor"/>
+          <circle cx="12" cy="15" r="1" fill="currentColor"/>
+          <circle cx="16" cy="15" r="1" fill="currentColor"/>
+        </svg>
+
+        <!-- Settings / gear -->
+        <svg *ngIf="item.icon === 'settings'" class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/>
+        </svg>
+
         <span class="nav-label" *ngIf="!collapsed()">{{ item.label }}</span>
       </a>
     </li>
@@ -37,6 +87,5 @@
 
   <div class="sidebar-footer" *ngIf="!collapsed()">
     <p class="footer-quote">✦ level up every day ✦</p>
-    <div class="stars-deco"></div>
   </div>
 </nav>
