@@ -165,12 +165,24 @@ export class SkillsPageComponent {
   totalXpEarned     = computed(() => this.game.skills().reduce((sum, s) => sum + s.xp, 0));
   masteredCount     = computed(() => this.game.skills().filter(s => s.level >= 10).length);
 
+  /* ── Helper: extract canonical key from skill ID
+     Backend uses "{key}_{userId}" format (e.g. "python_1").
+     Offline fallback uses plain keys (e.g. "python").
+     This normalises both so lookups always work. ── */
+  private skillKey(id: string): string {
+    return id.replace(/_\d+$/, '');
+  }
+
+  private buildKeyMap(skills: import('../../models/game.models').Skill[]) {
+    return new Map(skills.map(s => [this.skillKey(s.id), s]));
+  }
+
   /* ── SVG tree signals ── */
   svgNodes = computed<SvgNode[]>(() => {
     const cat      = this.svgCategory();
     const config   = SVG_CONFIGS[cat];
     const skills   = this.game.skills();
-    const skillMap = new Map(skills.map(s => [s.id, s]));
+    const skillMap = this.buildKeyMap(skills);
 
     return Object.entries(config.positions).map(([id, pos]) => {
       const skill = skillMap.get(id);
@@ -191,7 +203,7 @@ export class SkillsPageComponent {
     const cat      = this.svgCategory();
     const config   = SVG_CONFIGS[cat];
     const skills   = this.game.skills();
-    const skillMap = new Map(skills.map(s => [s.id, s]));
+    const skillMap = this.buildKeyMap(skills);
 
     return Object.entries(SKILL_DEPS)
       .filter(([cId, dep]) => config.positions[cId] && config.positions[dep.parent])
@@ -218,7 +230,7 @@ export class SkillsPageComponent {
   /* ── Roadmap signals ── */
   roadmapPaths = computed<RoadmapPathData[]>(() => {
     const skills   = this.game.skills();
-    const skillMap = new Map(skills.map(s => [s.id, s]));
+    const skillMap = this.buildKeyMap(skills);
 
     return PATH_DEFS.map(path => {
       const stops = ROADMAP_ORDER[path.id].map((id, index) => {

@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.security import HTTPBearer, HTTPAuthCredentials
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from sqlalchemy.orm import Session
 from sqlalchemy import text
 from contextlib import asynccontextmanager
@@ -22,10 +22,18 @@ Base.metadata.create_all(bind=engine)
 
 
 def run_migrations():
-    """Add new columns to existing tables without breaking existing data."""
+    """Add missing columns to existing tables without dropping data."""
     migrations = [
-        "ALTER TABLE users ADD COLUMN IF NOT EXISTS google_id VARCHAR UNIQUE",
+        "ALTER TABLE users ADD COLUMN IF NOT EXISTS username VARCHAR",
+        "ALTER TABLE users ADD COLUMN IF NOT EXISTS email VARCHAR",
+        "ALTER TABLE users ADD COLUMN IF NOT EXISTS password_hash VARCHAR",
+        "ALTER TABLE users ADD COLUMN IF NOT EXISTS google_id VARCHAR",
         "ALTER TABLE users ADD COLUMN IF NOT EXISTS avatar_url VARCHAR",
+        "ALTER TABLE users ADD COLUMN IF NOT EXISTS created_at TIMESTAMP",
+        # Unique indexes (ignore if already exist)
+        "CREATE UNIQUE INDEX IF NOT EXISTS ix_users_email ON users (email)",
+        "CREATE UNIQUE INDEX IF NOT EXISTS ix_users_username ON users (username)",
+        "CREATE UNIQUE INDEX IF NOT EXISTS ix_users_google_id ON users (google_id)",
     ]
     with engine.connect() as conn:
         for sql in migrations:
@@ -62,11 +70,11 @@ security = HTTPBearer()
 
 
 def hash_password(password: str) -> str:
-    return pwd_context.hash(password)
+    return pwd_context.hash(password[:72])
 
 
 def verify_password(plain: str, hashed: str) -> bool:
-    return pwd_context.verify(plain, hashed)
+    return pwd_context.verify(plain[:72], hashed)
 
 
 def create_access_token(user_id: int, username: str) -> str:
@@ -78,7 +86,7 @@ def create_access_token(user_id: int, username: str) -> str:
     return jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
 
 
-def get_current_user(credentials: HTTPAuthCredentials = Depends(security), db: Session = Depends(get_db)) -> models.User:
+def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security), db: Session = Depends(get_db)) -> models.User:
     try:
         payload = jwt.decode(credentials.credentials, SECRET_KEY, algorithms=[ALGORITHM])
         user_id: int = payload.get("user_id")
@@ -120,7 +128,7 @@ def signup(req: schemas.UserSignup, db: Session = Depends(get_db)):
 def login(req: schemas.UserLogin, db: Session = Depends(get_db)):
     """Authenticate user and return token."""
     user = db.query(models.User).filter(models.User.email == req.email).first()
-    if not user or not verify_password(req.password, user.password_hash):
+    if not user or not user.password_hash or not verify_password(req.password, user.password_hash):
         raise HTTPException(status_code=401, detail="Invalid email or password")
 
     token = create_access_token(user.id, user.username)
@@ -167,6 +175,8 @@ def seed_new_user(user: models.User, db: Session):
     db.add(character)
     db.commit()
     for sd in SKILLS_SEED:
+        # ID format: "{key}_{user_id}" keeps PK unique across users
+        # while the frontend can strip the suffix to get the canonical key
         skill = models.Skill(
             id=f"{sd['id']}_{user.id}",
             user_id=user.id,
@@ -390,9 +400,9 @@ def toggle_quest(quest_id: str, user: models.User = Depends(get_current_user), d
 
 
 @app.delete("/api/quests/{quest_id}")
-def delete_quest(quest_id: str, db: Session = Depends(get_db)):
+def delete_quest(quest_id: str, user: models.User = Depends(get_current_user), db: Session = Depends(get_db)):
     quest = db.get(models.Quest, quest_id)
-    if not quest:
+    if not quest or quest.user_id != user.id:
         raise HTTPException(status_code=404, detail="Quest not found.")
     db.delete(quest)
     db.commit()
