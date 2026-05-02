@@ -41,20 +41,18 @@ $white:    #ffffff;
   50%       { transform: translateY(-16px) rotate(180deg); opacity: .6; }
 }
 
-// ─── Left: form side ──────────────────────────────────────────────────────
+// ─── Right: form side ─────────────────────────────────────────────────────
 .form-side {
   position: relative;
   z-index: 2;
-  flex: 0 0 auto;
-  width: 100%;
-  max-width: 440px;
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 2.5rem 2rem;
 
   @media (min-width: 860px) {
-    padding: 2rem 2.5rem 2rem 3.5rem;
+    padding: 2rem 3.5rem 2rem 2rem;
     min-height: 100vh;
   }
 }
@@ -62,10 +60,11 @@ $white:    #ffffff;
 // ─── Card ─────────────────────────────────────────────────────────────────
 .card {
   width: 100%;
+  max-width: 460px;
   background: $white;
   border: 2px solid $border;
   border-radius: 28px;
-  padding: 2.2rem 2rem;
+  padding: 2.2rem 2.2rem;
   box-shadow:
     0 4px 0 $pink,
     0 24px 64px rgba(244,143,177,.18),
@@ -384,7 +383,7 @@ $white:    #ffffff;
   &:disabled { opacity: .6; cursor: not-allowed; }
 }
 
-// ─── Right: character side ────────────────────────────────────────────────
+// ─── Left: character side ─────────────────────────────────────────────────
 .char-side {
   display: none;
   position: relative;

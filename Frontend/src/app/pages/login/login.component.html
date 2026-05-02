@@ -12,108 +12,7 @@
     <span class="px-star" style="top:55%;right:20%;--s:7.5s;--d:2.5s">★</span>
   </div>
 
-  <!-- ══ LEFT — Login card ══════════════════════════════════════════════ -->
-  <section class="form-side">
-    <div class="card">
-
-      <!-- logo top -->
-      <div class="logo-row">
-        <span class="logo-gem">💎</span>
-        <span class="pixel logo-text">Gamify Your Life</span>
-      </div>
-
-      <!-- tabs -->
-      <div class="tabs" role="tablist">
-        <button role="tab" [class.active]="isLogin()"
-          (click)="isLogin() || toggleMode()" [disabled]="loading()">
-          🗝️ Login
-        </button>
-        <button role="tab" [class.active]="!isLogin()"
-          (click)="!isLogin() || toggleMode()" [disabled]="loading()">
-          ⚔️ Register
-        </button>
-      </div>
-
-      <!-- headline -->
-      <div class="headline">
-        <h2>{{ isLogin() ? 'Welcome back! 👾' : 'Start your quest! 🌟' }}</h2>
-        <p>{{ isLogin() ? 'Ready to level up today?' : 'Create your character and begin.' }}</p>
-      </div>
-
-      <!-- Google -->
-      <div *ngIf="googleEnabled" class="google-wrap">
-        <div #googleBtnContainer class="google-container"></div>
-        <div class="divider"><span>or</span></div>
-      </div>
-
-      <!-- Form -->
-      <form (ngSubmit)="submit()" class="form">
-
-        <div class="field" *ngIf="!isLogin()">
-          <label>🧙 Username</label>
-          <input type="text"
-            [ngModel]="username()" (ngModelChange)="username.set($event)"
-            name="username" placeholder="Your hero name"
-            autocomplete="username" required [disabled]="loading()">
-        </div>
-
-        <div class="field">
-          <label>📧 Email</label>
-          <input type="email"
-            [ngModel]="email()" (ngModelChange)="email.set($event)"
-            name="email" placeholder="your@email.com"
-            autocomplete="email" required [disabled]="loading()">
-        </div>
-
-        <div class="field">
-          <label>🔑 Password</label>
-          <div class="pass-row">
-            <input [type]="showPass() ? 'text' : 'password'"
-              [ngModel]="password()" (ngModelChange)="password.set($event)"
-              name="password" placeholder="••••••••"
-              autocomplete="current-password" required [disabled]="loading()">
-            <button type="button" class="eye" (click)="togglePass()" tabindex="-1">
-              {{ showPass() ? '🙈' : '👁️' }}
-            </button>
-          </div>
-        </div>
-
-        <div class="error-msg" *ngIf="error()" role="alert">⚠️ {{ error() }}</div>
-
-        <button type="submit" class="submit-btn" [disabled]="loading()">
-          <span *ngIf="!loading()">
-            {{ isLogin() ? '⚔️ Enter the dungeon' : '🌟 Create character' }}
-          </span>
-          <span *ngIf="loading()" class="dots"><i></i><i></i><i></i></span>
-        </button>
-
-      </form>
-
-      <!-- toggle -->
-      <p class="toggle-hint">
-        {{ isLogin() ? "Don't have an account?" : 'Already have one?' }}
-        <button type="button" class="link-btn" (click)="toggleMode()" [disabled]="loading()">
-          {{ isLogin() ? 'Sign up →' : '← Login' }}
-        </button>
-      </p>
-
-      <!-- demo -->
-      <div class="demo-box" *ngIf="isLogin()">
-        <span class="pixel demo-label">🎯 Demo</span>
-        <div class="demo-row">
-          <code>sofii&#64;gamify.dev</code>
-          <span>·</span>
-          <code>demo123456</code>
-          <button type="button" class="demo-fill" (click)="fillDemo()" [disabled]="loading()">
-            Fill ✨
-          </button>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ══ RIGHT — Character stage ════════════════════════════════════════ -->
+  <!-- ══ LEFT — Character stage ════════════════════════════════════════ -->
   <section class="char-side" aria-hidden="true">
 
     <!-- soft glow blob behind character -->
@@ -237,6 +136,107 @@
       <div class="pill">✨ <span>XP 320</span></div>
     </div>
 
+  </section>
+
+  <!-- ══ RIGHT — Login card ══════════════════════════════════════════════ -->
+  <section class="form-side">
+    <div class="card">
+
+      <!-- logo top -->
+      <div class="logo-row">
+        <span class="logo-gem">💎</span>
+        <span class="pixel logo-text">Gamify Your Life</span>
+      </div>
+
+      <!-- tabs -->
+      <div class="tabs" role="tablist">
+        <button role="tab" [class.active]="isLogin()"
+          (click)="isLogin() || toggleMode()" [disabled]="loading()">
+          🗝️ Login
+        </button>
+        <button role="tab" [class.active]="!isLogin()"
+          (click)="!isLogin() || toggleMode()" [disabled]="loading()">
+          ⚔️ Register
+        </button>
+      </div>
+
+      <!-- headline -->
+      <div class="headline">
+        <h2>{{ isLogin() ? 'Welcome back! 👾' : 'Start your quest! 🌟' }}</h2>
+        <p>{{ isLogin() ? 'Ready to level up today?' : 'Create your character and begin.' }}</p>
+      </div>
+
+      <!-- Google -->
+      <div *ngIf="googleEnabled" class="google-wrap">
+        <div #googleBtnContainer class="google-container"></div>
+        <div class="divider"><span>or</span></div>
+      </div>
+
+      <!-- Form -->
+      <form (ngSubmit)="submit()" class="form">
+
+        <div class="field" *ngIf="!isLogin()">
+          <label>🧙 Username</label>
+          <input type="text"
+            [ngModel]="username()" (ngModelChange)="username.set($event)"
+            name="username" placeholder="Your hero name"
+            autocomplete="username" required [disabled]="loading()">
+        </div>
+
+        <div class="field">
+          <label>📧 Email</label>
+          <input type="email"
+            [ngModel]="email()" (ngModelChange)="email.set($event)"
+            name="email" placeholder="your@email.com"
+            autocomplete="email" required [disabled]="loading()">
+        </div>
+
+        <div class="field">
+          <label>🔑 Password</label>
+          <div class="pass-row">
+            <input [type]="showPass() ? 'text' : 'password'"
+              [ngModel]="password()" (ngModelChange)="password.set($event)"
+              name="password" placeholder="••••••••"
+              autocomplete="current-password" required [disabled]="loading()">
+            <button type="button" class="eye" (click)="togglePass()" tabindex="-1">
+              {{ showPass() ? '🙈' : '👁️' }}
+            </button>
+          </div>
+        </div>
+
+        <div class="error-msg" *ngIf="error()" role="alert">⚠️ {{ error() }}</div>
+
+        <button type="submit" class="submit-btn" [disabled]="loading()">
+          <span *ngIf="!loading()">
+            {{ isLogin() ? '⚔️ Enter the dungeon' : '🌟 Create character' }}
+          </span>
+          <span *ngIf="loading()" class="dots"><i></i><i></i><i></i></span>
+        </button>
+
+      </form>
+
+      <!-- toggle -->
+      <p class="toggle-hint">
+        {{ isLogin() ? "Don't have an account?" : 'Already have one?' }}
+        <button type="button" class="link-btn" (click)="toggleMode()" [disabled]="loading()">
+          {{ isLogin() ? 'Sign up →' : '← Login' }}
+        </button>
+      </p>
+
+      <!-- demo -->
+      <div class="demo-box" *ngIf="isLogin()">
+        <span class="pixel demo-label">🎯 Demo</span>
+        <div class="demo-row">
+          <code>sofii&#64;gamify.dev</code>
+          <span>·</span>
+          <code>demo123456</code>
+          <button type="button" class="demo-fill" (click)="fillDemo()" [disabled]="loading()">
+            Fill ✨
+          </button>
+        </div>
+      </div>
+
+    </div>
   </section>
 
 </div>
